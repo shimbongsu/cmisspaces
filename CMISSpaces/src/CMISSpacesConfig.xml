@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<objects xmlns="http://www.pranaframework.org/objects" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.pranaframework.org/objects
+                             http://www.pranaframework.org/schema/objects/prana-objects-0.6.xsd">
+
+	<object id="cmisConfig" class="org.integratedsemantics.cmisspaces.model.config.CMISConfig">
+	
+		<!--  cmis service url of cmis repository -->	
+		<property name="cmisUrl" value="http://localhost:8080/alfresco/service/api/cmis"/>
+		
+		<!-- (for both flex+browser and flex+air) path to cross domain file to load (say from Tomcat ROOT webapp)
+		    1. "allow-access-from domain= to-ports=" needed to use flash sockets api even on local domain, 
+		    2. allow use of http headers even on local domain with "allow-http-request-headers-from domain= headers=",		
+		    3. and "allow-access-from domain= to-ports=" for cross domain use --> 
+		<property name="crossDomainFileUrl" value="http://localhost:8080/crossdomain.xml"/>  			
+
+		<!-- whether to use sockets or non sockets (HttpService, URLLoader) communication -->  
+		<property name="useSockets" value="false"/>
+					
+	</object>
+
+</objects>
