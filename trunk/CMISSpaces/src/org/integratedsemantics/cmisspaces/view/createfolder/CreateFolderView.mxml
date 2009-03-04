@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<createfolder:CreateFolderViewBase xmlns:mx="http://www.adobe.com/2006/mxml"  
+    xmlns:createfolder="org.integratedsemantics.cmisspaces.view.createfolder.*"
+    width="460" height="300" styleName="dialog" title="{resourceManager.getString('CreateSpaceView', 'title')}" showCloseButton="true">
+    
+    <mx:Metadata>[ResourceBundle("CreateSpaceView")]</mx:Metadata>
+    
+    <mx:Style source="../../framework/presmodel/dialog.css"/>
+    
+    <mx:Spacer height="10"/>
+    
+    <mx:Form width="388" styleName="mainArea" height="175">
+
+        <mx:FormItem label="{resourceManager.getString('CreateSpaceView', 'spaceNameFormItem_label' )}" width="348" styleName="mainArea" id="spaceNameFormItem">      
+            <mx:TextInput id="foldername" width="250" text="{resourceManager.getString('CreateSpaceView', 'foldername_text')}" styleName="input"
+            	change="createFolderPresModel.updateFolderName(foldername.text)"/>      
+        </mx:FormItem>
+ 
+    </mx:Form>
+
+    <mx:HBox width="100%" styleName="buttonArea"> 
+        <mx:Button id="okBtn" label="{resourceManager.getString('CreateSpaceView', 'okBtn_label' )}"/>    
+        <mx:Spacer width="20"/>
+        <mx:Button id="cancelBtn" label="{resourceManager.getString('CreateSpaceView', 'cancelBtn_label' )}"/>    
+    </mx:HBox>
+ 
+</createfolder:CreateFolderViewBase>
+
