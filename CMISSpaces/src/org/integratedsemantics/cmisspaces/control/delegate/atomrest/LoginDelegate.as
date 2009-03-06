@@ -3,6 +3,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
     import com.adobe.net.URI;
     import com.universalmind.cairngorm.business.Delegate;
     
+    import mx.collections.ArrayCollection;
     import mx.rpc.IResponder;
     import mx.rpc.events.FaultEvent;
     import mx.rpc.events.ResultEvent;
@@ -10,12 +11,16 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
     import org.coderepos.atompub.credentials.BasicCredential;
     import org.coderepos.atompub.events.AtompubEvent;
     import org.coderepos.xml.atom.AtomCollection;
+    import org.coderepos.xml.atom.AtomLink;
     import org.coderepos.xml.atom.AtomService;
     import org.coderepos.xml.atom.AtomWorkspace;
     import org.integratedsemantics.cmisspaces.cmis.atom.CMISAtomClient;
+    import org.integratedsemantics.cmisspaces.cmis.atom.CMISAtomEntry;
+    import org.integratedsemantics.cmisspaces.cmis.atom.CMISAtomFeed;
     import org.integratedsemantics.cmisspaces.cmis.atom.CMISConstants;
     import org.integratedsemantics.cmisspaces.model.config.CMISConfig;
     import org.integratedsemantics.flexspaces.model.AppModelLocator;
+    import org.integratedsemantics.flexspaces.model.cmis.CMISType;
 
 
     /**
@@ -67,7 +72,9 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
         
         protected function onCompletedToGetService(e:AtompubEvent):void
         {
-            removeListeners();
+            client.removeEventListener(AtompubEvent.GET_SERVICE_COMPLETED, onCompletedToGetService);
+            client.removeEventListener(AtompubEvent.GET_SERVICE_FAILED, onFailedToGetService);            
+
             var service:AtomService = e.result.service;
             var workspace:AtomWorkspace = service.workspace;
             
@@ -90,23 +97,89 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
                 {
                     cmisConfig.queryCollection = collection.href.toString();                
                 }
+                else if (collectionType== "types-descendants")
+                {
+                    cmisConfig.typesCollection = collection.href.toString();                
+                }                
             } 
+            
+            client.addEventListener(AtompubEvent.GET_FEED_COMPLETED, onCompletedGetTypes);
+            client.addEventListener(AtompubEvent.GET_FEED_FAILED, onFailedGetTypes);
+
+            var typesUri:URI = new URI(cmisConfig.typesCollection);                         
+
+            client.getFeed(typesUri);            
+        }
+
+        protected function onFailedToGetService(e:AtompubEvent):void
+        {
+            client.removeEventListener(AtompubEvent.GET_SERVICE_COMPLETED, onCompletedToGetService);
+            client.removeEventListener(AtompubEvent.GET_SERVICE_FAILED, onFailedToGetService);            
+
+            var faultEvent:FaultEvent = new FaultEvent("CMIS getRepoInfo failed");
+            this.onFault(faultEvent);
+        }      
+
+        protected function onCompletedGetTypes(e:AtompubEvent):void
+        {
+            client.removeEventListener(AtompubEvent.GET_FEED_COMPLETED, onCompletedGetTypes);
+            client.removeEventListener(AtompubEvent.GET_FEED_FAILED, onFailedGetTypes);            
+
+            var feed:CMISAtomFeed = e.result.feed as CMISAtomFeed;
+            var entries:Array = feed.getEntries();
+            
+			var types:ArrayCollection = new ArrayCollection();
+			var typeUrlToBaseType:Array = new Array();
+			
+            var cmis:Namespace = new Namespace("cmis", CMISConstants.CMIS_200805_NS); 
+			
+            for (var i:int = 0; i < entries.length; i++)
+			{
+                var entry:CMISAtomEntry = entries[i] as CMISAtomEntry;
+				
+				var type:CMISType = new CMISType();
+				
+				for (var j:int = 0; j < entry.links.length; j++)
+                {
+                    var link:AtomLink = entry.links[j] as AtomLink;    
+                    if (link.rel == "self")
+                    {
+                        type.url = link.href.toString();
+                        break;
+                    }
+                }
+
+				var folderBaseType:String = entry._src.cmis::folderType.cmis::baseType;
+				var documentBaseType:String = entry._src.cmis::documentType.cmis::baseType;		
+
+				if (folderBaseType.length > 0)
+				{
+					type.baseType = folderBaseType;
+				}
+				else if (documentBaseType.length > 0)
+				{
+					type.baseType = documentBaseType;
+				}
+				
+				types.addItem(type);
+				typeUrlToBaseType[type.url] = type.baseType;			
+			}
+			
+			cmisConfig.types = types;
+			cmisConfig.typeUrlToBaseType = typeUrlToBaseType;
                         
             var resultEvent:ResultEvent = new ResultEvent("");
             notifyCaller("ticket", resultEvent);                          
         }
 
-        protected function onFailedToGetService(e:AtompubEvent):void
+        protected function onFailedGetTypes(e:AtompubEvent):void
         {
-            removeListeners();
-            var faultEvent:FaultEvent = new FaultEvent("CMIS getRepoInfo failed");
+            client.removeEventListener(AtompubEvent.GET_SERVICE_COMPLETED, onCompletedGetTypes);
+            client.removeEventListener(AtompubEvent.GET_SERVICE_FAILED, onFailedGetTypes);            
+
+            var faultEvent:FaultEvent = new FaultEvent("CMIS get Types failed");
             this.onFault(faultEvent);
         }      
         
-        protected function removeListeners():void
-        {
-            client.removeEventListener(AtompubEvent.GET_SERVICE_COMPLETED, onCompletedToGetService);
-            client.removeEventListener(AtompubEvent.GET_SERVICE_FAILED, onFailedToGetService);            
-        }           
     }
 }
