@@ -27,7 +27,8 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
     public class TreeDelegate extends Delegate
     {
         protected var client:CMISAtomClient;
-        protected var displayPath:String;         
+        protected var displayPath:String;
+        protected var cmisConfig:CMISConfig;         
 
         /**
          * Constructor
@@ -57,7 +58,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
             displayPath = path;
 
             var model:AppModelLocator = AppModelLocator.getInstance();
-            var cmisConfig:CMISConfig = model.ecmServerConfig as CMISConfig;
+            cmisConfig = model.ecmServerConfig as CMISConfig;
 
             var urlStr:String;               
             if (cmisChildren == null)
@@ -135,44 +136,52 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
             for (var i:int = 0; i < entries.length; i++)
             {
                 var entry:CMISAtomEntry = entries[i] as CMISAtomEntry;
+                
                 var cmisObj:CMISObject = entry.getCMISObject(); 
-                var baseType:String = cmisObj.getBaseType().getValue();
-
+                
+                //var baseType:String = cmisObj.getBaseType().getValue();
+				var baseType:String = "";
+				
+                name = cmisObj.getName().getValue();
+                var id:String = cmisObj.getObjectId().getValue();
+                var childNode:TreeNode = new TreeNode(name, id);
+                
+                for (var j:int = 0; j < entry.links.length; j++)
+                {
+                    link = entry.links[j] as AtomLink;    
+                    if (link.rel == "cmis-children")
+                    {
+                        childNode.cmisChildren = link.href.toString();
+                    }
+                    else if (link.rel == "self")
+                    {
+                        childNode.cmisSelf = link.href.toString();
+                    }
+                    else if (link.rel == "cmis-type")
+                    {
+                        childNode.cmisType = link.href.toString();
+                        baseType = cmisConfig.typeUrlToBaseType[childNode.cmisType];
+                    }                                                                        
+                }
+                
                 if (baseType == "folder")
                 {
-                    name = cmisObj.getName().getValue();
-                    var id:String = cmisObj.getObjectId().getValue();
-                    var childNode:TreeNode = new TreeNode(name, id);
-                    
-                    childNode.name = name;                    
-    
-                    childNode.nodeRef = cmisObj.getObjectId().getValue();              
-                    childNode.id = childNode.nodeRef;                   
-    
-                    for (var j:int = 0; j < entry.links.length; j++)
-                    {
-                        link = entry.links[j] as AtomLink;    
-                        if (link.rel == "cmis-children")
-                        {
-                            childNode.cmisChildren = link.href.toString();
-                        }
-                        else if (link.rel == "self")
-                        {
-                            childNode.cmisSelf = link.href.toString();
-                        }                        
-                    }
-                    
-                    childNode.parentPath = displayPath;                                        
-                    childNode.path = displayPath + "/" + childNode.name;
-                    childNode.displayPath = childNode.path;                   
-                    childNode.qnamePath = null;                
-                    
-                    // todo
-                    childNode.readPermission = true;
-                    childNode.writePermission = true;
-                    childNode.deletePermission = true;
-                    childNode.createChildrenPermission = true;
-    
+	                childNode.name = name;                    
+	
+	                childNode.nodeRef = cmisObj.getObjectId().getValue();              
+	                childNode.id = childNode.nodeRef;                   
+
+	                childNode.parentPath = displayPath;                                        
+	                childNode.path = displayPath + "/" + childNode.name;
+	                childNode.displayPath = childNode.path;                   
+	                childNode.qnamePath = null;                
+	                
+	                // todo
+	                childNode.readPermission = true;
+	                childNode.writePermission = true;
+	                childNode.deletePermission = true;
+	                childNode.createChildrenPermission = true;
+
                     currentNode.children.addItem(childNode);
                 }
             }

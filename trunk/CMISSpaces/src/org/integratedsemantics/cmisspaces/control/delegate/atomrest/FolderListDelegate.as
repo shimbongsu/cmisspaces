@@ -29,6 +29,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
     {	   
         protected var client:CMISAtomClient;
         protected var displayPath:String; 
+        protected var cmisConfig:CMISConfig;         
 
         /**
          * Constructor
@@ -56,7 +57,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
             displayPath = path;
                        
             var model:AppModelLocator = AppModelLocator.getInstance();
-            var cmisConfig:CMISConfig = model.ecmServerConfig as CMISConfig;           
+            cmisConfig = model.ecmServerConfig as CMISConfig;           
 
             var urlStr:String;               
             if (cmisChildren == null)
@@ -145,9 +146,32 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
                 
                 node.name = cmisObj.getName().getValue();
                 
-                var baseType:String = cmisObj.getBaseType().getValue();
+                //var baseType:String = cmisObj.getBaseType().getValue();
+                var baseType:String = "";
                 
                 // description, title, author not return in cmis object properties, use from atom fields?                
+                
+                for (var j:int = 0; j < entry.links.length; j++)
+                {
+                    link = entry.links[j] as AtomLink;    
+                    if (link.rel == "cmis-children")
+                    {
+                        node.cmisChildren = link.href.toString();
+                    }
+                    else if (link.rel == "self")
+                    {
+                        node.cmisSelf = link.href.toString();
+                    }
+                    else if (link.rel == "cmis-allversions")
+                    {
+                        node.cmisAllVersions = link.href.toString();
+                    }    
+                    else if (link.rel == "cmis-type")
+                    {
+                        node.cmisType = link.href.toString();
+                        baseType = cmisConfig.typeUrlToBaseType[node.cmisType];
+                    }                                                                                                            
+                }
                 
                 if (baseType == "folder")
                 {
@@ -181,24 +205,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
 
                 node.created = cmisObj.getCreationDate().getValue();
                 node.modified = cmisObj.getLastModificationDate().getValue();
-                
-                for (var j:int = 0; j < entry.links.length; j++)
-                {
-                    link = entry.links[j] as AtomLink;    
-                    if (link.rel == "cmis-children")
-                    {
-                        node.cmisChildren = link.href.toString();
-                    }
-                    else if (link.rel == "self")
-                    {
-                        node.cmisSelf = link.href.toString();
-                    }
-                    else if (link.rel == "cmis-allversions")
-                    {
-                        node.cmisAllVersions = link.href.toString();
-                    }                    
-                }
-                
+                                
                 node.parentPath = displayPath;
                 node.path = displayPath + "/" + node.name;                
                 node.displayPath = node.path;

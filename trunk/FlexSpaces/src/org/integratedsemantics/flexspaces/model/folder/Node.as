@@ -37,6 +37,7 @@ package org.integratedsemantics.flexspaces.model.folder
         public var cmisSelf:String;
         public var cmisObj:Object;
         public var cmisAllVersions:String;
+        public var cmisType:String;
               
         
         /**

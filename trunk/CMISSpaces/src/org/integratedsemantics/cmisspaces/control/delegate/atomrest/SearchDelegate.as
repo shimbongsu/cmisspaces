@@ -14,6 +14,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
     import org.integratedsemantics.cmisspaces.cmis.atom.CMISAtomEntry;
     import org.integratedsemantics.cmisspaces.cmis.atom.CMISAtomFeed;
     import org.integratedsemantics.cmisspaces.cmis.atom.CMISObject;
+    import org.integratedsemantics.cmisspaces.model.config.CMISConfig;
     import org.integratedsemantics.flexspaces.model.AppModelLocator;
     import org.integratedsemantics.flexspaces.model.folder.Node;
     import org.integratedsemantics.flexspaces.model.searchresults.SearchResultsCollection;
@@ -27,6 +28,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
     {
         protected var client:CMISAtomClient;
         protected var queryStr:String;
+        protected var cmisConfig:CMISConfig;         
 
         /**
          * Constructor
@@ -54,6 +56,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
             client = new CMISAtomClient();
             var model:AppModelLocator = AppModelLocator.getInstance();
             client.credential = new BasicCredential(model.userInfo.loginUserName, model.userInfo.loginPassword);
+            cmisConfig = model.ecmServerConfig as CMISConfig;                       
        
             client.addEventListener(AtompubEvent.GET_FEED_COMPLETED, onSearchSuccess);
             client.addEventListener(AtompubEvent.GET_FEED_FAILED, onSearchFail);   
@@ -74,6 +77,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
             client = new CMISAtomClient();
             var model:AppModelLocator = AppModelLocator.getInstance();
             client.credential = new BasicCredential(model.userInfo.loginUserName, model.userInfo.loginPassword);
+            cmisConfig = model.ecmServerConfig as CMISConfig;                       
        
             client.addEventListener(AtompubEvent.GET_FEED_COMPLETED, onSearchSuccess);
             client.addEventListener(AtompubEvent.GET_FEED_FAILED, onSearchFail);   
@@ -119,6 +123,28 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
                 
                 // description, title, author not return in cmis object properties, use from atom fields?                
                 
+                for (var j:int = 0; j < entry.links.length; j++)
+                {
+                    var link:AtomLink = entry.links[j] as AtomLink;    
+                    if (link.rel == "cmis-children")
+                    {
+                        node.cmisChildren = link.href.toString();
+                    }
+                    else if (link.rel == "self")
+                    {
+                        node.cmisSelf = link.href.toString();
+                    }
+                    else if (link.rel == "cmis-allversions")
+                    {
+                        node.cmisAllVersions = link.href.toString();
+                    }    
+                    else if (link.rel == "cmis-type")
+                    {
+                        //node.cmisType = link.href.toString();
+                        //baseType = cmisConfig.typeUrlToBaseType[node.cmisType];
+                    }                                                                                                                                                
+                }
+
                 if (baseType == "folder")
                 {
                     node.isFolder = true;
@@ -152,24 +178,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
 
                 node.created = cmisObj.getCreationDate().getValue();
                 node.modified = cmisObj.getLastModificationDate().getValue();
-                
-                for (var j:int = 0; j < entry.links.length; j++)
-                {
-                    var link:AtomLink = entry.links[j] as AtomLink;    
-                    if (link.rel == "cmis-children")
-                    {
-                        node.cmisChildren = link.href.toString();
-                    }
-                    else if (link.rel == "self")
-                    {
-                        node.cmisSelf = link.href.toString();
-                    }
-                    else if (link.rel == "cmis-allversions")
-                    {
-                        node.cmisAllVersions = link.href.toString();
-                    }                    
-                }
-                
+                                
                 // todo: don't have display path
                 var displayPath:String = "";
                 node.parentPath = displayPath;
