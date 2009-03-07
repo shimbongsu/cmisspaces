@@ -14,10 +14,10 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
     import org.coderepos.xml.atom.AtomLink;
     import org.coderepos.xml.atom.AtomService;
     import org.coderepos.xml.atom.AtomWorkspace;
-    import org.integratedsemantics.cmisspaces.cmis.atom.CMISAtomClient;
-    import org.integratedsemantics.cmisspaces.cmis.atom.CMISAtomEntry;
-    import org.integratedsemantics.cmisspaces.cmis.atom.CMISAtomFeed;
-    import org.integratedsemantics.cmisspaces.cmis.atom.CMISConstants;
+    import org.integratedsemantics.cmis.atom.CMISAtomClient;
+    import org.integratedsemantics.cmis.atom.CMISAtomEntry;
+    import org.integratedsemantics.cmis.atom.CMISAtomFeed;
+    import org.integratedsemantics.cmis.atom.CMISConstants;
     import org.integratedsemantics.cmisspaces.model.config.CMISConfig;
     import org.integratedsemantics.flexspaces.model.AppModelLocator;
     import org.integratedsemantics.flexspaces.model.cmis.CMISType;

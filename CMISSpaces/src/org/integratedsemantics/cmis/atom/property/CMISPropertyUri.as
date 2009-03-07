@@ -1,4 +1,4 @@
-package org.integratedsemantics.cmisspaces.cmis.atom.property
+package org.integratedsemantics.cmis.atom.property
 {
     /**
      * URI Property

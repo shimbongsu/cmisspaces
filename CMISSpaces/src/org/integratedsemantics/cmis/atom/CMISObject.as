@@ -1,7 +1,7 @@
-package org.integratedsemantics.cmisspaces.cmis.atom
+package org.integratedsemantics.cmis.atom
 {
     import org.coderepos.xml.atom.AtomElement;
-    import org.integratedsemantics.cmisspaces.cmis.atom.property.CMISProperty;
+    import org.integratedsemantics.cmis.atom.property.CMISProperty;
 
     public class CMISObject extends AtomElement
     {

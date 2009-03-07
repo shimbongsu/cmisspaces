@@ -24,8 +24,8 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
     import org.coderepos.atompub.credentials.BasicCredential;
     import org.coderepos.atompub.events.AtompubEvent;
     import org.coderepos.xml.atom.AtomEntry;
-    import org.integratedsemantics.cmisspaces.cmis.atom.CMISAtomClient;
-    import org.integratedsemantics.cmisspaces.cmis.atom.CMISAtomEntry;
+    import org.integratedsemantics.cmis.atom.CMISAtomClient;
+    import org.integratedsemantics.cmis.atom.CMISAtomEntry;
     import org.integratedsemantics.cmisspaces.model.config.CMISConfig;
     import org.integratedsemantics.flexspaces.control.command.IUploadHandlers;
     import org.integratedsemantics.flexspaces.model.AppModelLocator;

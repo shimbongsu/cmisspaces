@@ -41,7 +41,7 @@ package org.coderepos.atompub {
   import org.httpclient.*;
   import org.httpclient.events.*;
   import org.httpclient.http.*;
-  import org.integratedsemantics.cmisspaces.cmis.atom.CMISAtomFeed;
+  import org.integratedsemantics.cmis.atom.CMISAtomFeed;
   import org.integratedsemantics.util.HttpClient2;
   
   /**
