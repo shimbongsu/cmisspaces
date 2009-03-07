@@ -1,4 +1,4 @@
-package org.integratedsemantics.cmisspaces.cmis.atom
+package org.integratedsemantics.cmis.atom
 {
     import org.coderepos.xml.atom.AtomElement;
 

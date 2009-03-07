@@ -11,10 +11,10 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
     import org.coderepos.atompub.credentials.BasicCredential;
     import org.coderepos.atompub.events.AtompubEvent;
     import org.coderepos.xml.atom.AtomLink;
-    import org.integratedsemantics.cmisspaces.cmis.atom.CMISAtomClient;
-    import org.integratedsemantics.cmisspaces.cmis.atom.CMISAtomEntry;
-    import org.integratedsemantics.cmisspaces.cmis.atom.CMISAtomFeed;
-    import org.integratedsemantics.cmisspaces.cmis.atom.CMISObject;
+    import org.integratedsemantics.cmis.atom.CMISAtomClient;
+    import org.integratedsemantics.cmis.atom.CMISAtomEntry;
+    import org.integratedsemantics.cmis.atom.CMISAtomFeed;
+    import org.integratedsemantics.cmis.atom.CMISObject;
     import org.integratedsemantics.cmisspaces.model.config.CMISConfig;
     import org.integratedsemantics.flexspaces.model.AppModelLocator;
     import org.integratedsemantics.flexspaces.model.folder.Folder;
