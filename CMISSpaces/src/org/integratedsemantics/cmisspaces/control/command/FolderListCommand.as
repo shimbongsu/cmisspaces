@@ -5,7 +5,10 @@ package org.integratedsemantics.cmisspaces.control.command
     import com.universalmind.cairngorm.events.Callbacks;
     
     import org.integratedsemantics.cmisspaces.control.delegate.atomrest.FolderListDelegate;
+    import org.integratedsemantics.cmisspaces.control.delegate.webservice.FolderListWebServiceDelegate;
+    import org.integratedsemantics.cmisspaces.model.config.CMISConfig;
     import org.integratedsemantics.flexspaces.control.event.FolderListEvent;
+    import org.integratedsemantics.flexspaces.model.AppModelLocator;
 
 	
 	/**
@@ -13,6 +16,8 @@ package org.integratedsemantics.cmisspaces.control.command
 	 */
 	public class FolderListCommand extends Command
 	{
+       protected var model:AppModelLocator = AppModelLocator.getInstance();
+
         /**
          * Constructor
          */
@@ -48,9 +53,18 @@ package org.integratedsemantics.cmisspaces.control.command
 		 */
 		public function getFolderList(event:FolderListEvent):void
 		{
-            var handlers:Callbacks = new Callbacks(onFolderListSuccess, onFault);
-            var delegate:FolderListDelegate = new FolderListDelegate(handlers);
-            delegate.getFolderList(event.path, event.pageSize, event.pageNum, event.cmisChildren);                 
+			var cmisConfig:CMISConfig = model.ecmServerConfig as CMISConfig;
+            var handlers:Callbacks = new Callbacks(onFolderListSuccess, onFault);            
+			if (cmisConfig.useWebServices == true)
+			{
+	            var wsDelegate:FolderListWebServiceDelegate = new FolderListWebServiceDelegate(handlers);
+    	        wsDelegate.getFolderList(event.path, event.pageSize, event.pageNum, event.cmisChildren);        	            
+        	}
+        	else
+        	{
+	            var delegate:FolderListDelegate = new FolderListDelegate(handlers);
+    	        delegate.getFolderList(event.path, event.pageSize, event.pageNum, event.cmisChildren);        
+        	}                                                                             
 		}
 		
 		/**

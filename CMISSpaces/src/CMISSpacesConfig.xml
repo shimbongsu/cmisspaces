@@ -5,8 +5,14 @@
 
 	<object id="cmisConfig" class="org.integratedsemantics.cmisspaces.model.config.CMISConfig">
 	
-		<!--  cmis service url of cmis repository -->	
+		<!--  cmis service rest atom url of cmis repository -->	
 		<property name="cmisUrl" value="http://localhost:8080/alfresco/service/api/cmis"/>
+
+		<!--  cmis service webservice url -->	
+		<property name="cmisWebServicesUrl" value="http://localhost:8080/alfresco/cmis"/>
+
+		<!-- whether to use web services or rest atom apis -->  
+		<property name="useWebServices" value="false"/>
 		
 		<!-- (for both flex+browser and flex+air) path to cross domain file to load (say from Tomcat ROOT webapp)
 		    1. "allow-access-from domain= to-ports=" needed to use flash sockets api even on local domain, 
