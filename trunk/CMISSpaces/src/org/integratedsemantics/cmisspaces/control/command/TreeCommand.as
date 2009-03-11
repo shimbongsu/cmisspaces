@@ -5,7 +5,10 @@ package org.integratedsemantics.cmisspaces.control.command
     import com.universalmind.cairngorm.events.Callbacks;
     
     import org.integratedsemantics.cmisspaces.control.delegate.atomrest.TreeDelegate;
+    import org.integratedsemantics.cmisspaces.control.delegate.webservice.TreeWebServiceDelegate;
+    import org.integratedsemantics.cmisspaces.model.config.CMISConfig;
     import org.integratedsemantics.flexspaces.control.event.TreeDataEvent;
+    import org.integratedsemantics.flexspaces.model.AppModelLocator;
 	
 	
 	/**
@@ -13,6 +16,8 @@ package org.integratedsemantics.cmisspaces.control.command
 	 */
 	public class TreeCommand extends Command
 	{
+       protected var model:AppModelLocator = AppModelLocator.getInstance();
+
         /**
          * Constructor
          */
@@ -48,9 +53,18 @@ package org.integratedsemantics.cmisspaces.control.command
 		 */
 		public function getFolders(event:TreeDataEvent):void
 		{
+			var cmisConfig:CMISConfig = model.ecmServerConfig as CMISConfig;
             var handlers:Callbacks = new Callbacks(onTreeDataSuccess, onFault);
-            var delegate:TreeDelegate = new TreeDelegate(handlers);
-            delegate.getFolders(event.path, event.cmisChildren);                  
+			if (cmisConfig.useWebServices == true)
+			{
+	            var wsDelegate:TreeWebServiceDelegate = new TreeWebServiceDelegate(handlers);
+	            wsDelegate.getFolders(event.path, event.cmisChildren);    
+        	}
+        	else
+        	{
+	            var delegate:TreeDelegate = new TreeDelegate(handlers);
+	            delegate.getFolders(event.path, event.cmisChildren);    
+        	}                                                        
 		}
 		
 		/**

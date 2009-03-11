@@ -53,7 +53,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
             if (path == "/")
             {
                 // todo elimanate root name hardcode
-                path = "/Company Home";    
+                path = "/Repository";    
             }            
             displayPath = path;
 

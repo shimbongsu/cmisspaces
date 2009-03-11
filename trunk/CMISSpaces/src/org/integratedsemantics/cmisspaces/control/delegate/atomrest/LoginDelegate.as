@@ -78,9 +78,6 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
             var service:AtomService = e.result.service;
             var workspace:AtomWorkspace = service.workspace;
             
-            var cmisRootChildren:String = workspace.collection.href.toString();
-            cmisConfig.cmisRootChildren = cmisRootChildren;
-
             var cmis:Namespace = new Namespace("cmis", CMISConstants.CMIS_200805_NS);            
             
             for (var c:int = 0; c < workspace.collections.length; c++)
@@ -100,7 +97,11 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
                 else if (collectionType== "types-descendants")
                 {
                     cmisConfig.typesCollection = collection.href.toString();                
-                }                
+                }  
+                else if (collectionType== "root-children")
+                {
+                    cmisConfig.cmisRootChildren = collection.href.toString();     
+                }                                                
             } 
             
             client.addEventListener(AtompubEvent.GET_FEED_COMPLETED, onCompletedGetTypes);

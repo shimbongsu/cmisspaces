@@ -5,6 +5,8 @@ package org.integratedsemantics.cmisspaces.control.command
     import com.universalmind.cairngorm.events.Callbacks;
     
     import org.integratedsemantics.cmisspaces.control.delegate.atomrest.LoginDelegate;
+    import org.integratedsemantics.cmisspaces.control.delegate.webservice.LoginWebServicesDelegate;
+    import org.integratedsemantics.cmisspaces.model.config.CMISConfig;
     import org.integratedsemantics.flexspaces.control.event.LoginEvent;
     import org.integratedsemantics.flexspaces.model.AppModelLocator;
 
@@ -56,8 +58,17 @@ package org.integratedsemantics.cmisspaces.control.command
             model.userInfo.loginPassword = event.password;
             
             var handlers:Callbacks = new Callbacks(onLoginSuccess, onLoginFault);
-            var delegate:LoginDelegate = new LoginDelegate(handlers);
-            delegate.login(event.userName, event.password);                  
+			var cmisConfig:CMISConfig = model.ecmServerConfig as CMISConfig;
+			if (cmisConfig.useWebServices == true)
+			{
+            	var wsDelegate:LoginWebServicesDelegate = new LoginWebServicesDelegate(handlers);
+            	wsDelegate.login(event.userName, event.password);        		
+        	}
+        	else
+        	{
+            	var delegate:LoginDelegate = new LoginDelegate(handlers);
+            	delegate.login(event.userName, event.password);
+        	}                  
         }
 
         /**
