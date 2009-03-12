@@ -104,7 +104,10 @@ package org.integratedsemantics.cmis.atom
         //sreiner public static const PROP_CONTENT_STREAM_MIMETYPE:String = "ContentStreamMimetype";
         public static const PROP_CONTENT_STREAM_MIMETYPE:String = "ContentStreamMimeType";
         public static const PROP_CONTENT_STREAM_FILENAME:String = "ContentStreamFilename";
+        // alfresco was using URI in labs 3 final
         public static const PROP_CONTENT_STREAM_URI:String = "ContentStreamURI";
+        // alfreco and spec use Uri
+        public static const PROP_CONTENT_STREAM_Uri:String = "ContentStreamUri";
         
     
         // CMIS Property Types
