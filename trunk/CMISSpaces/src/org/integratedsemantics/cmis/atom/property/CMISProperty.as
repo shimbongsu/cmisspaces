@@ -56,8 +56,12 @@ package org.integratedsemantics.cmis.atom.property
          */
         public function getValue():String
         {
-            var cmis:Namespace = new Namespace("cmis", CMISConstants.CMIS_200805_NS);            
-            var value:String = _src.cmis::value;
+        	var value:String = null;
+        	if (_src != null)
+        	{
+            	var cmis:Namespace = new Namespace("cmis", CMISConstants.CMIS_200805_NS);            
+            	value = _src.cmis::value;
+        	}
             return value;            
         }
     

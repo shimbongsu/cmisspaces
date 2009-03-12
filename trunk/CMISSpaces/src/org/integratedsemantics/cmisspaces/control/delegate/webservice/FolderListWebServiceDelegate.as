@@ -172,9 +172,14 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
                     {
                     	node.viewurl = cmisObj.getContentStreamURI().getValue();
                     }
-                    
-                    node.mimetype = cmisObj.getContentStreamMimeType().getValue();            
-                    node.size = cmisObj.getContentStreamLength().getValue();                                                                  
+                    if (cmisObj.getContentStreamMimeType() != null)
+                    {
+                    	node.mimetype = cmisObj.getContentStreamMimeType().getValue();            	                    	
+                    }
+                    if (cmisObj.getContentStreamLength() != null)
+                    {
+                    	node.size = cmisObj.getContentStreamLength().getValue();
+                    }
                     node.isLocked = cmisObj.isVersionSeriesCheckedOut().getBooleanValue();                    
                     // working copies not returned                
                     node.isWorkingCopy = false;                    

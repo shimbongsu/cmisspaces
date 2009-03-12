@@ -242,8 +242,12 @@ package org.integratedsemantics.cmis.atom
          */
         public function getContentStreamURI():CMISProperty
         {
-            return getProperties().find(CMISConstants.PROP_CONTENT_STREAM_URI);
-        }        
-        
+            var uriProp:CMISProperty =  getProperties().find(CMISConstants.PROP_CONTENT_STREAM_URI);
+            if (uriProp == null)
+            {
+            	uriProp =  getProperties().find(CMISConstants.PROP_CONTENT_STREAM_Uri);            	
+            }
+            return uriProp; 
+        }                
     }
 }
