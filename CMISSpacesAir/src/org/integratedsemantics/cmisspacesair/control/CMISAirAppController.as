@@ -2,7 +2,9 @@ package org.integratedsemantics.cmisspacesair.control
 {
     import org.integratedsemantics.cmisspaces.control.CMISAppController;
     import org.integratedsemantics.cmisspacesair.control.command.*;
+    import org.integratedsemantics.cmisspacesair.control.event.UploadFilesAirEvent;
     import org.integratedsemantics.flexspaces.control.event.UploadFilesEvent;
+    import org.integratedsemantics.flexspaces.control.event.ui.UploadFilesUIEvent;
     import org.integratedsemantics.flexspacesair.control.event.*;
 
 
@@ -41,9 +43,11 @@ package org.integratedsemantics.cmisspacesair.control
 
             addCommand(AirOfflineUploadUIEvent.AIR_OFFLINE_UPLOAD, AirOfflineUploadUICommand);
             
-            // different upload files with dialog
-            //addCommand(UploadFilesEvent.UPLOAD_FILES, UploadFilesAirCommand);
-            
+            // different upload file implemenation for air
+            this.removeCommand(UploadFilesUIEvent.UPLOAD_FILES_UI);
+            this.removeCommand(UploadFilesEvent.UPLOAD_FILES);
+            addCommand(UploadFilesUIEvent.UPLOAD_FILES_UI, UploadFilesAirUICommand);
+            addCommand(UploadFilesAirEvent.UPLOAD_FILES, UploadFilesAirCommand);                        
         }
         
     }
