@@ -11,9 +11,11 @@ package org.integratedsemantics.cmisspaces.app
 	public class CMISApp extends AppBase
 	{	    
 		public function CMISApp()
-		{
-			super();   
-						            						
+		{                                                            
+			super();
+			
+            model.appConfig.cmisMode = true;   
+
             // spring actionscript config
             applicationContext = new XMLApplicationContext("CMISSpacesConfig.xml");
             applicationContext.addEventListener(Event.COMPLETE, onApplicationContextComplete);
