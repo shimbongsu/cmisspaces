@@ -286,9 +286,7 @@ package org.integratedsemantics.cmisspaces.view.main
          * 
          */
         override protected function enableMenusAfterSelection(selectedItem:Object):void
-        {     
-            super.enableMenusAfterSelection(selectedItem);
-                         
+        {              
             var tabIndex:int = tabNav.selectedIndex;
             
             if ((selectedItem != null) && (mainMenu.configurationDone == true))
@@ -302,36 +300,307 @@ package org.integratedsemantics.cmisspaces.view.main
                 var deletePermission:Boolean = node.deletePermission;                                
                 
                 var createChildrenPermission:Boolean = false;                                       
-                if ( (cmisSpacesPresModel.currentNodeList != null) && (cmisSpacesPresModel.currentNodeList is Folder))
+                if ( (flexSpacesPresModel.currentNodeList != null) && (flexSpacesPresModel.currentNodeList is Folder))
                 {
-                    var folder:Folder = cmisSpacesPresModel.currentNodeList as Folder;
+                    var folder:Folder = flexSpacesPresModel.currentNodeList as Folder;
                     var parentNode:Node = folder.folderNode;
                     if (parentNode != null)
                     {
                         createChildrenPermission = parentNode.createChildrenPermission;
                     }                
-                }         
-                       
+                }                
+                var enablePaste:Boolean = createChildrenPermission && ((flexSpacesPresModel.cut != null) || (flexSpacesPresModel.copy != null));
+                
                 var fileContextMenu:Boolean;
 
+                // disable file operations if folder selected
                 if (node.isFolder == true)
                 {
-                    fileContextMenu = false;                    
+                    // download, edit, view, preview
+                    mainMenu.menuBarCollection[0].menuitem[4].@enabled = false;
+                    mainMenu.menuBarCollection[0].menuitem[5].@enabled = false;
+                    mainMenu.menuBarCollection[0].menuitem[6].@enabled = false;
+                    mainMenu.menuBarCollection[0].menuitem[7].@enabled = false;
+                    // checkin menus, update
+                    mainMenu.menuBarCollection[1].menuitem[5].@enabled = false;
+                    mainMenu.menuBarCollection[1].menuitem[6].@enabled = false;
+                    mainMenu.menuBarCollection[1].menuitem[7].@enabled = false;
+                    mainMenu.menuBarCollection[1].menuitem[8].@enabled = false;
+                    mainMenu.menuBarCollection[1].menuitem[9].@enabled = false;
+                    
+                    // make pdf, make flash, startworkflow    
+                    mainMenu.menuBarCollection[3].menuitem[0].@enabled = false;
+                    mainMenu.menuBarCollection[3].menuitem[1].@enabled = false;
+                    mainMenu.menuBarCollection[3].menuitem[3].@enabled = false;
+
+                    fileContextMenu = false;
                 }
                 else
                 {
-                    fileContextMenu = true;                    
+                    // download, view, preview
+                    mainMenu.menuBarCollection[0].menuitem[4].@enabled = readPermission;
+                    mainMenu.menuBarCollection[0].menuitem[6].@enabled = readPermission;
+                    //cmis mainMenu.menuBarCollection[0].menuitem[7].@enabled = readPermission;                                        
+                    mainMenu.menuBarCollection[0].menuitem[7].@enabled = false;                                        
+
+                    fileContextMenu = true;
+                    // view, play video context  menus 
+                    if (browserView != null)
+                    {  
+                        browserView.enableContextMenuItem("view", readPermission, fileContextMenu);
+                        browserView.enableContextMenuItem("playVideo", readPermission, fileContextMenu);
+                    }  
+                    if (wcmBrowserView != null)
+                    {  
+                        wcmBrowserView.enableContextMenuItem("view", readPermission, fileContextMenu);
+                        wcmBrowserView.enableContextMenuItem("playVideo", readPermission, fileContextMenu);
+                    } 
+                    if (searchPanel != null)
+                    {  
+                        searchPanel.searchResultsView.enableContextMenuItem("view", readPermission, fileContextMenu);
+                        searchPanel.searchResultsView.enableContextMenuItem("playVideo", readPermission, fileContextMenu);
+                    }
+                    if (tasksPanelView != null)
+                    {  
+                        tasksPanelView.taskAttachmentsView.enableContextMenuItem("view", readPermission, fileContextMenu);
+                        tasksPanelView.taskAttachmentsView.enableContextMenuItem("playVideo", readPermission, fileContextMenu);
+                    }                    
                 }
                 
                 // view specific         
                 switch(tabIndex)
                 {
-                    case DOC_LIB_TAB_INDEX:      
-                        break;                                             
-                    case SEARCH_TAB_INDEX:
-                        break;       
                     case CHECKED_OUT_TAB_INDEX:
-                        break;                                                                                              
+                        // for cmis
+                        // cut, copy, paste, delete
+                        mainMenu.menuBarCollection[1].menuitem[0].@enabled = false;
+                        mainMenu.menuBarCollection[1].menuitem[1].@enabled = readPermission;
+                        mainMenu.menuBarCollection[1].menuitem[2].@enabled = false;
+                        mainMenu.menuBarCollection[1].menuitem[3].@enabled = false;
+                        this.cutBtn.enabled = false;
+                        this.copyBtn.enabled = readPermission;
+                        this.pasteBtn.enabled = false;                    
+                        this.deleteBtn.enabled = false;
+                        checkedOutView.enableContextMenuItem("cut", false, fileContextMenu);  
+                        checkedOutView.enableContextMenuItem("copy", readPermission, fileContextMenu);
+                        checkedOutView.enableContextMenuItem("paste", false, fileContextMenu);  
+                        checkedOutView.enableContextMenuItem("delete", false, fileContextMenu);  
+                        
+                        // rename, properties, tags
+                        mainMenu.menuBarCollection[1].menuitem[11].@enabled = writePermission;                        
+                        mainMenu.menuBarCollection[1].menuitem[12].@enabled = readPermission;                        
+                        mainMenu.menuBarCollection[1].menuitem[13].@enabled = false;    
+                        this.tagsBtn.enabled = false;                        
+                        checkedOutView.enableContextMenuItem("rename", writePermission, fileContextMenu);  
+                        checkedOutView.enableContextMenuItem("properties", readPermission, fileContextMenu);  
+                        checkedOutView.enableContextMenuItem("tags", false, fileContextMenu);
+                                                                    
+                        // checkin
+                        var canCheckin:Boolean = writePermission && isWorkingCopy;
+                        mainMenu.menuBarCollection[1].menuitem[5].@enabled = canCheckin;
+                        checkedOutView.enableContextMenuItem("checkin", canCheckin, fileContextMenu);  
+                        
+                        // checkout, edit
+                        var canCheckout:Boolean = writePermission && !isLocked && !isWorkingCopy;
+                        mainMenu.menuBarCollection[1].menuitem[6].@enabled = canCheckout;
+                        // edit disabled for now
+                        mainMenu.menuBarCollection[0].menuitem[5].@enabled = false;
+                        checkedOutView.enableContextMenuItem("checkout", canCheckout, fileContextMenu);  
+                        
+                        // cancel checkout
+                        var canCancelCheckout:Boolean = writePermission && isWorkingCopy;
+                        mainMenu.menuBarCollection[1].menuitem[7].@enabled = canCancelCheckout;
+                        checkedOutView.enableContextMenuItem("cancelcheckout", canCancelCheckout, fileContextMenu);  
+                        
+                        // update
+                        var canUpdate:Boolean = writePermission && !isLocked;
+                        mainMenu.menuBarCollection[1].menuitem[9].@enabled = canUpdate;
+
+                        // make pdf, make flash, startworkflow
+                        mainMenu.menuBarCollection[3].menuitem[0].@enabled = false;
+                        mainMenu.menuBarCollection[3].menuitem[1].@enabled = false;
+                        mainMenu.menuBarCollection[3].menuitem[3].@enabled = false;  
+                        break;  
+
+                    case DOC_LIB_TAB_INDEX:  
+                        // cut, copy, paste, delete
+                        mainMenu.menuBarCollection[1].menuitem[0].@enabled = deletePermission;
+                        mainMenu.menuBarCollection[1].menuitem[1].@enabled = readPermission;
+                        mainMenu.menuBarCollection[1].menuitem[2].@enabled = enablePaste;
+                        mainMenu.menuBarCollection[1].menuitem[3].@enabled = deletePermission;
+                        this.cutBtn.enabled = deletePermission;
+                        this.copyBtn.enabled = readPermission;
+                        this.pasteBtn.enabled = enablePaste;                    
+                        this.deleteBtn.enabled = deletePermission;
+                        browserView.enableContextMenuItem("cut", deletePermission, fileContextMenu);  
+                        browserView.enableContextMenuItem("copy", readPermission, fileContextMenu);  
+                        browserView.enableContextMenuItem("paste", enablePaste, fileContextMenu);  
+                        browserView.enableContextMenuItem("delete", deletePermission, fileContextMenu);  
+                        
+                        // rename, properties, tags
+
+                        mainMenu.menuBarCollection[1].menuitem[11].@enabled = writePermission;                        
+                        mainMenu.menuBarCollection[1].menuitem[12].@enabled = readPermission;                        
+                        //cmis mainMenu.menuBarCollection[1].menuitem[13].@enabled = readPermission;    
+                        mainMenu.menuBarCollection[1].menuitem[13].@enabled = false;    
+                        //cmis this.tagsBtn.enabled = readPermission;                        
+                        this.tagsBtn.enabled = false;                        
+                        browserView.enableContextMenuItem("rename", writePermission, fileContextMenu);  
+                        browserView.enableContextMenuItem("properties", readPermission, fileContextMenu);  
+                        //cmis browserView.enableContextMenuItem("tags", readPermission, fileContextMenu);
+                        browserView.enableContextMenuItem("tags", false, fileContextMenu);
+                                                                    
+                        if (selectedItem.isFolder != true)
+                        {                            
+                            // checkin
+                            canCheckin = writePermission && isWorkingCopy;
+                            mainMenu.menuBarCollection[1].menuitem[5].@enabled = canCheckin;
+                            browserView.enableContextMenuItem("checkin", canCheckin, fileContextMenu);  
+                            
+                            // checkout, edit
+                            canCheckout = writePermission && !isLocked && !isWorkingCopy;
+                            mainMenu.menuBarCollection[1].menuitem[6].@enabled = canCheckout;
+                            // edit disabled for now
+                            //mainMenu.menuBarCollection[0].menuitem[5].@enabled = canCheckout;
+                            mainMenu.menuBarCollection[0].menuitem[5].@enabled = false;
+                            browserView.enableContextMenuItem("checkout", canCheckout, fileContextMenu);  
+                            
+                            // cancel checkout
+                            canCancelCheckout = writePermission && isWorkingCopy;
+                            mainMenu.menuBarCollection[1].menuitem[7].@enabled = canCancelCheckout;
+                            browserView.enableContextMenuItem("cancelcheckout", canCancelCheckout, fileContextMenu);  
+                            
+                            // make versionable
+                            var canMakeVersionable:Boolean = writePermission && !isLocked;
+                            //cmis mainMenu.menuBarCollection[1].menuitem[8].@enabled = canMakeVersionable;
+                            mainMenu.menuBarCollection[1].menuitem[8].@enabled = false;
+                            
+                            // update
+                            canUpdate = writePermission && !isLocked;
+                            mainMenu.menuBarCollection[1].menuitem[9].@enabled = canUpdate;
+
+                            // make pdf, make flash, startworkflow
+                            //cmis mainMenu.menuBarCollection[3].menuitem[0].@enabled = createChildrenPermission;
+                            //cmis mainMenu.menuBarCollection[3].menuitem[1].@enabled = createChildrenPermission;
+                            //cmis mainMenu.menuBarCollection[3].menuitem[3].@enabled = readPermission;  
+                            mainMenu.menuBarCollection[3].menuitem[0].@enabled = false;
+                            mainMenu.menuBarCollection[3].menuitem[1].@enabled = false;
+                            mainMenu.menuBarCollection[3].menuitem[3].@enabled = false;  
+                            
+                            // auto-tag, suggest tags
+                            /* cmis
+                            if ((model.calaisConfig.enableCalias == true) && (writePermission == true))
+                            {
+                                if (model.appConfig.airMode == false)
+                                {
+                                    mainMenu.menuBarCollection[3].menuitem[7].@enabled = true;                  
+                                    mainMenu.menuBarCollection[3].menuitem[8].@enabled = true;
+                                }
+                                else
+                                {
+                                    mainMenu.menuBarCollection[3].menuitem[10].@enabled = true;                 
+                                    mainMenu.menuBarCollection[3].menuitem[11].@enabled = true;                         
+                                }                   
+                            }
+                            */                                                                                  
+                        }
+                        break;        
+                                     
+                    case SEARCH_TAB_INDEX:
+                    case TASKS_TAB_INDEX:
+                        // cut, copy, paste, delete   
+                        mainMenu.menuBarCollection[1].menuitem[0].@enabled = false;
+                        mainMenu.menuBarCollection[1].menuitem[1].@enabled = readPermission;
+                        mainMenu.menuBarCollection[1].menuitem[2].@enabled = false;
+                        mainMenu.menuBarCollection[1].menuitem[3].@enabled = false;
+                        this.cutBtn.enabled = false;
+                        this.copyBtn.enabled = readPermission;
+                        this.pasteBtn.enabled = false;                    
+                        this.deleteBtn.enabled = false;
+                        if (searchPanel != null)
+                        {
+                            searchPanel.searchResultsView.enableContextMenuItem("copy", readPermission, fileContextMenu);
+                        }  
+                        if (tasksPanelView != null)
+                        {
+                            tasksPanelView.taskAttachmentsView.enableContextMenuItem("copy", readPermission, fileContextMenu);
+                        }  
+
+                        // rename, properties, tags
+                        mainMenu.menuBarCollection[1].menuitem[11].@enabled = writePermission;                        
+                        mainMenu.menuBarCollection[1].menuitem[12].@enabled = readPermission;                        
+                        //cmis mainMenu.menuBarCollection[1].menuitem[13].@enabled = readPermission;                        
+                        //cmis this.tagsBtn.enabled = readPermission;            
+                        mainMenu.menuBarCollection[1].menuitem[13].@enabled = false;                        
+                        this.tagsBtn.enabled = false;            
+                        
+                        if (searchPanel != null)
+                        {
+                            searchPanel.searchResultsView.enableContextMenuItem("rename", writePermission, fileContextMenu);
+                            searchPanel.searchResultsView.enableContextMenuItem("properties", readPermission, fileContextMenu);
+                            //cmis searchPanel.searchResultsView.enableContextMenuItem("tags", readPermission, fileContextMenu);
+                            //cmis searchPanel.searchResultsView.enableContextMenuItem( "gotoParent", flexSpacesPresModel.showDocLib, fileContextMenu);
+                            searchPanel.searchResultsView.enableContextMenuItem("tags", false, fileContextMenu);
+                            searchPanel.searchResultsView.enableContextMenuItem( "gotoParent", false, fileContextMenu);
+                        }        
+                        if (tasksPanelView != null)
+                        {
+                            tasksPanelView.taskAttachmentsView.enableContextMenuItem("rename", writePermission, fileContextMenu);
+                            tasksPanelView.taskAttachmentsView.enableContextMenuItem("properties", readPermission, fileContextMenu);
+                            tasksPanelView.taskAttachmentsView.enableContextMenuItem("tags", readPermission, fileContextMenu);
+                            tasksPanelView.taskAttachmentsView.enableContextMenuItem( "gotoParent", flexSpacesPresModel.showDocLib, fileContextMenu);
+                        }        
+                        // checkin menus
+                        mainMenu.menuBarCollection[1].menuitem[5].@enabled = false;
+                        mainMenu.menuBarCollection[1].menuitem[6].@enabled = false;
+                        mainMenu.menuBarCollection[1].menuitem[7].@enabled = false;
+                        mainMenu.menuBarCollection[1].menuitem[8].@enabled = false;
+                        // make pdf, make flash, startworkflow    
+                        mainMenu.menuBarCollection[3].menuitem[0].@enabled = false;
+                        mainMenu.menuBarCollection[3].menuitem[1].@enabled = false;
+                        mainMenu.menuBarCollection[3].menuitem[3].@enabled = false;                        
+                        break;
+                                        
+                    case WCM_TAB_INDEX:
+                        // cut, copy, paste, delete   
+                        mainMenu.menuBarCollection[1].menuitem[0].@enabled = deletePermission;
+                        mainMenu.menuBarCollection[1].menuitem[1].@enabled = readPermission;
+                        mainMenu.menuBarCollection[1].menuitem[2].@enabled = enablePaste;
+                        mainMenu.menuBarCollection[1].menuitem[3].@enabled = deletePermission;
+                        this.cutBtn.enabled = deletePermission;
+                        this.copyBtn.enabled = readPermission;
+                        this.pasteBtn.enabled = enablePaste;                    
+                        this.deleteBtn.enabled = deletePermission;
+                        wcmBrowserView.enableContextMenuItem("cut", deletePermission, fileContextMenu);  
+                        wcmBrowserView.enableContextMenuItem("copy", readPermission, fileContextMenu);  
+                        wcmBrowserView.enableContextMenuItem("paste", enablePaste, fileContextMenu);  
+                        wcmBrowserView.enableContextMenuItem("delete", deletePermission, fileContextMenu);  
+
+                        // rename, properties
+                        mainMenu.menuBarCollection[1].menuitem[11].@enabled = writePermission;                        
+                        mainMenu.menuBarCollection[1].menuitem[12].@enabled = readPermission;                        
+                        wcmBrowserView.enableContextMenuItem("rename", writePermission, fileContextMenu);  
+                        wcmBrowserView.enableContextMenuItem("properties", readPermission, fileContextMenu);  
+
+                        if (selectedItem.isFolder != true)
+                        {                                                    
+                            // checkin menus
+                            mainMenu.menuBarCollection[1].menuitem[5].@enabled = false;
+                            mainMenu.menuBarCollection[1].menuitem[6].@enabled = false;
+                            mainMenu.menuBarCollection[1].menuitem[7].@enabled = false;
+                            mainMenu.menuBarCollection[1].menuitem[8].@enabled = false;
+    
+                            // update
+                            canUpdate = writePermission && !isLocked;
+                            mainMenu.menuBarCollection[1].menuitem[9].@enabled = canUpdate;
+    
+                            // make pdf, make flash, startworkflow    
+                            mainMenu.menuBarCollection[3].menuitem[0].@enabled = false;
+                            mainMenu.menuBarCollection[3].menuitem[1].@enabled = false;
+                            mainMenu.menuBarCollection[3].menuitem[3].@enabled = false;  
+                        }
+                                              
+                        break;     
                 }                                                                                              
             }
         }
