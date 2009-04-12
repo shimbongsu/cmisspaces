@@ -13,7 +13,9 @@ package org.integratedsemantics.cmisspacesair.app
         public function CMISAirAppBase()
         {
 			super();            
-            
+                        
+            model.appConfig.cmisMode = true;   
+
             // spring actionscript config
             applicationContext = new XMLApplicationContext("CMISSpacesConfig.xml");
             applicationContext.addEventListener(Event.COMPLETE, onApplicationContextComplete);
