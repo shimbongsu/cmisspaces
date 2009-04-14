@@ -50,7 +50,9 @@ package org.integratedsemantics.cmisspacesair.app
             if ((cmisConfig.crossDomainFileUrl != null) && (cmisConfig.crossDomainFileUrl != ""))
             {
                 Security.loadPolicyFile(cmisConfig.crossDomainFileUrl);
-            }                                     	                                       	 	                                                                                     
+            }  
+
+            model.configComplete = true;                                                                                                                                                                                                                    	                                       	 	                                                                                     
         }                        	
         
     }
