@@ -7,10 +7,6 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
     import mx.rpc.events.FaultEvent;
     import mx.rpc.events.ResultEvent;
     
-    import org.alfresco.framework.service.error.ErrorService;
-    import org.alfresco.framework.service.webscript.ConfigService;
-    import org.alfresco.framework.service.webscript.SuccessEvent;
-    import org.alfresco.framework.service.webscript.WebScriptService;
     import org.coderepos.atompub.credentials.BasicCredential;
     import org.coderepos.atompub.events.AtompubEvent;
     import org.coderepos.xml.atom.AtomEntry;

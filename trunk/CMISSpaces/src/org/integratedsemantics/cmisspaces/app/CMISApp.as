@@ -4,7 +4,7 @@ package org.integratedsemantics.cmisspaces.app
     
     import org.integratedsemantics.cmisspaces.model.config.CMISConfig;
     import org.integratedsemantics.cmisspaces.presmodel.main.CMISSpacesPresModel;
-    import org.integratedsemantics.flexspaces.view.app.AppBase;
+    import org.integratedsemantics.flexspaces.app.AppBase;
     import org.springextensions.actionscript.context.support.XMLApplicationContext;
 
 
@@ -13,13 +13,6 @@ package org.integratedsemantics.cmisspaces.app
 		public function CMISApp()
 		{                                                            
 			super();
-			
-            model.appConfig.cmisMode = true;   
-
-            // spring actionscript config
-            applicationContext = new XMLApplicationContext("CMISSpacesConfig.xml");
-            applicationContext.addEventListener(Event.COMPLETE, onApplicationContextComplete);
-            applicationContext.load();            	                      				              			   
 		}
 		
 		[Bindable]
@@ -31,14 +24,22 @@ package org.integratedsemantics.cmisspaces.app
     	public function set cmisSpacesPresModel(cmisSpacesPresModel:CMISSpacesPresModel):void
         {
             this.flexSpacesPresModel = cmisSpacesPresModel;            
-        }               
+        }   
+        
+        override protected function loadConfig():void
+        {        
+            // spring actionscript config
+            applicationContext = new XMLApplicationContext("CMISSpacesConfig.xml");
+            applicationContext.addEventListener(Event.COMPLETE, onApplicationContextComplete);
+            applicationContext.load();                                                                                         
+        }
 
         override protected function onApplicationContextComplete(event:Event):void
         {
-            super.onApplicationContextComplete(event);
-            
             var cmisConfig:CMISConfig = applicationContext.getObject("cmisConfig");
             model.ecmServerConfig = cmisConfig;
+
+            model.appConfig.cmisMode = true;   
 
             cmisSpacesPresModel = new CMISSpacesPresModel();
             model.flexSpacesPresModel = cmisSpacesPresModel;     
