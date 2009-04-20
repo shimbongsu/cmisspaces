@@ -19,15 +19,14 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
     import mx.rpc.events.ResultEvent;
     import mx.utils.Base64Encoder;
     
-    import org.alfresco.framework.service.error.ErrorService;
     import org.coderepos.atompub.AtomMediaType;
     import org.coderepos.atompub.credentials.BasicCredential;
     import org.coderepos.atompub.events.AtompubEvent;
     import org.coderepos.xml.atom.AtomEntry;
     import org.integratedsemantics.cmis.atom.CMISAtomClient;
-    import org.integratedsemantics.cmis.atom.CMISAtomEntry;
     import org.integratedsemantics.cmisspaces.model.config.CMISConfig;
     import org.integratedsemantics.flexspaces.control.command.IUploadHandlers;
+    import org.integratedsemantics.flexspaces.control.error.ErrorMgr;
     import org.integratedsemantics.flexspaces.model.AppModelLocator;
     import org.integratedsemantics.flexspaces.model.folder.Node;
     import org.integratedsemantics.flexspaces.model.repo.IRepoNode;
@@ -241,7 +240,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
             }
             catch (error:Error)
             {
-                ErrorService.instance.raiseError(ErrorService.APPLICATION_ERROR, error);
+                ErrorMgr.getInstance().raiseError(ErrorMgr.APPLICATION_ERROR, error);
             }
         }
              
