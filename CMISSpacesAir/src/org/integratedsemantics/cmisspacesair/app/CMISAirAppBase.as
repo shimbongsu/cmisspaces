@@ -5,21 +5,14 @@ package org.integratedsemantics.cmisspacesair.app
     
     import org.integratedsemantics.cmisspaces.model.config.CMISConfig;
     import org.integratedsemantics.cmisspacesair.presmodel.main.CMISSpacesAirPresModel;
-    import org.integratedsemantics.flexspacesair.view.app.AirAppBase;
+    import org.integratedsemantics.flexspacesair.app.AirAppBase;
     import org.springextensions.actionscript.context.support.XMLApplicationContext;
     
     public class CMISAirAppBase extends AirAppBase
     {        
         public function CMISAirAppBase()
         {
-			super();            
-                        
-            model.appConfig.cmisMode = true;   
-
-            // spring actionscript config
-            applicationContext = new XMLApplicationContext("CMISSpacesConfig.xml");
-            applicationContext.addEventListener(Event.COMPLETE, onApplicationContextComplete);
-            applicationContext.load();            	                      				              			   
+			super();                                    
         }
         
 		[Bindable]
@@ -33,12 +26,21 @@ package org.integratedsemantics.cmisspacesair.app
             this.flexSpacesAirPresModel = cmisSpacesAirPresModel;            
         }               
 
+        override protected function loadConfig():void
+        {        
+            // spring actionscript config
+            applicationContext = new XMLApplicationContext("CMISSpacesConfig.xml");
+            applicationContext.addEventListener(Event.COMPLETE, onApplicationContextComplete);
+            applicationContext.load();                                                                                         
+        }
+
         override protected function onApplicationContextComplete(event:Event):void
         {
-            super.onApplicationContextComplete(event);
-                        
             var cmisConfig:CMISConfig = applicationContext.getObject("cmisConfig");
             model.ecmServerConfig = cmisConfig;
+
+            model.appConfig.airMode = true;         
+            model.appConfig.cmisMode = true;                          
             
             cmisSpacesAirPresModel = new CMISSpacesAirPresModel();
             model.flexSpacesPresModel = cmisSpacesAirPresModel;            
