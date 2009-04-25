@@ -83,12 +83,17 @@ package org.integratedsemantics.cmisspacesair.view.main
             this.uploadFileBtn.addEventListener(MouseEvent.CLICK, onUploadFileBtn);                    
             this.tagsBtn.addEventListener(MouseEvent.CLICK, onTagsBtn);     
 
+            // get index values of tabs
+            docLibTabIndex = tabNav.getChildIndex(docLibTab);
+            searchTabIndex = tabNav.getChildIndex(searchTab);
+            checkedOutTabIndex = tabNav.getChildIndex(checkedOutTab);        
+
             // init tab navigator
             tabNav.addEventListener(IndexChangedEvent.CHANGE, tabChange);   
             tabNav.popUpButtonPolicy = SuperTabNavigator.POPUPPOLICY_OFF;
-            tabNav.setClosePolicyForTab(DOC_LIB_TAB_INDEX, SuperTab.CLOSE_NEVER);                    
-            tabNav.setClosePolicyForTab(SEARCH_TAB_INDEX, SuperTab.CLOSE_NEVER);  
-            tabNav.setClosePolicyForTab(CHECKED_OUT_TAB_INDEX, SuperTab.CLOSE_NEVER);  
+            tabNav.setClosePolicyForTab(docLibTabIndex, SuperTab.CLOSE_NEVER);                    
+            tabNav.setClosePolicyForTab(searchTabIndex, SuperTab.CLOSE_NEVER);  
+            tabNav.setClosePolicyForTab(checkedOutTabIndex, SuperTab.CLOSE_NEVER);  
             tabNav.dragEnabled = false;
             tabNav.dropEnabled = false; 
             tabNav.addEventListener(SuperTabEvent.TAB_CLOSE, onTabClose);
@@ -113,7 +118,7 @@ package org.integratedsemantics.cmisspacesair.view.main
             checkedOutView.addEventListener(ClickNodeEvent.CLICK_NODE, onClickNode);   
 
             // select the doclib view
-            var tabIndex:int = DOC_LIB_TAB_INDEX;
+            var tabIndex:int = docLibTabIndex;
             tabNav.invalidateDisplayList();
             tabNav.selectedIndex = tabIndex;      
             
@@ -187,7 +192,7 @@ package org.integratedsemantics.cmisspacesair.view.main
             super.redraw();
 
             var tabIndex:int = tabNav.selectedIndex;
-            if (tabIndex == CHECKED_OUT_TAB_INDEX)
+            if (tabIndex == checkedOutTabIndex)
             {
                 checkedOutView.redraw();             
             }
@@ -206,7 +211,7 @@ package org.integratedsemantics.cmisspacesair.view.main
             {
                 clearSelection();   
                 
-                if (event.newIndex == DOC_LIB_TAB_INDEX)
+                if (event.newIndex == docLibTabIndex)
                 {
                     if (browserView != null)
                     {
@@ -214,7 +219,7 @@ package org.integratedsemantics.cmisspacesair.view.main
                         browserView.redraw();
                     }
                 }
-                else if (event.newIndex == SEARCH_TAB_INDEX) 
+                else if (event.newIndex == searchTabIndex) 
                 {
                     cmisSpacesAirPresModel.currentNodeList = null;
                     if (browserView != null)
@@ -222,7 +227,7 @@ package org.integratedsemantics.cmisspacesair.view.main
                         browserView.viewActive(false);
                     }
                 }
-                else if (event.newIndex == CHECKED_OUT_TAB_INDEX) 
+                else if (event.newIndex == checkedOutTabIndex) 
                 {
                     cmisSpacesAirPresModel.currentNodeList = null;
                     if (browserView != null)
@@ -307,11 +312,11 @@ package org.integratedsemantics.cmisspacesair.view.main
                 // view specific         
                 switch(tabIndex)
                 {
-                    case DOC_LIB_TAB_INDEX:
+                    case docLibTabIndex:
                         break;                                             
-                    case SEARCH_TAB_INDEX:
+                    case searchTabIndex:
                         break;   
-                    case CHECKED_OUT_TAB_INDEX:
+                    case checkedOutTabIndex:
                         break;                                     
                 }                                                                                              
             }
@@ -342,11 +347,11 @@ package org.integratedsemantics.cmisspacesair.view.main
                                
                 switch(tabIndex)
                 {
-                    case DOC_LIB_TAB_INDEX: 
+                    case docLibTabIndex: 
                         break;  
-                    case SEARCH_TAB_INDEX:
+                    case searchTabIndex:
                         break;                                            
-                    case CHECKED_OUT_TAB_INDEX:
+                    case checkedOutTabIndex:
                         break;                                     
                 }
             }  
