@@ -87,12 +87,17 @@ package org.integratedsemantics.cmisspaces.view.main
             this.uploadFileBtn.addEventListener(MouseEvent.CLICK, onUploadFileBtn);                    
             this.tagsBtn.addEventListener(MouseEvent.CLICK, onTagsBtn);     
 
+            // get index values of tabs
+            docLibTabIndex = tabNav.getChildIndex(docLibTab);
+            searchTabIndex = tabNav.getChildIndex(searchTab);
+            checkedOutTabIndex = tabNav.getChildIndex(checkedOutTab);        
+
             // init tab navigator
             tabNav.addEventListener(IndexChangedEvent.CHANGE, tabChange);   
             tabNav.popUpButtonPolicy = SuperTabNavigator.POPUPPOLICY_OFF;
-            tabNav.setClosePolicyForTab(DOC_LIB_TAB_INDEX, SuperTab.CLOSE_NEVER);                    
-            tabNav.setClosePolicyForTab(SEARCH_TAB_INDEX, SuperTab.CLOSE_NEVER);  
-            tabNav.setClosePolicyForTab(CHECKED_OUT_TAB_INDEX, SuperTab.CLOSE_NEVER);  
+            tabNav.setClosePolicyForTab(docLibTabIndex, SuperTab.CLOSE_NEVER);                    
+            tabNav.setClosePolicyForTab(searchTabIndex, SuperTab.CLOSE_NEVER);  
+            tabNav.setClosePolicyForTab(checkedOutTabIndex, SuperTab.CLOSE_NEVER);  
             tabNav.dragEnabled = false;
             tabNav.dropEnabled = false; 
             tabNav.addEventListener(SuperTabEvent.TAB_CLOSE, onTabClose);
@@ -117,7 +122,7 @@ package org.integratedsemantics.cmisspaces.view.main
             checkedOutView.addEventListener(ClickNodeEvent.CLICK_NODE, onClickNode);   
 
             // select the doclib view
-            var tabIndex:int = DOC_LIB_TAB_INDEX;
+            var tabIndex:int = docLibTabIndex;
             tabNav.invalidateDisplayList();
             tabNav.selectedIndex = tabIndex;
             
@@ -175,7 +180,7 @@ package org.integratedsemantics.cmisspaces.view.main
             super.redraw();
 
             var tabIndex:int = tabNav.selectedIndex;            
-            if (tabIndex == CHECKED_OUT_TAB_INDEX)
+            if (tabIndex == checkedOutTabIndex)
             {
                 checkedOutView.redraw();             
             }
@@ -194,7 +199,7 @@ package org.integratedsemantics.cmisspaces.view.main
             {
                 clearSelection();   
                 
-                if (event.newIndex == DOC_LIB_TAB_INDEX)
+                if (event.newIndex == docLibTabIndex)
                 {
                     if (browserView != null)
                     {
@@ -202,7 +207,7 @@ package org.integratedsemantics.cmisspaces.view.main
                         browserView.redraw();
                     }
                 }
-                else if (event.newIndex == SEARCH_TAB_INDEX) 
+                else if (event.newIndex == searchTabIndex) 
                 {
                     cmisSpacesPresModel.currentNodeList = null;
                     if (browserView != null)
@@ -210,7 +215,7 @@ package org.integratedsemantics.cmisspaces.view.main
                         browserView.viewActive(false);
                     }
                 }
-                else if (event.newIndex == CHECKED_OUT_TAB_INDEX) 
+                else if (event.newIndex == checkedOutTabIndex) 
                 {
                     cmisSpacesPresModel.currentNodeList = null;
                     if (browserView != null)
@@ -370,7 +375,7 @@ package org.integratedsemantics.cmisspaces.view.main
                 // view specific         
                 switch(tabIndex)
                 {
-                    case CHECKED_OUT_TAB_INDEX:
+                    case checkedOutTabIndex:
                         // for cmis
                         // cut, copy, paste, delete
                         mainMenu.menuBarCollection[1].menuitem[0].@enabled = false;
@@ -422,7 +427,7 @@ package org.integratedsemantics.cmisspaces.view.main
                         mainMenu.menuBarCollection[3].menuitem[3].@enabled = false;  
                         break;  
 
-                    case DOC_LIB_TAB_INDEX:  
+                    case docLibTabIndex:  
                         // cut, copy, paste, delete
                         mainMenu.menuBarCollection[1].menuitem[0].@enabled = deletePermission;
                         mainMenu.menuBarCollection[1].menuitem[1].@enabled = readPermission;
@@ -506,8 +511,8 @@ package org.integratedsemantics.cmisspaces.view.main
                         }
                         break;        
                                      
-                    case SEARCH_TAB_INDEX:
-                    case TASKS_TAB_INDEX:
+                    case searchTabIndex:
+                    case tasksTabIndex:
                         // cut, copy, paste, delete   
                         mainMenu.menuBarCollection[1].menuitem[0].@enabled = false;
                         mainMenu.menuBarCollection[1].menuitem[1].@enabled = readPermission;
@@ -561,7 +566,7 @@ package org.integratedsemantics.cmisspaces.view.main
                         mainMenu.menuBarCollection[3].menuitem[3].@enabled = false;                        
                         break;
                                         
-                    case WCM_TAB_INDEX:
+                    case wcmTabIndex:
                         // cut, copy, paste, delete   
                         mainMenu.menuBarCollection[1].menuitem[0].@enabled = deletePermission;
                         mainMenu.menuBarCollection[1].menuitem[1].@enabled = readPermission;
@@ -630,11 +635,11 @@ package org.integratedsemantics.cmisspaces.view.main
                                
                 switch(tabIndex)
                 {
-                    case DOC_LIB_TAB_INDEX: 
+                    case docLibTabIndex: 
                         break;  
-                    case SEARCH_TAB_INDEX:
+                    case searchTabIndex:
                         break;      
-                    case CHECKED_OUT_TAB_INDEX:
+                    case checkedOutTabIndex:
                         break;                                                                                                                           
                 }
             }  
