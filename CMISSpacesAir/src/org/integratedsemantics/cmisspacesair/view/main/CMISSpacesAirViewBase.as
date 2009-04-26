@@ -46,14 +46,6 @@ package org.integratedsemantics.cmisspacesair.view.main
             this.flexSpacesPresModel = cmisSpacesAirPresModel;            
         }  
 
-        override public function onLoginDone(event:LoginDoneEvent):void
-        {
-            trace("CMISSpacesAirViewBase onLoginDone");
-                        
-            // Switch from get info to (main view in view stack 
-            viewStack.selectedIndex = MAIN_VIEW_MODE_INDEX;                 
-        }        
-
         /**
          * Handle creation complete with doc library 
          * 
@@ -145,7 +137,7 @@ package org.integratedsemantics.cmisspacesair.view.main
         }
         
         // cmis
-        protected function onDoneTreeDataChange(event:Event):void
+        override protected function onDoneTreeDataChange(event:Event):void
         {
             trace("CMISSpacesAirViewBase onDoneTreeDataChange " + browserView.treeView.treePresModel.doneTreeData);
             if (browserView.treeView.treePresModel.doneTreeData == true)
@@ -171,7 +163,7 @@ package org.integratedsemantics.cmisspacesair.view.main
         }
                      
         // cmis
-        protected function onDoneFolderViewDataChange(event:Event):void
+        override protected function onDoneFolderViewDataChange(event:Event):void
         {
             trace("CMISSpacesAirViewBase onDoneFolderViewDataChange " + browserView.fileView1.folderViewPresModel.doneFolderViewData);
             if (browserView.fileView1.folderViewPresModel.doneFolderViewData == true)
