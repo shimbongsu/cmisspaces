@@ -9,14 +9,13 @@ package org.integratedsemantics.cmisspacesair.view.main
     import flash.filesystem.FileMode;
     import flash.filesystem.FileStream;
     
-    import flexlib.controls.tabBarClasses.SuperTab;
-    
-    import mx.containers.VBox;
     import mx.events.FlexEvent;
     import mx.managers.DragManager;
     import mx.managers.PopUpManager;
     import mx.rpc.Responder;
     
+    import org.integratedsemantics.cmisspaces.view.main.CMISSpacesViewBase;
+    import org.integratedsemantics.cmisspacesair.control.command.UploadAir;
     import org.integratedsemantics.flexspaces.control.event.ui.*;
     import org.integratedsemantics.flexspaces.model.folder.Folder;
     import org.integratedsemantics.flexspaces.model.folder.Node;
@@ -25,13 +24,8 @@ package org.integratedsemantics.cmisspacesair.view.main
     import org.integratedsemantics.flexspaces.presmodel.main.FlexSpacesPresModel;
     import org.integratedsemantics.flexspaces.presmodel.upload.UploadStatusPresModel;
     import org.integratedsemantics.flexspaces.view.folderview.FolderViewBase;
-    import org.integratedsemantics.flexspaces.view.main.FlexSpacesViewBase;
     import org.integratedsemantics.flexspaces.view.menu.event.MenuConfiguredEvent;
     import org.integratedsemantics.flexspaces.view.upload.UploadStatusView;
-    
-    //cmis import org.integratedsemantics.flexspacesair.control.command.UploadAir;
-    import org.integratedsemantics.cmisspacesair.control.command.UploadAir;
-    
     import org.integratedsemantics.flexspacesair.control.event.*;
     import org.integratedsemantics.flexspacesair.presmodel.create.CreateHtmlPresModel;
     import org.integratedsemantics.flexspacesair.presmodel.create.CreateTextPresModel;
@@ -39,7 +33,6 @@ package org.integratedsemantics.cmisspacesair.view.main
     import org.integratedsemantics.flexspacesair.presmodel.localfiles.LocalFilesBrowserPresModel;
     import org.integratedsemantics.flexspacesair.presmodel.main.FlexSpacesAirPresModel;
     import org.integratedsemantics.flexspacesair.util.AirOfflineUtil;
-    import org.integratedsemantics.flexspacesair.view.browser.Browser;
     import org.integratedsemantics.flexspacesair.view.create.html.CreateHtmlView;
     import org.integratedsemantics.flexspacesair.view.create.text.CreateTextView;
     import org.integratedsemantics.flexspacesair.view.create.xml.CreateXmlView;
@@ -47,10 +40,10 @@ package org.integratedsemantics.cmisspacesair.view.main
 
 
     /**
-     * Base for FlexSpacesAir overall main view 
+     * Base for FlexSpacesAir (modified for cmis) overall main view 
      * 
      */
-    public class FlexSpacesAirViewBase extends FlexSpacesViewBase
+    public class FlexSpacesAirViewBase extends CMISSpacesViewBase
     {
         // local files browser
         protected var localFilesView:LocalFilesBrowserView;
@@ -140,7 +133,8 @@ package org.integratedsemantics.cmisspacesair.view.main
             // enable paste right away if user has copied files to native external clipboard
             // before starting flexspacesair
             var enablePaste:Boolean = formatToPaste();
-            mainMenu.menuBarCollection[1].menuitem[2].@enabled = enablePaste;
+            mainMenu.enableMenuItem("edit", "paste", enablePaste);
+
             this.pasteBtn.enabled = enablePaste;                    
 
             // TODO: also need to add check for formatToPaste when switching/activating the flexpacesair window 
@@ -168,7 +162,7 @@ package org.integratedsemantics.cmisspacesair.view.main
             var tabIndex:int = tabNav.selectedIndex;
             if ((tabIndex == docLibTabIndex) || (tabIndex == wcmTabIndex))
             {
-                mainMenu.menuBarCollection[1].menuitem[2].@enabled = true;                    
+                mainMenu.enableMenuItem("edit", "paste", true);
             }                                                                                                           
         }
         
@@ -188,7 +182,7 @@ package org.integratedsemantics.cmisspacesair.view.main
             var tabIndex:int = tabNav.selectedIndex;
             if ((tabIndex == docLibTabIndex) || (tabIndex == wcmTabIndex))
             {
-                mainMenu.menuBarCollection[1].menuitem[2].@enabled = true;                    
+                mainMenu.enableMenuItem("edit", "paste", true);
             }                                                                                                           
         }        
             
@@ -688,30 +682,18 @@ package org.integratedsemantics.cmisspacesair.view.main
                 {
                     case docLibTabIndex:  
                         // paste                        
-                        mainMenu.menuBarCollection[1].menuitem[2].@enabled = enablePaste;
+                        mainMenu.enableMenuItem("edit", "paste", enablePaste);
                         browserView.enableContextMenuItem("paste", enablePaste, true);  
                         this.pasteBtn.enabled = enablePaste;                    
                         // make avail offline, offline upload
-                        //cmis mainMenu.menuBarCollection[3].menuitem[7].@enabled = readPermission;
-                        //cmis mainMenu.menuBarCollection[3].menuitem[8].@enabled = writePermission;                         
-                        mainMenu.menuBarCollection[3].menuitem[7].@enabled = false;
-                        mainMenu.menuBarCollection[3].menuitem[8].@enabled = false;                         
+                        mainMenu.enableMenuItem("tools", "availoffline", false);
+                        mainMenu.enableMenuItem("tools", "offlineupload", false);
                         break;                     
                     case searchTabIndex:
-                    case tasksTabIndex:
                         // make avail offline, offline upload
-                        mainMenu.menuBarCollection[3].menuitem[7].@enabled = false;
-                        mainMenu.menuBarCollection[3].menuitem[8].@enabled = false;                         
+                        mainMenu.enableMenuItem("tools", "availoffline", false);
+                        mainMenu.enableMenuItem("tools", "offlineupload", false);
                         break;                
-                    case wcmTabIndex:
-                        // paste
-                        mainMenu.menuBarCollection[1].menuitem[2].@enabled = enablePaste;
-                        wcmBrowserView.enableContextMenuItem("paste", enablePaste, true);  
-                        this.pasteBtn.enabled = enablePaste;                    
-                        // make avail offline, offline upload
-                        mainMenu.menuBarCollection[3].menuitem[7].@enabled = readPermission;
-                        mainMenu.menuBarCollection[3].menuitem[8].@enabled = writePermission;                         
-                        break;     
                 }                                                                                              
             }
         }
@@ -729,8 +711,8 @@ package org.integratedsemantics.cmisspacesair.view.main
             if (mainMenu.configurationDone == true)
             {
                 // make avail offline, offline upload
-                mainMenu.menuBarCollection[3].menuitem[7].@enabled = false;
-                mainMenu.menuBarCollection[3].menuitem[8].@enabled = false;
+                mainMenu.enableMenuItem("tools", "availoffline", false);
+                mainMenu.enableMenuItem("tools", "offlineupload", false);
     
                 var createChildrenPermission:Boolean = false;                                       
                 if ( (flexSpacesAirPresModel.currentNodeList != null) && (flexSpacesAirPresModel.currentNodeList is Folder))
@@ -748,42 +730,16 @@ package org.integratedsemantics.cmisspacesair.view.main
                 {
                     case docLibTabIndex:
                         // create content          
-                        mainMenu.menuBarCollection[0].menuitem[1].@enabled = createChildrenPermission;
+                        mainMenu.enableMenuItem("file", "createcontent", createChildrenPermission);
                         // paste
-                        mainMenu.menuBarCollection[1].menuitem[2].@enabled = enablePaste;
+                        mainMenu.enableMenuItem("edit", "paste", enablePaste);
                         browserView.enableContextMenuItem("paste", enablePaste, true);  
                         this.pasteBtn.enabled = enablePaste;                    
                         break;                     
                     case searchTabIndex:
-                    case tasksTabIndex:
                         // create content          
-                        mainMenu.menuBarCollection[0].menuitem[1].@enabled = false;
+                        mainMenu.enableMenuItem("file", "createcontent", false);
                         break;                
-                    case wcmTabIndex:
-                        // create content          
-                        mainMenu.menuBarCollection[0].menuitem[1].@enabled = false;
-                        // paste
-                        mainMenu.menuBarCollection[1].menuitem[2].@enabled = enablePaste;
-                        wcmBrowserView.enableContextMenuItem("paste", enablePaste, true);  
-                        this.pasteBtn.enabled = enablePaste;                    
-                        break;  
-                    case this.shareTabIndex:
-                        // create content          
-                        mainMenu.menuBarCollection[0].menuitem[1].@enabled = false;
-                        // create space, upload          
-                        mainMenu.menuBarCollection[0].menuitem[0].@enabled = false;
-                        mainMenu.menuBarCollection[0].menuitem[3].@enabled = false;
-                        this.createSpaceBtn.enabled = false;
-                        this.uploadFileBtn.enabled = false;
-                        // paste
-                        mainMenu.menuBarCollection[1].menuitem[2].@enabled = false;
-                        this.pasteBtn.enabled = false;                    
-                        // tree, dual panes, wcm tree, dual wcm panes
-                        mainMenu.menuBarCollection[2].menuitem[0].@enabled = false;
-                        mainMenu.menuBarCollection[2].menuitem[1].@enabled = false;
-                        mainMenu.menuBarCollection[2].menuitem[3].@enabled = false;
-                        mainMenu.menuBarCollection[2].menuitem[4].@enabled = false;
-                        break;   
                 }   
             }            
         }                
