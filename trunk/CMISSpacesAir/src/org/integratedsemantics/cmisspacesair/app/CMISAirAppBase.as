@@ -4,7 +4,7 @@ package org.integratedsemantics.cmisspacesair.app
     import flash.system.Security;
     
     import org.integratedsemantics.cmisspaces.model.config.CMISConfig;
-    import org.integratedsemantics.cmisspacesair.presmodel.main.CMISSpacesAirPresModel;
+    import org.integratedsemantics.cmisspaces.presmodel.main.CMISSpacesPresModel;
     import org.integratedsemantics.flexspacesair.app.AirAppBase;
     import org.springextensions.actionscript.context.support.XMLApplicationContext;
     
@@ -16,14 +16,14 @@ package org.integratedsemantics.cmisspacesair.app
         }
         
 		[Bindable]
-        public function get cmisSpacesAirPresModel():CMISSpacesAirPresModel
+        public function get cmisSpacesAirPresModel():CMISSpacesPresModel
         {
-        	return this.flexSpacesAirPresModel as CMISSpacesAirPresModel;
+        	return this.flexSpacesAirPresModel as CMISSpacesPresModel;
         }
 
-    	public function set cmisSpacesAirPresModel(cmisSpacesAirPresModel:CMISSpacesAirPresModel):void
+    	public function set cmisSpacesAirPresModel(cmisSpacesPresModel:CMISSpacesPresModel):void
         {
-            this.flexSpacesAirPresModel = cmisSpacesAirPresModel;            
+            this.flexSpacesAirPresModel = cmisSpacesPresModel;            
         }               
 
         override protected function loadConfig():void
@@ -42,7 +42,7 @@ package org.integratedsemantics.cmisspacesair.app
             model.appConfig.airMode = true;         
             model.appConfig.cmisMode = true;                          
             
-            cmisSpacesAirPresModel = new CMISSpacesAirPresModel();
+            cmisSpacesAirPresModel = new CMISSpacesPresModel();
             model.flexSpacesPresModel = cmisSpacesAirPresModel;            
 
         	cmisSpacesAirPresModel.showTasks = false;
