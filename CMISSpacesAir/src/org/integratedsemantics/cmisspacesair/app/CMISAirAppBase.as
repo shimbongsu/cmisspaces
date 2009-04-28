@@ -6,7 +6,7 @@ package org.integratedsemantics.cmisspacesair.app
     import org.integratedsemantics.cmisspaces.model.config.CMISConfig;
     import org.integratedsemantics.cmisspaces.presmodel.main.CMISSpacesPresModel;
     import org.integratedsemantics.flexspacesair.app.AirAppBase;
-    import org.springextensions.actionscript.context.support.XMLApplicationContext;
+    import org.springextensions.actionscript.context.support.FlexXMLApplicationContext;
     
     public class CMISAirAppBase extends AirAppBase
     {        
@@ -29,7 +29,7 @@ package org.integratedsemantics.cmisspacesair.app
         override protected function loadConfig():void
         {        
             // spring actionscript config
-            applicationContext = new XMLApplicationContext("CMISSpacesConfig.xml");
+            applicationContext = new FlexXMLApplicationContext("CMISSpacesConfig.xml");
             applicationContext.addEventListener(Event.COMPLETE, onApplicationContextComplete);
             applicationContext.load();                                                                                         
         }
