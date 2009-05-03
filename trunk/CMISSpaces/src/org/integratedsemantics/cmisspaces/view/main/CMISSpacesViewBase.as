@@ -66,11 +66,23 @@ package org.integratedsemantics.cmisspaces.view.main
         {      
             trace("CMISSpacesViewBase onRepoBrowserCreated");
             
-            searchView.addEventListener(SearchResultsEvent.SEARCH_RESULTS_AVAILABLE, onSearchResults);
-            searchView.addEventListener(AdvancedSearchEvent.ADVANCED_SEARCH_REQUEST, advancedSearch);   
-            
-            //logoutView.addEventListener(LogoutDoneEvent.LOGOUT_DONE, onLogoutDone);              
-
+            // init header section
+            if (cmisSpacesPresModel.showHeader == false)
+            {
+                this.header.visible = false;
+                this.header.includeInLayout = false;
+            }
+            else
+            {
+                if (cmisSpacesPresModel.showSearch == true)
+                {
+                    searchView.addEventListener(SearchResultsEvent.SEARCH_RESULTS_AVAILABLE, onSearchResults);
+                    searchView.addEventListener(AdvancedSearchEvent.ADVANCED_SEARCH_REQUEST, advancedSearch);   
+                }    
+                
+                //logoutView.addEventListener(LogoutDoneEvent.LOGOUT_DONE, onLogoutDone);              
+            }
+          
             // init main menu
             mainMenu.addEventListener(MenuConfiguredEvent.MENU_CONFIGURED, onMainMenuConfigured);
             mainMenu.addEventListener(MenuEvent.ITEM_CLICK, menuHandler); 
@@ -103,33 +115,72 @@ package org.integratedsemantics.cmisspaces.view.main
             tabNav.addEventListener(SuperTabEvent.TAB_CLOSE, onTabClose);
 			           
             // init doclib view
-            browserView.viewActive(true);
-            browserView.setContextMenuHandler(onContextMenu);
-            browserView.setOnDropHandler(onFolderViewOnDrop);
-            browserView.setDoubleClickDocHandler(onDoubleClickDoc);
-            browserView.setClickNodeHandler(onClickNode);                                    
-            browserView.addEventListener(RepoBrowserChangePathEvent.REPO_BROWSER_CHANGE_PATH, onBrowserChangePath);
-            //clientside paging only browserView.initPaging();                
+            if (cmisSpacesPresModel.showDocLib == true)
+            {
+                browserView.viewActive(true);
+                browserView.setContextMenuHandler(onContextMenu);
+                browserView.setOnDropHandler(onFolderViewOnDrop);
+                browserView.setDoubleClickDocHandler(onDoubleClickDoc);
+                browserView.setClickNodeHandler(onClickNode);                                    
+                browserView.addEventListener(RepoBrowserChangePathEvent.REPO_BROWSER_CHANGE_PATH, onBrowserChangePath);
+                //clientside paging only browserView.initPaging();                
+            }
             
             // init search view
-            searchResultsView.addEventListener(FolderViewContextMenuEvent.FOLDERLIST_CONTEXTMENU, onContextMenu);
-            searchResultsView.addEventListener(DoubleClickDocEvent.DOUBLE_CLICK_DOC, onDoubleClickDoc);
-            searchResultsView.addEventListener(ClickNodeEvent.CLICK_NODE, onClickNode);   
-
+            if (cmisSpacesPresModel.showSearch == true)
+            {
+                searchResultsView.addEventListener(FolderViewContextMenuEvent.FOLDERLIST_CONTEXTMENU, onContextMenu);
+                searchResultsView.addEventListener(DoubleClickDocEvent.DOUBLE_CLICK_DOC, onDoubleClickDoc);
+                searchResultsView.addEventListener(ClickNodeEvent.CLICK_NODE, onClickNode);   
+            }
+            
             // init checked out view
-            checkedOutView.addEventListener(FolderViewContextMenuEvent.FOLDERLIST_CONTEXTMENU, onContextMenu);
-            checkedOutView.addEventListener(DoubleClickDocEvent.DOUBLE_CLICK_DOC, onDoubleClickDoc);
-            checkedOutView.addEventListener(ClickNodeEvent.CLICK_NODE, onClickNode);   
-
-            // select the doclib view
-            var tabIndex:int = docLibTabIndex;
+            if (cmisSpacesPresModel.showCheckedOut == true)
+            {
+                checkedOutView.addEventListener(FolderViewContextMenuEvent.FOLDERLIST_CONTEXTMENU, onContextMenu);
+                checkedOutView.addEventListener(DoubleClickDocEvent.DOUBLE_CLICK_DOC, onDoubleClickDoc);
+                checkedOutView.addEventListener(ClickNodeEvent.CLICK_NODE, onClickNode);   
+            }
+            
+            // hide tabs for views not to show
+            if (cmisSpacesPresModel.showDocLib == false)
+            {
+                tabNav.getTabAt(docLibTabIndex).visible = false;
+                tabNav.getTabAt(docLibTabIndex).includeInLayout = false;
+            }   
+            if (cmisSpacesPresModel.showSearch == false)
+            {
+                tabNav.getTabAt(searchTabIndex).visible = false;
+                tabNav.getTabAt(searchTabIndex).includeInLayout = false;
+                searchView.visible = false;
+                this.header.invalidateDisplayList();
+            }   
+            if (cmisSpacesPresModel.showCheckedOut == false)
+            {
+                tabNav.getTabAt(checkedOutTabIndex).visible = false;
+                tabNav.getTabAt(checkedOutTabIndex).includeInLayout = false;
+            }   
+            
+            // select the first enabled main view tab
+            var tabIndex:int = 0;
+            if (cmisSpacesPresModel.showDocLib == true)
+            {
+                tabIndex = docLibTabIndex;
+            }
+            else if (cmisSpacesPresModel.showSearch == true)
+            {
+                tabIndex = searchTabIndex;
+            }
+            else if (cmisSpacesPresModel.showCheckedOut == true)
+            {
+                tabIndex = checkedOutTabIndex;
+            }
             tabNav.invalidateDisplayList();
             tabNav.selectedIndex = tabIndex;
             
             // cmis
             ChangeWatcher.watch(browserView.treeView.treePresModel, "doneTreeData", onDoneTreeDataChange);
-            ChangeWatcher.watch(browserView.fileView1.folderViewPresModel, "doneFolderViewData", onDoneFolderViewDataChange);                
-            
+            ChangeWatcher.watch(browserView.fileView1.folderViewPresModel, "doneFolderViewData", onDoneFolderViewDataChange);                            
         }
               
         // cmis

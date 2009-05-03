@@ -5,6 +5,7 @@ package org.integratedsemantics.cmisspaces.app
     import org.integratedsemantics.cmisspaces.model.config.CMISConfig;
     import org.integratedsemantics.cmisspaces.presmodel.main.CMISSpacesPresModel;
     import org.integratedsemantics.flexspaces.app.AppBase;
+    import org.integratedsemantics.flexspaces.model.global.AppConfig;
     import org.springextensions.actionscript.context.support.FlexXMLApplicationContext;
 
 
@@ -39,10 +40,15 @@ package org.integratedsemantics.cmisspaces.app
             var cmisConfig:CMISConfig = applicationContext.getObject("cmisConfig");
             model.ecmServerConfig = cmisConfig;
 
+            var appConfig:AppConfig = applicationContext.getObject("appConfig"); 
+            model.appConfig = appConfig; 
             model.appConfig.cmisMode = true;   
 
-            cmisSpacesPresModel = new CMISSpacesPresModel();
+            cmisSpacesPresModel = applicationContext.getObject("presModel");
             model.flexSpacesPresModel = cmisSpacesPresModel;     
+            
+            // setup search panel pres model after all the config done
+            cmisSpacesPresModel.searchPanelPresModel.setupSubViews();        
             
         	cmisSpacesPresModel.showTasks = false;
         	cmisSpacesPresModel.showWCM = false;                                     

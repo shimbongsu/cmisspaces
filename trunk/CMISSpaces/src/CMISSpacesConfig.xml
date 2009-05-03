@@ -25,4 +25,31 @@
 					
 	</object>
 
+    <object id="appConfig" class="org.integratedsemantics.flexspaces.model.global.AppConfig">
+        <!-- default locale -->  
+        <property name="locale" value="en_US"/>        
+    </object>
+
+    <object id="presModel" class="org.integratedsemantics.cmisspaces.presmodel.main.CMISSpacesPresModel">
+        <!-- configure what tab views to display -->
+        <property name="showDocLib" value="true"/>        
+        <property name="showSearch" value="true"/>                
+        <property name="showCheckedOut" value="true"/>                
+
+        <!-- default page sizes for views --> 
+        <property name="docLibPageSize" value="10"/>    
+        <property name="searchPageSize" value="10"/>    
+        <property name="versionsPageSize" value="10"/>    
+        <property name="checkedOutPageSize" value="10"/>    
+        <property name="pageSizeList">
+            <array-collection>
+                <value>10</value>
+                <value>20</value>
+                <value>30</value>
+                <value>40</value>
+                <value>50</value>
+            </array-collection>
+        </property>                               
+    </object>
+
 </objects>

@@ -5,6 +5,7 @@ package org.integratedsemantics.cmisspaces.presmodel.main
 	[Bindable]
 	public class CMISSpacesPresModel extends FlexSpacesPresModel
 	{		
+        public var showCheckedOut:Boolean = true;
 	    
 		public function CMISSpacesPresModel()
 		{
