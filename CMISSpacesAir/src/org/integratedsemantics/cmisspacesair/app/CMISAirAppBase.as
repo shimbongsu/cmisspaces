@@ -30,17 +30,17 @@ package org.integratedsemantics.cmisspacesair.app
         override protected function loadConfig():void
         {        
             // spring actionscript config
-            applicationContext = new FlexXMLApplicationContext("CMISSpacesConfig.xml");
-            applicationContext.addEventListener(Event.COMPLETE, onApplicationContextComplete);
-            applicationContext.load();                                                                                         
+            model.applicationContext = new FlexXMLApplicationContext("CMISSpacesConfig.xml");
+            model.applicationContext.addEventListener(Event.COMPLETE, onApplicationContextComplete);
+            model.applicationContext.load();                                                                                         
         }
 
         override protected function onApplicationContextComplete(event:Event):void
         {
-            var cmisConfig:CMISConfig = applicationContext.getObject("cmisConfig");
+            var cmisConfig:CMISConfig = model.applicationContext.getObject("cmisConfig");
             model.ecmServerConfig = cmisConfig;
 
-            var appConfig:AppConfig = applicationContext.getObject("appConfig"); 
+            var appConfig:AppConfig = model.applicationContext.getObject("appConfig"); 
             model.appConfig = appConfig;                
 
             model.appConfig.airMode = true;         
