@@ -65,8 +65,8 @@ package org.integratedsemantics.cmisspaces.control
         
 			//addCommand(LogoutEvent.LOGOUT, LogoutCommand);            
 			
-			//addCommand(GetPropertiesEvent.GET_PROPERTIES, PropertiesCommand);
-			//addCommand(SetPropertiesEvent.SET_PROPERTIES, PropertiesCommand);            
+			addCommand(GetPropertiesEvent.GET_PROPERTIES, PropertiesCommand);
+			addCommand(SetPropertiesEvent.SET_PROPERTIES, PropertiesCommand);            
 			
 			//addCommand(SemanticTagsEvent.GET_SEMANTIC_TAGS, SemanticTagsCommand);            
 			//addCommand(SemanticTagsEvent.ADD_SEMANTIC_TAG, SemanticTagsCommand);            
@@ -108,7 +108,7 @@ package org.integratedsemantics.cmisspaces.control
 
 			//addCommand(DropNodesUIEvent.DROP_NODES, DragDropUICommand);
 			
-			//addCommand(PropertiesUIEvent.PROPERTIES_UI, PropertiesUICommand);
+			addCommand(PropertiesUIEvent.PROPERTIES_UI, PropertiesUICommand);
 			
 			//addCommand(RenameNodeUIEvent.RENAME_NODE_UI, RenameUICommand);
 			

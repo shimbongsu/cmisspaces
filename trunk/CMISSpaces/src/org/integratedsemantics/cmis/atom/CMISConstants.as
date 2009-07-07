@@ -14,7 +14,8 @@ package org.integratedsemantics.cmis.atom
     public class CMISConstants
     {
         // Namespace
-        public static const CMIS_200805_NS:String = "http://www.cmis.org/2008/05";
+        //public static const CMIS_200805_NS:String = "http://www.cmis.org/2008/05";
+        public static const CMIS_200805_NS:String = "http://docs.oasis-open.org/ns/cmis/core/200901";
         
         // Mimetypes
         public static const MIMETYPE_QUERY:String = "application/cmisquery+xml";

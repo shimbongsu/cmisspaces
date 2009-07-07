@@ -110,7 +110,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
                 {
                     currentNode.cmisChildren = link.href.toString();
                 }
-                else if (link.rel == "cmis-source")
+                else if (link.rel == "source")
                 {
                     currentNode.nodeRef = link.href.toString();                                  
                     currentNode.id = currentNode.nodeRef;             
@@ -149,7 +149,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
                 for (var j:int = 0; j < entry.links.length; j++)
                 {
                     link = entry.links[j] as AtomLink;    
-                    if (link.rel == "cmis-children")
+                    if (link.rel == "children")
                     {
                         childNode.cmisChildren = link.href.toString();
                     }
@@ -157,7 +157,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
                     {
                         childNode.cmisSelf = link.href.toString();
                     }
-                    else if (link.rel == "cmis-type")
+                    else if (link.rel == "type")
                     {
                         childNode.cmisType = link.href.toString();
                         baseType = cmisConfig.typeUrlToBaseType[childNode.cmisType];

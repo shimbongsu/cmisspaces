@@ -98,15 +98,13 @@ package org.integratedsemantics.cmis.atom
             clear(); 
       
 			var queryXML:XML = 
-				<cmis:query xmlns:cmis="http://www.cmis.org/2008/05" 
-						xmlns:p="http://www.w3.org/1999/xhtml" 
-						xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-						xsi:schemaLocation="http://www.cmis.org/2008/05 CMIS.xsd ">
+				<cmis:query xmlns:cmis="http://docs.oasis-open.org/ns/cmis/core/200901"
+				    xmlns:p="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 		  			<cmis:statement>{cmisQuery}</cmis:statement>
 		  			<cmis:searchAllVersions>true</cmis:searchAllVersions>
-		  			<cmis:pageSize>0</cmis:pageSize>
-		  			<cmis:skipCount>0</cmis:skipCount>
-		  			<cmis:returnAllowableActions>false</cmis:returnAllowableActions>
+		  			<cmis:pageSize>100</cmis:pageSize>
+		  			<cmis:skipCount>0</cmis:skipCount>		  	
+		  			<cmis:returnAllowableActions>false</cmis:returnAllowableActions>		
 				</cmis:query>;
 			
             var queryData:ByteArray = new ByteArray();       
@@ -143,7 +141,7 @@ package org.integratedsemantics.cmis.atom
             trace("CMISAtomClient createFolder()");   
 
             var folderXML:XML =
-                <entry xmlns="http://www.w3.org/2005/Atom" xmlns:cmis="http://www.cmis.org/2008/05">
+                <entry xmlns="http://www.w3.org/2005/Atom" xmlns:cmis="http://docs.oasis-open.org/ns/cmis/core/200901">
                     <title>{folderName}</title>
                     <summary>{folderName} summary</summary>
                     <cmis:object>

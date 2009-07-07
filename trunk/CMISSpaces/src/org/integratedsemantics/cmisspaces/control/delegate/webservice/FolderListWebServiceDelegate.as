@@ -70,7 +70,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
             
 			navigationService.addgetChildrenEventListener(onCompleteGetChildren);
 			navigationService.addNavigationServiceFaultEventListener(onFaultNavigationService);            
-            navigationService.getChildren(cmisConfig.repositoryId, parentFolderId, null, null, false, false, 0, 0);
+            navigationService.getChildren(cmisConfig.repositoryId, parentFolderId, null, null, false, null, 0, 0, null);
             
             //if (pageSize != 0)
             //{

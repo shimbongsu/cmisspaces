@@ -94,11 +94,11 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
                 {
                     cmisConfig.queryCollection = collection.href.toString();                
                 }
-                else if (collectionType== "types-descendants")
+                else if (collectionType== "typesdescendants")
                 {
                     cmisConfig.typesCollection = collection.href.toString();                
                 }  
-                else if (collectionType== "root-children")
+                else if (collectionType== "rootchildren")
                 {
                     cmisConfig.cmisRootChildren = collection.href.toString();     
                 }                                                

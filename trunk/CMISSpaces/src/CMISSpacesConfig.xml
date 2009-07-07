@@ -11,7 +11,7 @@
 		<!--  cmis service webservice url -->	
 		<property name="cmisWebServicesUrl" value="http://localhost:8080/alfresco/cmis"/>
 
-		<!-- whether to use web services or rest atom apis -->  
+		<!-- whether to use soap web services or rest atom apis -->  
 		<property name="useWebServices" value="false"/>
 		
 		<!-- (for both flex+browser and flex+air) path to cross domain file to load (say from Tomcat ROOT webapp)

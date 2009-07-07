@@ -69,7 +69,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
 			if ( (event.result != null) && (event.result is Array) && (event.result.length > 0) )
 			{
 				var repository:CmisRepositoryEntryType = event.result[0] as CmisRepositoryEntryType;
-				repositoryId = repository.repositoryID;
+                repositoryId = repository.repositoryId
 				cmisConfig.repositoryId = repositoryId;				
 			}
 			
