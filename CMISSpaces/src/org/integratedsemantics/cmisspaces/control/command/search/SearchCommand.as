@@ -5,7 +5,10 @@ package org.integratedsemantics.cmisspaces.control.command.search
     import com.universalmind.cairngorm.events.Callbacks;
     
     import org.integratedsemantics.cmisspaces.control.delegate.atomrest.SearchDelegate;
+    import org.integratedsemantics.cmisspaces.control.delegate.webservice.SearchWebServiceDelegate;
+    import org.integratedsemantics.cmisspaces.model.config.CMISConfig;
     import org.integratedsemantics.flexspaces.control.event.SearchEvent;
+    import org.integratedsemantics.flexspaces.model.AppModelLocator;
 
 	
 	/**
@@ -51,9 +54,21 @@ package org.integratedsemantics.cmisspaces.control.command.search
 		 */
 		public function search(event:SearchEvent):void
 		{
+            var model:AppModelLocator = AppModelLocator.getInstance();
+            var cmisConfig:CMISConfig = model.ecmServerConfig as CMISConfig;
             var handlers:Callbacks = new Callbacks(onSearchSuccess, onFault);
-            var delegate:SearchDelegate = new SearchDelegate(handlers);
-            delegate.search(event.searchText, event.pageSize, event.pageNum);                  
+            
+            if (cmisConfig.useWebServices == true)
+            {
+                var wsDelegate:SearchWebServiceDelegate = new SearchWebServiceDelegate(handlers);
+                wsDelegate.search(event.searchText, event.pageSize, event.pageNum);    
+            }
+            else
+            {
+                var delegate:SearchDelegate = new SearchDelegate(handlers);
+                delegate.search(event.searchText, event.pageSize, event.pageNum);    
+            }                  
+                          
 		}
 		
 		/**

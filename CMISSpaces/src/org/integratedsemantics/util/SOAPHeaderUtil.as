@@ -11,6 +11,10 @@ package org.integratedsemantics.util
 		    var userToken:String = "UsernameToken-"+Math.round(Math.random()*999999).toString();
 			var timestampToken:String = "Timestamp-"+Math.round(Math.random()*9999999).toString();
 			var wsseToken:Array = WSSEUsernameToken.getUsernameTokenAsArray(username, password, nonce, timestamp);
+			
+//        <wsse:Password xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" 
+//            Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest">{wsseToken[1]}</wsse:Password>
+            			
 			var headerXML : XML =  			
 <wsse:Security xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" 
 	xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" soap:mustUnderstand="1">
@@ -24,7 +28,7 @@ package org.integratedsemantics.util
 		xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id={userToken}>
 		<wsse:Username xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">{wsseToken[0]}</wsse:Username>
 		<wsse:Password xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" 
-			Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest">{wsseToken[1]}</wsse:Password>
+			Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">{password}</wsse:Password>
 		<wsse:Nonce xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">{wsseToken[2]}</wsse:Nonce>
 		<wsu:Created xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">{wsseToken[3]}</wsu:Created>	
 	</wsse:UsernameToken>

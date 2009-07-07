@@ -1005,13 +1005,13 @@ package org.coderepos.atompub {
       initializeHttpClient(onCompleteToUpdateEntry);
       var req:AtompubRequest = new AtompubRequest("PUT");
       req.addHeader("Content-Type", AtomMediaType.ENTRY.toString());
-      var cr:AtompubCacheResource = _cache.get(uri);
-      if (cr) {
-        if (cr.etag)
-          req.addHeader("If-Match", cr.etag);
-        if (cr.lastModified)
-          req.addHeader("If-Not-Modified-Since", cr.lastModified);
-      }
+      //var cr:AtompubCacheResource = _cache.get(uri);
+      //if (cr) {
+      //  if (cr.etag)
+      //    req.addHeader("If-Match", cr.etag);
+      //  if (cr.lastModified)
+      //    req.addHeader("If-Not-Modified-Since", cr.lastModified);
+      //}
       var content:ByteArray = new ByteArray();
       content.writeUTFBytes(entry.toXMLString());
       req.body = content;
