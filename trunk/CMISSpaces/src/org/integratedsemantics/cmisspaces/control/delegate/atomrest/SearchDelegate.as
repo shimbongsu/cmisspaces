@@ -9,6 +9,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
     
     import org.coderepos.atompub.credentials.BasicCredential;
     import org.coderepos.atompub.events.AtompubEvent;
+    import org.coderepos.xml.atom.AtomContent;
     import org.coderepos.xml.atom.AtomLink;
     import org.integratedsemantics.cmis.atom.CMISAtomClient;
     import org.integratedsemantics.cmis.atom.CMISAtomEntry;
@@ -51,7 +52,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
          */
         public function search(searchText:String, pageSize:int=0, pageNum:int=0):void
         {
-            queryStr = "select * from document where contains ('" + searchText + "')";
+            queryStr = "SELECT * FROM cmis:document WHERE contains ('" + searchText + "')";
 
             client = new CMISAtomClient();
             var model:AppModelLocator = AppModelLocator.getInstance();
@@ -138,14 +139,9 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
                     {
                         node.cmisAllVersions = link.href.toString();
                     }    
-                    else if (link.rel == "cmis-type")
-                    {
-                        //node.cmisType = link.href.toString();
-                        //baseType = cmisConfig.typeUrlToBaseType[node.cmisType];
-                    }                                                                                                                                                
                 }
 
-                if (baseType == "folder")
+                if (baseType == "cmis:folder")
                 {
                     node.isFolder = true;
                     node.icon16 = model.appConfig.srcPath + "images/icons/space-icon-default-16.png";
@@ -163,10 +159,14 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
                     node.icon64 = model.appConfig.srcPath + "images/filetypes64/_default.png";                                    
                     node.thumbnailUrl = node.icon64;
                     node.type = "Document";
-                    //content stream uri element with no value returned on search
-                    //node.viewurl = cmisObj.getContentStreamURI().getValue();
-                    
-                    node.mimetype = cmisObj.getContentStreamMimeType().getValue();            
+                    if (entry.content != null)
+                    {
+                        var content:AtomContent = entry.content;
+                        if (content.src != null)
+                        {
+                            node.viewurl = content.src.toString();
+                        }
+                    }                    node.mimetype = cmisObj.getContentStreamMimeType().getValue();            
                     node.size = cmisObj.getContentStreamLength().getValue();                                                                  
                     node.isLocked = cmisObj.isVersionSeriesCheckedOut().getBooleanValue();                    
                     // working copies not returned                

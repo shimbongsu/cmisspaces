@@ -876,7 +876,7 @@ package org.coderepos.atompub {
         }
         else
         {
-            req.header.remove("Connection");
+            //req.header.remove("Connection");
             
             requestURLLoader(uri, req);                    
         }                            
@@ -1145,7 +1145,7 @@ package org.coderepos.atompub {
         else
         {
             // only send basic auth header
-            req.header.remove("Connection"); 
+            //req.header.remove("Connection"); 
                       
             // todo: add check for non air, and put up msg not supported
                                       

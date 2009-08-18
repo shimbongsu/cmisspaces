@@ -20,7 +20,7 @@ package org.integratedsemantics.cmis.atom
          */
         public function getNames():ArrayCollection
         {
-            var cmis:Namespace = new Namespace("cmis", CMISConstants.CMIS_200805_NS);            
+            var cmis:Namespace = new Namespace("cmis", CMISConstants.CMIS_CORE);            
             var xmlAll:XML = new XML(_src);
             var children:XMLList = xmlAll.children();
             var props:XMLListCollection = new XMLListCollection(children);           
@@ -43,7 +43,7 @@ package org.integratedsemantics.cmis.atom
          */
         public function find(name:String):CMISProperty
         {            
-            var cmis:Namespace = new Namespace("cmis", CMISConstants.CMIS_200805_NS);            
+            var cmis:Namespace = new Namespace("cmis", CMISConstants.CMIS_CORE);            
             var xmlAll:XML = new XML(_src);
             
             var children:XMLList = xmlAll.children();
@@ -52,7 +52,7 @@ package org.integratedsemantics.cmis.atom
             for each (var prop:XML in props)
             {
                 prop.setNamespace(cmis);
-                var nameAttrValue:String = prop.@cmis::name;
+                var nameAttrValue:String = prop.@pdid;
                 if (nameAttrValue == name)
                 {
                     var xml:XML = new XML(prop);

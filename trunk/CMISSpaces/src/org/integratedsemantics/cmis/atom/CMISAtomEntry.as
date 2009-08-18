@@ -39,7 +39,7 @@ package org.integratedsemantics.cmis.atom
                 
         public function addCMISObject():void
         {
-            var cmis:Namespace = new Namespace("cmis", CMISConstants.CMIS_200805_NS); 
+            var cmis:Namespace = new Namespace("cmis", CMISConstants.CMIS_CORE); 
             var atomNS:Namespace = new Namespace("atom", "http://www.w3.org/2005/Atom");                                   
             _src.setNamespace(atomNS);
             _src.addNamespace(cmis);

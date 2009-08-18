@@ -5,12 +5,13 @@
 
 	<object id="cmisConfig" class="org.integratedsemantics.cmisspaces.model.config.CMISConfig">
 	
-		<!--  cmis service rest atom url of cmis repository -->	
+		<!--  cmis service atompub rest url of cmis repository -->
 		<property name="cmisUrl" value="http://localhost:8080/alfresco/service/api/cmis"/>
+        <!-- property name="cmisUrl" value="http://localhost:8080/nuxeo/site/cmis/repository"/-->
 
-		<!--  cmis service webservice url -->	
+		<!--  cmis service soap / webservice url -->	
 		<property name="cmisWebServicesUrl" value="http://localhost:8080/alfresco/cmis"/>
-
+        
 		<!-- whether to use soap web services or rest atom apis -->  
 		<property name="useWebServices" value="false"/>
 		
@@ -27,7 +28,15 @@
 
     <object id="appConfig" class="org.integratedsemantics.flexspaces.model.global.AppConfig">
         <!-- default locale -->  
-        <property name="locale" value="en_US"/>        
+        <property name="locale" value="en_US"/>    
+
+        <!-- whether store to locally short term store ticket / docLibPath / tabIndex -->
+        <!-- allows restoring state after browser refresh, portlet resize, and re-running app -->
+        <property name="useSessionData" value="false"/>                 
+        <!-- when short term data storage is used (useSessionData true), how long (in minutes) -->
+        <!-- can data still be used to restore state when app restarts -->
+        <property name="sessionDataValidTime" value="30"/>  
+                                
     </object>
 
     <object id="presModel" class="org.integratedsemantics.cmisspaces.presmodel.main.CMISSpacesPresModel">

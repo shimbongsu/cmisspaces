@@ -17,7 +17,7 @@ package org.integratedsemantics.cmis.atom
          */
         public function getProperties():CMISProperties
         {
-            var cmis:Namespace = new Namespace("cmis", CMISConstants.CMIS_200805_NS);            
+            var cmis:Namespace = new Namespace("cmis", CMISConstants.CMIS_CORE);            
             var ns:Namespace = new Namespace(CMISConstants.PROPERTIES.uri);
             var xml:XML = new XML(getElementText(ns, CMISConstants.PROPERTIES.localName));
             var cmisProperties:CMISProperties = new CMISProperties(xml);
@@ -242,11 +242,8 @@ package org.integratedsemantics.cmis.atom
          */
         public function getContentStreamURI():CMISProperty
         {
-            var uriProp:CMISProperty =  getProperties().find(CMISConstants.PROP_CONTENT_STREAM_URI);
-            if (uriProp == null)
-            {
-            	uriProp =  getProperties().find(CMISConstants.PROP_CONTENT_STREAM_Uri);            	
-            }
+            var uriProp:CMISProperty =  getProperties().find(CMISConstants.PROP_CONTENT_STREAM_ID);
+            // TODO deal with uri vs id
             return uriProp; 
         }                
     }

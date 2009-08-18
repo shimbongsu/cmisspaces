@@ -309,6 +309,23 @@ package org.coderepos.xml.atom {
     public function addRepliesLink(_href:URI):void {
       addLinkByRelType("replies", _href);
     }
+    
+    // sreiner added missing content get
+    
+    public function get content():AtomContent
+    {
+        return getContent();
+    }
+
+    public function getContent():AtomContent
+    {
+        var element:XML = getElement(defaultNamespace, "content");
+        if (element == null)
+        {
+            return null;
+        }
+        return new AtomContent(element);
+    }    
 
   }
 

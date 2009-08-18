@@ -27,14 +27,6 @@ package org.integratedsemantics.cmis.atom
             return str;
         }
     
-        public function getSpecificInfo():AtomElement
-        {
-            var ns:Namespace = new Namespace(CMISConstants.REPOSITORY_SPECIFIC_INFO.uri);
-            var xml:XML = new XML(getElementText(ns, CMISConstants.REPOSITORY_SPECIFIC_INFO.localName));
-            var element:AtomElement = new AtomElement(xml);
-            return element;            
-        }
-    
         public function getVendorName():String
         {
             var str:String = _src.CMISConstants.VENDOR_NAME.localName;
@@ -53,9 +45,9 @@ package org.integratedsemantics.cmis.atom
             return str;
         }
         
-        public function getVersionsSupported():String
+        public function getVersionSupported():String
         {
-            var str:String = _src.CMISConstants.VERSIONS_SUPPORTED.localName;
+            var str:String = _src.CMISConstants.VERSION_SUPPORTED.localName;
             return str;
         }
         
