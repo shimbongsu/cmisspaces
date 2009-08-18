@@ -27,12 +27,13 @@
                 <mx:HBox width="100%" height="40">
                     <!-- cmisspaces logo -->
                     <mx:HBox width="100%" height="100%" horizontalAlign="left" verticalAlign="middle">
-                        <mx:Label text="CMIS" styleName="logoText" id="cmisLoginLabel"/>            
-                        <mx:Label text="Spaces" styleName="logoText" id="spacesLoginLabel"/>            
+                        <mx:Spacer width="5"/>
+                        <mx:Label text="CMIS Spaces" styleName="logoText" id="cmisSpacesLoginLabel"/>            
                     </mx:HBox>
                     <!-- integrated semantics logo -->
                     <mx:HBox width="100%" height="100%" horizontalAlign="right" verticalAlign="middle">
                         <mx:Label text="Integrated Semantics" styleName="logoText" id="integratedsemanticsLoginLabel"/>            
+                        <mx:Spacer width="5"/>
                     </mx:HBox>
                 </mx:HBox>
                 <!-- login panel -->
@@ -51,8 +52,8 @@
                 <mx:HBox id="header" width="100%" height="40">
                     <!-- cmisspaces logo -->
                     <mx:HBox width="100%" height="100%" horizontalAlign="left" verticalAlign="middle">
-                        <mx:Label text="CMIS" styleName="logoText" id="cmisLabel"/>            
-                        <mx:Label text="Spaces" styleName="logoText" id="spacesLabel"/>            
+                        <mx:Spacer width="5"/>
+                        <mx:Label text="CMIS Spaces" styleName="logoText" id="cmisSpacesLabel"/>            
                     </mx:HBox>
                     <!-- one box search -->   
                     <search:SearchView id="searchView" searchPresModel="{flexSpacesPresModel.searchPresModel}" height="100%" horizontalAlign="right" minWidth="330"/>      
@@ -61,6 +62,7 @@
                     <!-- integrated semantics logo -->
                     <mx:HBox width="100%" height="100%" horizontalAlign="right" verticalAlign="middle">
                         <mx:Label text="Integrated Semantics" styleName="logoText" id="integratedsemanticsLabel"/>            
+                        <mx:Spacer width="5"/>
                     </mx:HBox>
                 </mx:HBox>
 
