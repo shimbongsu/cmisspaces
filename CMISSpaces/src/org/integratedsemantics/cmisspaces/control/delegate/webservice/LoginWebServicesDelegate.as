@@ -105,7 +105,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
 			
             var typesXMLListCollection:XMLListCollection = new XMLListCollection(xmlList);
 
-            var cmis:Namespace = new Namespace("ns1", CMISConstants.CMIS_200805_NS); 
+            var cmis:Namespace = new Namespace("ns1", CMISConstants.CMIS_CORE); 
             
             for each (var typeXML:XML in typesXMLListCollection)
 			{

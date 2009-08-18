@@ -79,7 +79,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
             client.addEventListener(AtompubEvent.UPDATE_ENTRY_COMPLETED, onCompletedUpdateEntry);
             client.addEventListener(AtompubEvent.UPDATE_ENTRY_FAILED, onFailedUpdateEntry);
       
-            var cmis:Namespace = new Namespace("cmis", CMISConstants.CMIS_200805_NS); 
+            var cmis:Namespace = new Namespace("cmis", CMISConstants.CMIS_CORE); 
             var nameXML:XML =  
                <cmis:object xmlns:cmis="http://docs.oasis-open.org/ns/cmis/core/200901">
                   <cmis:properties>               

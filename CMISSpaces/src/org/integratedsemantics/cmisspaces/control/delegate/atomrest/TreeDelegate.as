@@ -14,6 +14,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
     import org.integratedsemantics.cmis.atom.CMISAtomClient;
     import org.integratedsemantics.cmis.atom.CMISAtomEntry;
     import org.integratedsemantics.cmis.atom.CMISAtomFeed;
+    import org.integratedsemantics.cmis.atom.CMISConstants;
     import org.integratedsemantics.cmis.atom.CMISObject;
     import org.integratedsemantics.cmisspaces.model.config.CMISConfig;
     import org.integratedsemantics.flexspaces.model.AppModelLocator;
@@ -110,12 +111,11 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
                 {
                     currentNode.cmisChildren = link.href.toString();
                 }
-                else if (link.rel == "source")
+                else if (link.rel == "via")
                 {
                     currentNode.nodeRef = link.href.toString();                                  
                     currentNode.id = currentNode.nodeRef;             
                     currentNode.cmisSelf = currentNode.nodeRef;       
-                    break;
                 }
             }
 
@@ -139,8 +139,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
                 
                 var cmisObj:CMISObject = entry.getCMISObject(); 
                 
-                //var baseType:String = cmisObj.getBaseType().getValue();
-				var baseType:String = "";
+                var baseType:String = cmisObj.getBaseType().getValue();
 				
                 name = cmisObj.getName().getValue();
                 var id:String = cmisObj.getObjectId().getValue();
@@ -149,22 +148,18 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
                 for (var j:int = 0; j < entry.links.length; j++)
                 {
                     link = entry.links[j] as AtomLink;    
-                    if (link.rel == "children")
+                    if ((link.rel == "down") && (link.type != CMISConstants.MIMETYPE_CMIS_TREE))
                     {
+                        // get the down / children not  down / descendants
                         childNode.cmisChildren = link.href.toString();
                     }
                     else if (link.rel == "self")
                     {
                         childNode.cmisSelf = link.href.toString();
                     }
-                    else if (link.rel == "type")
-                    {
-                        childNode.cmisType = link.href.toString();
-                        baseType = cmisConfig.typeUrlToBaseType[childNode.cmisType];
-                    }                                                                        
                 }
                 
-                if (baseType == "folder")
+                if (baseType == "cmis:folder")
                 {
 	                childNode.name = name;                    
 	

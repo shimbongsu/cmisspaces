@@ -10,10 +10,12 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
     
     import org.coderepos.atompub.credentials.BasicCredential;
     import org.coderepos.atompub.events.AtompubEvent;
+    import org.coderepos.xml.atom.AtomContent;
     import org.coderepos.xml.atom.AtomLink;
     import org.integratedsemantics.cmis.atom.CMISAtomClient;
     import org.integratedsemantics.cmis.atom.CMISAtomEntry;
     import org.integratedsemantics.cmis.atom.CMISAtomFeed;
+    import org.integratedsemantics.cmis.atom.CMISConstants;
     import org.integratedsemantics.cmis.atom.CMISObject;
     import org.integratedsemantics.cmisspaces.model.config.CMISConfig;
     import org.integratedsemantics.flexspaces.model.AppModelLocator;
@@ -119,7 +121,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
                 {
                     folder.folderNode.cmisChildren = link.href.toString();
                 }
-                else if (link.rel == "source")
+                else if (link.rel == "via")
                 {
                     folder.folderNode.nodeRef = link.href.toString();                                  
                     folder.folderNode.id = folder.folderNode.nodeRef;             
@@ -146,34 +148,29 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
                 
                 node.name = cmisObj.getName().getValue();
                 
-                //var baseType:String = cmisObj.getBaseType().getValue();
-                var baseType:String = "";
+                var baseType:String = cmisObj.getBaseType().getValue();
                 
                 // description, title, author not return in cmis object properties, use from atom fields?                
                 
                 for (var j:int = 0; j < entry.links.length; j++)
                 {
                     link = entry.links[j] as AtomLink;    
-                    if (link.rel == "children")
+                    if ((link.rel == "down") && (link.type != CMISConstants.MIMETYPE_CMIS_TREE))
                     {
+                        // get the down / children not  down / descendants
                         node.cmisChildren = link.href.toString();
                     }
                     else if (link.rel == "self")
                     {
                         node.cmisSelf = link.href.toString();
                     }
-                    else if (link.rel == "allversions")
+                    else if (link.rel == "all-versions")
                     {
                         node.cmisAllVersions = link.href.toString();
                     }    
-                    else if (link.rel == "type")
-                    {
-                        node.cmisType = link.href.toString();
-                        baseType = cmisConfig.typeUrlToBaseType[node.cmisType];
-                    }                                                                                                            
                 }
                 
-                if (baseType == "folder")
+                if (baseType == "cmis:folder")
                 {
                     node.isFolder = true;
                     node.icon16 = model.appConfig.srcPath + "images/icons/space-icon-default-16.png";
@@ -191,9 +188,13 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
                     node.icon64 = model.appConfig.srcPath + "images/filetypes64/_default.png";                                    
                     node.thumbnailUrl = node.icon64;
                     node.type = "Document";
-                    if (cmisObj.getContentStreamURI() != null)
+                    if (entry.content != null)
                     {
-                    	node.viewurl = cmisObj.getContentStreamURI().getValue();
+                        var content:AtomContent = entry.content;
+                        if (content.src != null)
+                        {
+                            node.viewurl = content.src.toString();
+                        }
                     }
                     if (cmisObj.getContentStreamMimeType() != null)
                     {
@@ -204,7 +205,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
                     	node.size = cmisObj.getContentStreamLength().getValue();
                     }
                     
-                    //todo node.isLocked = cmisObj.isVersionSeriesCheckedOut().getBooleanValue();                    
+                    node.isLocked = cmisObj.isVersionSeriesCheckedOut().getBooleanValue();                    
                     // working copies not returned                
                     node.isWorkingCopy = false;                    
                 }

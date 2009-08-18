@@ -78,13 +78,13 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
             var service:AtomService = e.result.service;
             var workspace:AtomWorkspace = service.workspace;
             
-            var cmis:Namespace = new Namespace("cmis", CMISConstants.CMIS_200805_NS);            
+            var cmisra:Namespace = new Namespace("cmisra", CMISConstants.CMIS_RESTATOM);            
             
             for (var c:int = 0; c < workspace.collections.length; c++)
             {
                 var collection:AtomCollection = workspace.collections[c];
      
-                var collectionType:String = collection._src.@cmis::collectionType;
+                var collectionType:String = collection._src.@cmisra::collectionType;
 
                 if (collectionType == "checkedout")
                 {
@@ -94,11 +94,11 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
                 {
                     cmisConfig.queryCollection = collection.href.toString();                
                 }
-                else if (collectionType== "typesdescendants")
+                else if (collectionType== "types")
                 {
                     cmisConfig.typesCollection = collection.href.toString();                
                 }  
-                else if (collectionType== "rootchildren")
+                else if (collectionType== "root")
                 {
                     cmisConfig.cmisRootChildren = collection.href.toString();     
                 }                                                
@@ -108,8 +108,12 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
             client.addEventListener(AtompubEvent.GET_FEED_FAILED, onFailedGetTypes);
 
             var typesUri:URI = new URI(cmisConfig.typesCollection);                         
-
-            client.getFeed(typesUri);            
+            
+            // don't need to get types with .062 now since will get base type on objects in folder lists
+            //client.getFeed(typesUri); 
+            
+            var resultEvent:ResultEvent = new ResultEvent("");
+            notifyCaller("ticket", resultEvent);                       
         }
 
         protected function onFailedToGetService(e:AtompubEvent):void
@@ -132,7 +136,8 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
 			var types:ArrayCollection = new ArrayCollection();
 			var typeUrlToBaseType:Array = new Array();
 			
-            var cmis:Namespace = new Namespace("cmis", CMISConstants.CMIS_200805_NS); 
+            var cmis:Namespace = new Namespace("cmis", CMISConstants.CMIS_CORE); 
+            var cmisra:Namespace = new Namespace("cmisra", CMISConstants.CMIS_RESTATOM); 
 			
             for (var i:int = 0; i < entries.length; i++)
 			{
@@ -150,18 +155,8 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
                     }
                 }
 
-				var folderBaseType:String = entry._src.cmis::folderType.cmis::baseType;
-				var documentBaseType:String = entry._src.cmis::documentType.cmis::baseType;		
+				type.baseType = entry._src.cmisra::type.cmis::baseTypeId;		
 
-				if (folderBaseType.length > 0)
-				{
-					type.baseType = folderBaseType;
-				}
-				else if (documentBaseType.length > 0)
-				{
-					type.baseType = documentBaseType;
-				}
-				
 				types.addItem(type);
 				typeUrlToBaseType[type.url] = type.baseType;			
 			}

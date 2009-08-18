@@ -54,8 +54,10 @@ package org.integratedsemantics.cmisspaces.view.main
         {
             trace("CMISSpacesViewBase onLoginDone");
             
-            // Switch from get info to (main view in view stack 
-            viewStack.selectedIndex = MAIN_VIEW_MODE_INDEX;                 
+            // Switch to main view in view stack 
+            viewStack.selectedIndex = MAIN_VIEW_MODE_INDEX;       
+            
+            updateSessionData();                       
         }        
 
         /**
@@ -178,6 +180,22 @@ package org.integratedsemantics.cmisspaces.view.main
             tabNav.invalidateDisplayList();
             tabNav.selectedIndex = tabIndex;
             
+            // use sessionData shared object to restore selected tab and path
+            /*
+            if ( (tabIndexHistory != -1) && (tabIndexHistory < tabNav.childDescriptors.length))
+            {
+                tabNav.selectedIndex = tabIndexHistory;
+                trace("set tab: " + tabIndexHistory);
+            }  
+            if (pathHistory != null) 
+            {
+                if (browserView != null)
+                {        
+                    browserView.setPath(pathHistory);
+                }                    
+            }                    
+            */
+            
             // cmis
             ChangeWatcher.watch(browserView.treeView.treePresModel, "doneTreeData", onDoneTreeDataChange);
             ChangeWatcher.watch(browserView.fileView1.folderViewPresModel, "doneFolderViewData", onDoneFolderViewDataChange);                            
@@ -276,7 +294,10 @@ package org.integratedsemantics.cmisspaces.view.main
                     }
                 }
                 
-                enableMenusAfterTabChange(event.newIndex);                
+                enableMenusAfterTabChange(event.newIndex);      
+
+                // remember tab index
+                updateSessionData();                                       
             }    
         }
 

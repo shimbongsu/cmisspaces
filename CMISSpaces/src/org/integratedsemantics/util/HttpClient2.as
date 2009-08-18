@@ -81,7 +81,7 @@ package org.integratedsemantics.util
             request.method = httpRequest.method;                        
 
 			request.data = httpRequest.body;
-			
+					
 			var loader:URLLoader = new URLLoader();
 
 			// use binary as what HttpClient excepts (response as ByteArray)

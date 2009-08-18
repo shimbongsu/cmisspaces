@@ -59,7 +59,7 @@ package org.integratedsemantics.cmis.atom.property
         	var value:String = null;
         	if (_src != null)
         	{
-            	var cmis:Namespace = new Namespace("cmis", CMISConstants.CMIS_200805_NS);            
+            	var cmis:Namespace = new Namespace("cmis", CMISConstants.CMIS_CORE);            
             	value = _src.cmis::value;
         	}
             return value;            

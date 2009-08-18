@@ -95,16 +95,14 @@ package org.integratedsemantics.cmis.atom
                 throw new Error("CMISAtomClient is fetching."); 
             };    
            
-            clear(); 
-      
+            clear();       
+
 			var queryXML:XML = 
-				<cmis:query xmlns:cmis="http://docs.oasis-open.org/ns/cmis/core/200901"
-				    xmlns:p="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+				<cmis:query xmlns:cmis="http://docs.oasis-open.org/ns/cmis/core/200901">
 		  			<cmis:statement>{cmisQuery}</cmis:statement>
-		  			<cmis:searchAllVersions>true</cmis:searchAllVersions>
-		  			<cmis:pageSize>100</cmis:pageSize>
-		  			<cmis:skipCount>0</cmis:skipCount>		  	
-		  			<cmis:returnAllowableActions>false</cmis:returnAllowableActions>		
+                    <cmis:skipCount>0</cmis:skipCount>
+                    <cmis:maxItems>100</cmis:maxItems>		
+                    <cmis:searchAllVersions>true</cmis:searchAllVersions>                      	
 				</cmis:query>;
 			
             var queryData:ByteArray = new ByteArray();       
@@ -141,14 +139,17 @@ package org.integratedsemantics.cmis.atom
             trace("CMISAtomClient createFolder()");   
 
             var folderXML:XML =
-                <entry xmlns="http://www.w3.org/2005/Atom" xmlns:cmis="http://docs.oasis-open.org/ns/cmis/core/200901">
+                <entry xmlns="http://www.w3.org/2005/Atom" xmlns:cmisra="http://docs.oasis-open.org/ns/cmis/restatom/200901" 
+                    xmlns:cmis="http://docs.oasis-open.org/ns/cmis/core/200901">
                     <title>{folderName}</title>
                     <summary>{folderName} summary</summary>
-                    <cmis:object>
+                    <cmisra:object>
                 	    <cmis:properties>
-                	        <cmis:propertyString cmis:name="ObjectTypeId"><cmis:value>folder</cmis:value></cmis:propertyString>
-                	    </cmis:properties>
-                    </cmis:object>
+                            <cmis:propertyId pdid="cmis:ObjectTypeId">
+                                <cmis:value>cmis:folder</cmis:value>
+                            </cmis:propertyId>
+                        </cmis:properties>
+                    </cmisra:object>
                 </entry>;
             
             if (_isFetching) 
@@ -207,10 +208,10 @@ package org.integratedsemantics.cmis.atom
             var content:ByteArray = new ByteArray();
             content.writeUTFBytes(entry.toXMLString());
             req.body = content;
-            
-            req.addHeader("CMIS-checkinComment", comment);
-            req.addHeader("CMIS-major", major.toString());
-            req.addHeader("CMIS-checkin", "true");
+
+            uri.setQueryValue("checkin", "true");            
+            uri.setQueryValue("major", major.toString());
+            uri.setQueryValue("checkinComment", comment);
             
             if (useSockets == true)
             {
