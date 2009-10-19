@@ -52,7 +52,7 @@ package org.integratedsemantics.cmis.atom
             for each (var prop:XML in props)
             {
                 prop.setNamespace(cmis);
-                var nameAttrValue:String = prop.@pdid;
+                var nameAttrValue:String = prop.@propertyDefinitionId;
                 if (nameAttrValue == name)
                 {
                     var xml:XML = new XML(prop);

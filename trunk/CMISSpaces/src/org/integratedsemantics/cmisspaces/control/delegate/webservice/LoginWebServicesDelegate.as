@@ -11,12 +11,12 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
     import mx.rpc.events.ResultEvent;
     
     import org.integratedsemantics.cmis.atom.CMISConstants;
-    import org.integratedsemantics.cmis.webservice.repositoryservice.CmisRepositoryEntryType;
-    import org.integratedsemantics.cmis.webservice.repositoryservice.CmisRepositoryInfoType;
-    import org.integratedsemantics.cmis.webservice.repositoryservice.GetRepositoriesResultEvent;
-    import org.integratedsemantics.cmis.webservice.repositoryservice.GetRepositoryInfoResultEvent;
-    import org.integratedsemantics.cmis.webservice.repositoryservice.GetTypesResultEvent;
-    import org.integratedsemantics.cmis.webservice.repositoryservice.RepositoryService;
+    import org.integratedsemantics.cmis.soap.repository.CmisRepositoryEntryType;
+    import org.integratedsemantics.cmis.soap.repository.CmisRepositoryInfoType;
+    import org.integratedsemantics.cmis.soap.repository.GetRepositoriesResultEvent;
+    import org.integratedsemantics.cmis.soap.repository.GetRepositoryInfoResultEvent;
+    import org.integratedsemantics.cmis.soap.repository.GetTypeDescendantsResultEvent;
+    import org.integratedsemantics.cmis.soap.repository.RepositoryService;
     import org.integratedsemantics.cmisspaces.model.config.CMISConfig;
     import org.integratedsemantics.flexspaces.model.AppModelLocator;
     import org.integratedsemantics.flexspaces.model.cmis.CMISType;
@@ -58,7 +58,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
             
 			repositoryService.addgetRepositoriesEventListener(onCompleteGetRepositories);
 			repositoryService.addRepositoryServiceFaultEventListener(onFaultRepositoryService);
-			repositoryService.getRepositories();				
+			repositoryService.getRepositories(null);				
         }
 
 		protected function onCompleteGetRepositories(event:GetRepositoriesResultEvent):void
@@ -75,7 +75,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
 			
 			repositoryService.addgetRepositoryInfoEventListener(onCompleteGetRepositoryInfo);
 
-			repositoryService.getRepositoryInfo(repositoryId);
+			repositoryService.getRepositoryInfo(repositoryId, null);
 		}
 
 		protected function onFaultRepositoryService(event:Event):void
@@ -91,11 +91,14 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
         	var repoInfo:CmisRepositoryInfoType = event.result;
         	cmisConfig.rootFolderId = repoInfo.rootFolderId;
 
-			repositoryService.addgetTypesEventListener(onCompleteGetTypes);
-        	repositoryService.getTypes(cmisConfig.repositoryId, null, false, 0, 0);        	
+            // don't need to get types in cmis versions from .62 since basetype comes with object properties
+			//repositoryService.addgetTypeDescendantsEventListener(onCompleteGetTypes);
+        	//repositoryService.getTypeDescendants(cmisConfig.repositoryId, null, -1, false, null);  
+            var resultEvent:ResultEvent = new ResultEvent("");
+            notifyCaller("ticket", resultEvent);                          
         }
 
-        protected function onCompleteGetTypes(event:GetTypesResultEvent):void
+        protected function onCompleteGetTypes(event:GetTypeDescendantsResultEvent):void
         {
         	var result:XMLList = event.result as XMLList;
         	var xmlList:XMLList = result.children();

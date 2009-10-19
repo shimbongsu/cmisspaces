@@ -98,7 +98,7 @@ package org.integratedsemantics.cmis.atom
             clear();       
 
 			var queryXML:XML = 
-				<cmis:query xmlns:cmis="http://docs.oasis-open.org/ns/cmis/core/200901">
+				<cmis:query xmlns:cmis="http://docs.oasis-open.org/ns/cmis/core/200908/">
 		  			<cmis:statement>{cmisQuery}</cmis:statement>
                     <cmis:skipCount>0</cmis:skipCount>
                     <cmis:maxItems>100</cmis:maxItems>		
@@ -139,13 +139,13 @@ package org.integratedsemantics.cmis.atom
             trace("CMISAtomClient createFolder()");   
 
             var folderXML:XML =
-                <entry xmlns="http://www.w3.org/2005/Atom" xmlns:cmisra="http://docs.oasis-open.org/ns/cmis/restatom/200901" 
-                    xmlns:cmis="http://docs.oasis-open.org/ns/cmis/core/200901">
+                <entry xmlns="http://www.w3.org/2005/Atom" xmlns:cmisra="http://docs.oasis-open.org/ns/cmis/restatom/200908/" 
+                    xmlns:cmis="http://docs.oasis-open.org/ns/cmis/core/200908/">
                     <title>{folderName}</title>
                     <summary>{folderName} summary</summary>
                     <cmisra:object>
                 	    <cmis:properties>
-                            <cmis:propertyId pdid="cmis:ObjectTypeId">
+                            <cmis:propertyId propertyDefinitionId="cmis:objectTypeId">
                                 <cmis:value>cmis:folder</cmis:value>
                             </cmis:propertyId>
                         </cmis:properties>

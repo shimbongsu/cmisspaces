@@ -12,7 +12,7 @@
 		
 		<!--  cmis service soap / webservice url --> 
 		<!--property name="cmisWebServicesUrl" value="http://localhost:80/alfresco/cmis"/-->
-		<property name="cmisWebServicesUrl" value="http://cmis.alfresco.com:80/alfresco/cmis"/>
+		<property name="cmisWebServicesUrl" value="http://cmis.alfresco.com:80/cmis"/>
         
 		<!-- whether to use soap web services or rest atom apis -->  
 		<property name="useWebServices" value="false"/>

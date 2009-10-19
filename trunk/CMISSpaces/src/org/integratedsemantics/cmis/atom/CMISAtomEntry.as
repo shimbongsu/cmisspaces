@@ -26,7 +26,7 @@ package org.integratedsemantics.cmis.atom
         }  
 
         private var objXML:XML = 
-        <cmis:object xmlns:cmis="http://docs.oasis-open.org/ns/cmis/core/200901">
+        <cmis:object xmlns:cmis="http://docs.oasis-open.org/ns/cmis/core/200908/">
             <cmis:properties>
                 <cmis:propertyId cmis:name="ObjectTypeId">
                     <cmis:value>document</cmis:value>

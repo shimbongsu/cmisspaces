@@ -1,0 +1,2184 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns1="http://docs.oasis-open.org/ns/cmis/messaging/200908/" xmlns:ns2="http://cxf.apache.org/bindings/xformat" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://docs.oasis-open.org/ns/cmis/ws/200908/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ObjectService" targetNamespace="http://docs.oasis-open.org/ns/cmis/ws/200908/">
+  <wsdl:types>
+    <xs:schema xmlns:ns1="http://docs.oasis-open.org/ns/cmis/core/200908/" xmlns:tns="http://docs.oasis-open.org/ns/cmis/messaging/200908/" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://docs.oasis-open.org/ns/cmis/messaging/200908/">
+<xs:import namespace="http://docs.oasis-open.org/ns/cmis/core/200908/"/>
+<xs:element name="addObjectToFolder">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="objectId" type="xs:string"/>
+<xs:element name="folderId" type="xs:string"/>
+<xs:element minOccurs="0" name="allVersions" type="xs:boolean"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="addObjectToFolderResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="applyACL">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="objectId" type="xs:string"/>
+<xs:element minOccurs="0" name="addACEs" type="ns1:cmisAccessControlListType"/>
+<xs:element minOccurs="0" name="removeACEs" type="ns1:cmisAccessControlListType"/>
+<xs:element name="ACLPropagation" type="ns1:enumACLPropagation"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="applyACLResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="ACL" type="tns:cmisACLType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="applyPolicy">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="policyId" type="xs:string"/>
+<xs:element name="objectId" type="xs:string"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="applyPolicyResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="cancelCheckOut">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="documentId" type="xs:string"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="cancelCheckOutResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="checkIn">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="documentId" type="xs:string"/>
+<xs:element name="major" type="xs:boolean"/>
+<xs:element name="properties" type="ns1:cmisPropertiesType"/>
+<xs:element name="contentStream" type="tns:cmisContentStreamType"/>
+<xs:element name="checkinComment" type="xs:string"/>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="policies" nillable="true" type="xs:string"/>
+<xs:element name="addACEs" type="ns1:cmisAccessControlListType"/>
+<xs:element name="removeACEs" type="ns1:cmisAccessControlListType"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="checkInResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="documentId" type="xs:string"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="checkOut">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="documentId" type="xs:string"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="checkOutResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="documentId" type="xs:string"/>
+<xs:element name="contentCopied" type="xs:boolean"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="cmisFault" nillable="true" type="tns:cmisFaultType"/>
+<xs:element name="createDocument">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="properties" type="ns1:cmisPropertiesType"/>
+<xs:element name="folderId" type="xs:string"/>
+<xs:element name="contentStream" type="tns:cmisContentStreamType"/>
+<xs:element name="versioningState" type="ns1:enumVersioningState"/>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="policies" nillable="true" type="xs:string"/>
+<xs:element name="addACEs" type="ns1:cmisAccessControlListType"/>
+<xs:element name="removeACEs" type="ns1:cmisAccessControlListType"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="createDocumentFromSource">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="sourceId" type="xs:string"/>
+<xs:element name="properties" type="ns1:cmisPropertiesType"/>
+<xs:element name="folderId" type="xs:string"/>
+<xs:element name="versioningState" type="ns1:enumVersioningState"/>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="policies" nillable="true" type="xs:string"/>
+<xs:element name="addACEs" type="ns1:cmisAccessControlListType"/>
+<xs:element name="removeACEs" type="ns1:cmisAccessControlListType"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="createDocumentFromSourceResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="objectId" type="xs:string"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="createDocumentResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="objectId" type="xs:string"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="createFolder">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="properties" type="ns1:cmisPropertiesType"/>
+<xs:element name="folderId" type="xs:string"/>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="policies" nillable="true" type="xs:string"/>
+<xs:element name="addACEs" type="ns1:cmisAccessControlListType"/>
+<xs:element name="removeACEs" type="ns1:cmisAccessControlListType"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="createFolderResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="objectId" type="xs:string"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="createPolicy">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="properties" type="ns1:cmisPropertiesType"/>
+<xs:element name="folderId" type="xs:string"/>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="policies" nillable="true" type="xs:string"/>
+<xs:element name="addACEs" type="ns1:cmisAccessControlListType"/>
+<xs:element name="removeACEs" type="ns1:cmisAccessControlListType"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="createPolicyResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="objectId" type="xs:string"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="createRelationship">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="properties" type="ns1:cmisPropertiesType"/>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="policies" nillable="true" type="xs:string"/>
+<xs:element name="addACEs" type="ns1:cmisAccessControlListType"/>
+<xs:element name="removeACEs" type="ns1:cmisAccessControlListType"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="createRelationshipResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="objectId" type="xs:string"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="deleteContentStream">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="documentId" type="xs:string"/>
+<xs:element minOccurs="0" name="changeToken" type="xs:string"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="deleteContentStreamResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="documentId" type="xs:string"/>
+<xs:element minOccurs="0" name="changeToken" type="xs:string"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="deleteObject">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="objectId" type="xs:string"/>
+<xs:element name="allVersions" type="xs:boolean"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="deleteObjectResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="deleteTree">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="folderId" type="xs:string"/>
+<xs:element name="allVersions" type="xs:boolean"/>
+<xs:element name="unfileObject" type="ns1:enumUnfileObject"/>
+<xs:element name="continueOnFailure" type="xs:boolean"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="deleteTreeResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="failedToDelete">
+<xs:complexType>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="objectIds" nillable="true" type="xs:string"/>
+<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getACL">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="objectId" type="xs:string"/>
+<xs:element name="onlyBasicPermissions" type="xs:boolean"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getACLResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="ACL" type="tns:cmisACLType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getAllVersions">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="objectId" type="xs:string"/>
+<xs:element name="filter" type="xs:string"/>
+<xs:element name="includeAllowableActions" type="xs:boolean"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getAllVersionsResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="objects" nillable="true" type="ns1:cmisObjectType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getAllowableActions">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="objectId" type="xs:string"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getAllowableActionsResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="allowableActions" type="ns1:cmisAllowableActionsType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getAppliedPolicies">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="objectId" type="xs:string"/>
+<xs:element name="filter" type="xs:string"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getAppliedPoliciesResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="objects" nillable="true" type="ns1:cmisObjectType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getCheckedOutDocs">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="folderId" type="xs:string"/>
+<xs:element name="filter" type="xs:string"/>
+<xs:element name="orderBy" type="xs:string"/>
+<xs:element name="includeAllowableActions" type="xs:boolean"/>
+<xs:element name="includeRelationships" type="ns1:enumIncludeRelationships"/>
+<xs:element name="renditionFilter" type="xs:string"/>
+<xs:element name="maxItems" type="xs:integer"/>
+<xs:element name="skipCount" type="xs:integer"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getCheckedOutDocsResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="objects" type="tns:cmisObjectListType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getChildren">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="folderId" type="xs:string"/>
+<xs:element name="filter" type="xs:string"/>
+<xs:element name="orderBy" type="xs:string"/>
+<xs:element name="includeAllowableActions" type="xs:boolean"/>
+<xs:element name="includeRelationships" type="ns1:enumIncludeRelationships"/>
+<xs:element name="renditionFilter" type="xs:string"/>
+<xs:element name="includePathSegments" type="xs:boolean"/>
+<xs:element name="maxItems" type="xs:integer"/>
+<xs:element name="skipCount" type="xs:integer"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getChildrenResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="objects" type="tns:cmisObjectInFolderListType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getContentChanges">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="changeLogToken" type="xs:string"/>
+<xs:element name="includeProperties" type="xs:boolean"/>
+<xs:element name="filter" type="xs:string"/>
+<xs:element name="includePolicyIds" type="xs:boolean"/>
+<xs:element name="includeACL" type="xs:boolean"/>
+<xs:element name="maxItems" type="xs:integer"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getContentChangesResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="objects" type="tns:cmisObjectListType"/>
+<xs:element name="changeLogToken" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getContentStream">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="objectId" type="xs:string"/>
+<xs:element name="streamId" type="xs:string"/>
+<xs:element name="offset" type="xs:integer"/>
+<xs:element name="length" type="xs:integer"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getContentStreamResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="contentStream" type="tns:cmisContentStreamType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getDescendants">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="folderId" type="xs:string"/>
+<xs:element name="depth" type="xs:integer"/>
+<xs:element name="filter" type="xs:string"/>
+<xs:element name="includeAllowableActions" type="xs:boolean"/>
+<xs:element name="includeRelationships" type="ns1:enumIncludeRelationships"/>
+<xs:element name="renditionFilter" type="xs:string"/>
+<xs:element name="includePathSegments" type="xs:boolean"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getDescendantsResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="objects" nillable="true" type="tns:cmisObjectInFolderContainerType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getFolderParent">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="folderId" type="xs:string"/>
+<xs:element minOccurs="0" name="filter" type="xs:string"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getFolderParentResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="object" type="ns1:cmisObjectType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getFolderTree">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="folderId" type="xs:string"/>
+<xs:element name="depth" type="xs:integer"/>
+<xs:element name="filter" type="xs:string"/>
+<xs:element name="includeAllowableActions" type="xs:boolean"/>
+<xs:element name="includeRelationships" type="ns1:enumIncludeRelationships"/>
+<xs:element name="renditionFilter" type="xs:string"/>
+<xs:element name="includePathSegments" type="xs:boolean"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getFolderTreeResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="objects" nillable="true" type="tns:cmisObjectInFolderContainerType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getObject">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="objectId" type="xs:string"/>
+<xs:element name="filter" type="xs:string"/>
+<xs:element name="includeAllowableActions" type="xs:boolean"/>
+<xs:element name="includeRelationships" type="ns1:enumIncludeRelationships"/>
+<xs:element name="renditionFilter" type="xs:string"/>
+<xs:element name="includePolicyIds" type="xs:boolean"/>
+<xs:element name="includeACL" type="xs:boolean"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getObjectByPath">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="path" type="xs:string"/>
+<xs:element name="filter" type="xs:string"/>
+<xs:element name="includeAllowableActions" type="xs:boolean"/>
+<xs:element name="includeRelationships" type="ns1:enumIncludeRelationships"/>
+<xs:element name="renditionFilter" type="xs:string"/>
+<xs:element name="includePolicyIds" type="xs:boolean"/>
+<xs:element name="includeACL" type="xs:boolean"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getObjectByPathResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="object" type="ns1:cmisObjectType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getObjectOfLatestVersion">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="objectId" type="xs:string"/>
+<xs:element minOccurs="0" name="major" type="xs:boolean"/>
+<xs:element name="filter" type="xs:string"/>
+<xs:element name="includeAllowableActions" type="xs:boolean"/>
+<xs:element name="includeRelationships" type="ns1:enumIncludeRelationships"/>
+<xs:element name="renditionFilter" type="xs:string"/>
+<xs:element name="includePolicyIds" type="xs:boolean"/>
+<xs:element name="includeACL" type="xs:boolean"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getObjectOfLatestVersionResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="object" type="ns1:cmisObjectType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getObjectParents">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="objectId" type="xs:string"/>
+<xs:element name="filter" type="xs:string"/>
+<xs:element name="includeAllowableActions" type="xs:boolean"/>
+<xs:element name="includeRelationships" type="ns1:enumIncludeRelationships"/>
+<xs:element name="renditionFilter" type="xs:string"/>
+<xs:element name="includeRelativePathSegment" type="xs:boolean"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getObjectParentsResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="parents" nillable="true" type="tns:cmisObjectParentsType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getObjectRelationships">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="objectId" type="xs:string"/>
+<xs:element minOccurs="0" name="includeSubRelationshipTypes" type="xs:boolean"/>
+<xs:element name="relationshipDirection" type="ns1:enumRelationshipDirection"/>
+<xs:element name="typeId" type="xs:string"/>
+<xs:element name="filter" type="xs:string"/>
+<xs:element name="includeAllowableActions" type="xs:boolean"/>
+<xs:element name="maxItems" type="xs:integer"/>
+<xs:element name="skipCount" type="xs:integer"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getObjectRelationshipsResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="objects" type="tns:cmisObjectListType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getObjectResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="object" type="ns1:cmisObjectType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getProperties">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="objectId" type="xs:string"/>
+<xs:element name="filter" type="xs:string"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getPropertiesOfLatestVersion">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="objectId" type="xs:string"/>
+<xs:element minOccurs="0" name="major" type="xs:boolean"/>
+<xs:element name="filter" type="xs:string"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getPropertiesOfLatestVersionResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="properties" type="ns1:cmisPropertiesType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getPropertiesResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="properties" type="ns1:cmisPropertiesType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getRenditions">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="objectId" type="xs:string"/>
+<xs:element name="renditionFilter" type="xs:string"/>
+<xs:element name="maxItems" type="xs:integer"/>
+<xs:element name="skipCount" type="xs:integer"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getRenditionsResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="renditions" nillable="true" type="ns1:cmisRenditionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getRepositories">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getRepositoriesResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="repositories" nillable="true" type="tns:cmisRepositoryEntryType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getRepositoryInfo">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getRepositoryInfoResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryInfo" type="ns1:cmisRepositoryInfoType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getTypeChildren">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="typeId" type="xs:string"/>
+<xs:element name="includePropertyDefinitions" type="xs:boolean"/>
+<xs:element name="maxItems" type="xs:integer"/>
+<xs:element name="skipCount" type="xs:integer"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getTypeChildrenResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="types" type="tns:cmisTypeDefinitionListType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getTypeDefinition">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="typeId" type="xs:string"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getTypeDefinitionResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="type" type="ns1:cmisTypeDefinitionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getTypeDescendants">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="typeId" type="xs:string"/>
+<xs:element name="depth" type="xs:integer"/>
+<xs:element name="includePropertyDefinitions" type="xs:boolean"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getTypeDescendantsResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="types" nillable="true" type="tns:cmisTypeContainer"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="moveObject">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="objectId" type="xs:string"/>
+<xs:element name="targetFolderId" type="xs:string"/>
+<xs:element name="sourceFolderId" type="xs:string"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="moveObjectResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="objectId" type="xs:string"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="query">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="statement" type="xs:string"/>
+<xs:element name="searchAllVersions" type="xs:boolean"/>
+<xs:element name="includeAllowableActions" type="xs:boolean"/>
+<xs:element name="includeRelationships" type="ns1:enumIncludeRelationships"/>
+<xs:element name="renditionFilter" type="xs:string"/>
+<xs:element name="maxItems" type="xs:integer"/>
+<xs:element name="skipCount" type="xs:integer"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="queryResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="objects" type="tns:cmisObjectListType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="removeObjectFromFolder">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="objectId" type="xs:string"/>
+<xs:element name="folderId" type="xs:string"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="removeObjectFromFolderResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="removePolicy">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="policyId" type="xs:string"/>
+<xs:element name="objectId" type="xs:string"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="removePolicyResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="setContentStream">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="documentId" type="xs:string"/>
+<xs:element name="overwriteFlag" type="xs:boolean"/>
+<xs:element name="changeToken" type="xs:string"/>
+<xs:element name="contentStream" type="tns:cmisContentStreamType"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="setContentStreamResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="documentId" type="xs:string"/>
+<xs:element minOccurs="0" name="changeToken" type="xs:string"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="updateProperties">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="objectId" type="xs:string"/>
+<xs:element name="changeToken" type="xs:string"/>
+<xs:element name="properties" type="ns1:cmisPropertiesType"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="updatePropertiesResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="objectId" type="xs:string"/>
+<xs:element minOccurs="0" name="changeToken" type="xs:string"/>
+<xs:element name="extension" type="tns:cmisExtensionType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:complexType name="cmisObjectInFolderContainerType">
+<xs:sequence>
+<xs:element name="objectInFolder" type="tns:cmisObjectInFolderType"/>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="children" nillable="true" type="tns:cmisObjectInFolderContainerType"/>
+<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="cmisObjectInFolderType">
+<xs:sequence>
+<xs:element name="object" type="ns1:cmisObjectType"/>
+<xs:element minOccurs="0" name="pathSegment" type="xs:string"/>
+<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="cmisTypeDefinitionListType">
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="types" nillable="true" type="ns1:cmisTypeDefinitionType"/>
+<xs:element name="hasMoreItems" type="xs:boolean"/>
+<xs:element minOccurs="0" name="numItems" type="xs:integer"/>
+<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="cmisExtensionType">
+<xs:sequence>
+<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="cmisTypeContainer">
+<xs:sequence>
+<xs:element name="type" type="ns1:cmisTypeDefinitionType"/>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="children" nillable="true" type="tns:cmisTypeContainer"/>
+<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="cmisObjectParentsType">
+<xs:sequence>
+<xs:element name="object" type="ns1:cmisObjectType"/>
+<xs:element minOccurs="0" name="relativePathSegment" type="xs:string"/>
+<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="cmisRepositoryEntryType">
+<xs:sequence>
+<xs:element name="repositoryId" type="xs:string"/>
+<xs:element name="repositoryName" type="xs:string"/>
+<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="cmisObjectListType">
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="objects" nillable="true" type="ns1:cmisObjectType"/>
+<xs:element name="hasMoreItems" type="xs:boolean"/>
+<xs:element minOccurs="0" name="numItems" type="xs:integer"/>
+<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="cmisContentStreamType">
+<xs:sequence>
+<xs:element minOccurs="0" name="length" type="xs:integer"/>
+<xs:element minOccurs="0" name="mimeType" type="xs:string"/>
+<xs:element minOccurs="0" name="filename" type="xs:string"/>
+<xs:element xmlns:ns2="http://www.w3.org/2005/05/xmlmime" name="stream" ns2:expectedContentTypes="application/octet-stream" type="xs:base64Binary"/>
+<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="cmisACLType">
+<xs:sequence>
+<xs:element name="ACL" type="ns1:cmisAccessControlListType"/>
+<xs:element minOccurs="0" name="exact" type="xs:boolean"/>
+<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="cmisFaultType">
+<xs:sequence>
+<xs:element name="type" type="tns:enumServiceException"/>
+<xs:element name="code" type="xs:integer"/>
+<xs:element name="message" type="xs:string"/>
+<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="cmisObjectInFolderListType">
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="objects" nillable="true" type="tns:cmisObjectInFolderType"/>
+<xs:element name="hasMoreItems" type="xs:boolean"/>
+<xs:element minOccurs="0" name="numItems" type="xs:integer"/>
+<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+</xs:sequence>
+</xs:complexType>
+<xs:simpleType name="enumServiceException">
+<xs:restriction base="xs:string">
+<xs:enumeration value="constraint"/>
+<xs:enumeration value="nameConstraintViolation"/>
+<xs:enumeration value="contentAlreadyExists"/>
+<xs:enumeration value="filterNotValid"/>
+<xs:enumeration value="invalidArgument"/>
+<xs:enumeration value="notSupported"/>
+<xs:enumeration value="objectNotFound"/>
+<xs:enumeration value="permissionDenied"/>
+<xs:enumeration value="runtime"/>
+<xs:enumeration value="storage"/>
+<xs:enumeration value="streamNotSupported"/>
+<xs:enumeration value="updateConflict"/>
+<xs:enumeration value="versioning"/>
+</xs:restriction>
+</xs:simpleType>
+</xs:schema>
+    <xs:schema xmlns:tns="http://docs.oasis-open.org/ns/cmis/core/200908/" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://docs.oasis-open.org/ns/cmis/core/200908/">
+<xs:element name="acl" nillable="true" type="tns:cmisAccessControlListType"/>
+<xs:element name="allowableActions" nillable="true" type="tns:cmisAllowableActionsType"/>
+<xs:element name="query" nillable="true" type="tns:cmisQueryType"/>
+<xs:complexType name="cmisQueryType">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="repositoryId" type="xs:string"/>
+<xs:element form="qualified" name="statement" type="xs:string"/>
+<xs:element form="qualified" minOccurs="0" name="searchAllVersions" type="xs:boolean"/>
+<xs:element form="qualified" minOccurs="0" name="includeAllowableActions" type="xs:boolean"/>
+<xs:element form="qualified" minOccurs="0" name="includeRelationships" type="tns:enumIncludeRelationships"/>
+<xs:element form="qualified" minOccurs="0" name="renditionFilter" type="xs:string"/>
+<xs:element form="qualified" minOccurs="0" name="maxItems" type="xs:integer"/>
+<xs:element form="qualified" minOccurs="0" name="skipCount" type="xs:integer"/>
+<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="cmisAccessControlListType">
+<xs:sequence>
+<xs:element form="qualified" maxOccurs="unbounded" name="permission" type="tns:cmisAccessControlEntryType"/>
+<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="cmisAccessControlEntryType">
+<xs:sequence>
+<xs:element form="qualified" name="principal" type="tns:cmisAccessControlPrincipalType"/>
+<xs:element form="qualified" maxOccurs="unbounded" name="permission" type="xs:string"/>
+<xs:element form="qualified" name="direct" type="xs:boolean"/>
+<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="cmisAccessControlPrincipalType">
+<xs:sequence>
+<xs:element form="qualified" name="principalId" type="xs:string"/>
+<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="cmisPropertiesType">
+<xs:sequence>
+<xs:choice maxOccurs="unbounded" minOccurs="0">
+<xs:element form="qualified" name="propertyId" nillable="true" type="tns:cmisPropertyId"/>
+<xs:element form="qualified" name="propertyUri" nillable="true" type="tns:cmisPropertyUri"/>
+<xs:element form="qualified" name="propertyInteger" nillable="true" type="tns:cmisPropertyInteger"/>
+<xs:element form="qualified" name="propertyDecimal" nillable="true" type="tns:cmisPropertyDecimal"/>
+<xs:element form="qualified" name="propertyBoolean" nillable="true" type="tns:cmisPropertyBoolean"/>
+<xs:element form="qualified" name="propertyHtml" nillable="true" type="tns:cmisPropertyHtml"/>
+<xs:element form="qualified" name="propertyDateTime" nillable="true" type="tns:cmisPropertyDateTime"/>
+<xs:element form="qualified" name="propertyString" nillable="true" type="tns:cmisPropertyString"/>
+</xs:choice>
+<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="cmisPropertyId">
+<xs:complexContent>
+<xs:extension base="tns:cmisProperty">
+<xs:sequence>
+<xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" nillable="true" type="xs:string"/>
+</xs:sequence>
+<xs:anyAttribute namespace="##other" processContents="skip"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="cmisProperty">
+<xs:sequence/>
+<xs:attribute name="propertyDefinitionId" type="xs:anySimpleType"/>
+<xs:attribute name="localName" type="xs:anySimpleType"/>
+<xs:attribute name="displayName" type="xs:anySimpleType"/>
+<xs:attribute name="queryName" type="xs:anySimpleType"/>
+</xs:complexType>
+<xs:complexType name="cmisPropertyDecimal">
+<xs:complexContent>
+<xs:extension base="tns:cmisProperty">
+<xs:sequence>
+<xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" nillable="true" type="xs:decimal"/>
+</xs:sequence>
+<xs:anyAttribute namespace="##other" processContents="skip"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="cmisPropertyInteger">
+<xs:complexContent>
+<xs:extension base="tns:cmisProperty">
+<xs:sequence>
+<xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" nillable="true" type="xs:integer"/>
+</xs:sequence>
+<xs:anyAttribute namespace="##other" processContents="skip"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="cmisPropertyDateTime">
+<xs:complexContent>
+<xs:extension base="tns:cmisProperty">
+<xs:sequence>
+<xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" nillable="true" type="xs:dateTime"/>
+</xs:sequence>
+<xs:anyAttribute namespace="##other" processContents="skip"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="cmisPropertyUri">
+<xs:complexContent>
+<xs:extension base="tns:cmisProperty">
+<xs:sequence>
+<xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" nillable="true" type="xs:anyURI"/>
+</xs:sequence>
+<xs:anyAttribute namespace="##other" processContents="skip"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="cmisPropertyHtml">
+<xs:complexContent>
+<xs:extension base="tns:cmisProperty">
+<xs:sequence>
+<xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" nillable="true" type="xs:string"/>
+</xs:sequence>
+<xs:anyAttribute namespace="##other" processContents="skip"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="cmisPropertyBoolean">
+<xs:complexContent>
+<xs:extension base="tns:cmisProperty">
+<xs:sequence>
+<xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" type="xs:boolean"/>
+</xs:sequence>
+<xs:anyAttribute namespace="##other" processContents="skip"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="cmisPropertyString">
+<xs:complexContent>
+<xs:extension base="tns:cmisProperty">
+<xs:sequence>
+<xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" nillable="true" type="xs:string"/>
+</xs:sequence>
+<xs:anyAttribute namespace="##other" processContents="skip"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="cmisObjectType">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="properties" type="tns:cmisPropertiesType"/>
+<xs:element form="qualified" minOccurs="0" name="allowableActions" type="tns:cmisAllowableActionsType"/>
+<xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="relationship" nillable="true" type="tns:cmisObjectType"/>
+<xs:element form="qualified" minOccurs="0" name="changeEventInfo" type="tns:cmisChangeEventType"/>
+<xs:element form="qualified" minOccurs="0" name="acl" type="tns:cmisAccessControlListType"/>
+<xs:element form="qualified" minOccurs="0" name="exactACL" type="xs:boolean"/>
+<xs:element form="qualified" minOccurs="0" name="policyIds" type="tns:cmisListOfIdsType"/>
+<xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="rendition" nillable="true" type="tns:cmisRenditionType"/>
+<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="cmisAllowableActionsType">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="canDeleteObject" type="xs:boolean"/>
+<xs:element form="qualified" minOccurs="0" name="canUpdateProperties" type="xs:boolean"/>
+<xs:element form="qualified" minOccurs="0" name="canGetProperties" type="xs:boolean"/>
+<xs:element form="qualified" minOccurs="0" name="canGetObjectRelationships" type="xs:boolean"/>
+<xs:element form="qualified" minOccurs="0" name="canGetObjectParents" type="xs:boolean"/>
+<xs:element form="qualified" minOccurs="0" name="canGetFolderParent" type="xs:boolean"/>
+<xs:element form="qualified" minOccurs="0" name="canGetDescendants" type="xs:boolean"/>
+<xs:element form="qualified" minOccurs="0" name="canMoveObject" type="xs:boolean"/>
+<xs:element form="qualified" minOccurs="0" name="canDeleteContentStream" type="xs:boolean"/>
+<xs:element form="qualified" minOccurs="0" name="canCheckOut" type="xs:boolean"/>
+<xs:element form="qualified" minOccurs="0" name="canCancelCheckOut" type="xs:boolean"/>
+<xs:element form="qualified" minOccurs="0" name="canCheckIn" type="xs:boolean"/>
+<xs:element form="qualified" minOccurs="0" name="canSetContentStream" type="xs:boolean"/>
+<xs:element form="qualified" minOccurs="0" name="canGetAllVersions" type="xs:boolean"/>
+<xs:element form="qualified" minOccurs="0" name="canAddObjectToFolder" type="xs:boolean"/>
+<xs:element form="qualified" minOccurs="0" name="canRemoveObjectFromFolder" type="xs:boolean"/>
+<xs:element form="qualified" minOccurs="0" name="canGetContentStream" type="xs:boolean"/>
+<xs:element form="qualified" minOccurs="0" name="canApplyPolicy" type="xs:boolean"/>
+<xs:element form="qualified" minOccurs="0" name="canGetAppliedPolicies" type="xs:boolean"/>
+<xs:element form="qualified" minOccurs="0" name="canRemovePolicy" type="xs:boolean"/>
+<xs:element form="qualified" minOccurs="0" name="canGetChildren" type="xs:boolean"/>
+<xs:element form="qualified" minOccurs="0" name="canCreateDocument" type="xs:boolean"/>
+<xs:element form="qualified" minOccurs="0" name="canCreateFolder" type="xs:boolean"/>
+<xs:element form="qualified" minOccurs="0" name="canCreateRelationship" type="xs:boolean"/>
+<xs:element form="qualified" minOccurs="0" name="canCreatePolicy" type="xs:boolean"/>
+<xs:element form="qualified" minOccurs="0" name="canDeleteTree" type="xs:boolean"/>
+<xs:element form="qualified" minOccurs="0" name="canGetRenditions" type="xs:boolean"/>
+<xs:element form="qualified" minOccurs="0" name="canGetACL" type="xs:boolean"/>
+<xs:element form="qualified" minOccurs="0" name="canApplyACL" type="xs:boolean"/>
+<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="cmisChangeEventType">
+<xs:sequence>
+<xs:element form="qualified" name="changeType" type="tns:enumTypeOfChanges"/>
+<xs:element form="qualified" name="changeTime" type="xs:dateTime"/>
+<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="cmisListOfIdsType">
+<xs:sequence>
+<xs:element form="qualified" maxOccurs="unbounded" name="id" type="xs:string"/>
+<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="cmisRenditionType">
+<xs:sequence>
+<xs:element form="qualified" name="streamId" type="xs:string"/>
+<xs:element form="qualified" name="mimetype" type="xs:string"/>
+<xs:element form="qualified" name="length" type="xs:integer"/>
+<xs:element form="qualified" name="kind" type="xs:string"/>
+<xs:element form="qualified" minOccurs="0" name="title" type="xs:string"/>
+<xs:element form="qualified" minOccurs="0" name="height" type="xs:integer"/>
+<xs:element form="qualified" minOccurs="0" name="width" type="xs:integer"/>
+<xs:element form="qualified" minOccurs="0" name="renditionDocumentId" type="xs:string"/>
+<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="cmisTypeDefinitionType">
+<xs:sequence>
+<xs:element form="qualified" name="id" type="xs:string"/>
+<xs:element form="qualified" name="localName" type="xs:string"/>
+<xs:element form="qualified" name="localNamespace" nillable="true" type="xs:anyURI"/>
+<xs:element form="qualified" minOccurs="0" name="displayName" type="xs:string"/>
+<xs:element form="qualified" minOccurs="0" name="queryName" type="xs:string"/>
+<xs:element form="qualified" minOccurs="0" name="description" type="xs:string"/>
+<xs:element form="qualified" name="baseId" type="tns:enumBaseObjectTypeIds"/>
+<xs:element form="qualified" minOccurs="0" name="parentId" type="xs:string"/>
+<xs:element form="qualified" name="creatable" type="xs:boolean"/>
+<xs:element form="qualified" name="fileable" type="xs:boolean"/>
+<xs:element form="qualified" name="queryable" type="xs:boolean"/>
+<xs:element form="qualified" name="fulltextIndexed" type="xs:boolean"/>
+<xs:element default="true" form="qualified" name="includedInSupertypeQuery" type="xs:boolean"/>
+<xs:element form="qualified" name="controllablePolicy" type="xs:boolean"/>
+<xs:element form="qualified" name="controllableACL" type="xs:boolean"/>
+<xs:choice maxOccurs="unbounded" minOccurs="0">
+<xs:element form="qualified" name="propertyBooleanDefinition" type="tns:cmisPropertyBooleanDefinitionType"/>
+<xs:element form="qualified" name="propertyDateTimeDefinition" type="tns:cmisPropertyDateTimeDefinitionType"/>
+<xs:element form="qualified" name="propertyUriDefinition" type="tns:cmisPropertyUriDefinitionType"/>
+<xs:element form="qualified" name="propertyStringDefinition" type="tns:cmisPropertyStringDefinitionType"/>
+<xs:element form="qualified" name="propertyIntegerDefinition" type="tns:cmisPropertyIntegerDefinitionType"/>
+<xs:element form="qualified" name="propertyHtmlDefinition" type="tns:cmisPropertyHtmlDefinitionType"/>
+<xs:element form="qualified" name="propertyDecimalDefinition" type="tns:cmisPropertyDecimalDefinitionType"/>
+<xs:element form="qualified" name="propertyIdDefinition" type="tns:cmisPropertyIdDefinitionType"/>
+</xs:choice>
+<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="cmisPropertyBooleanDefinitionType">
+<xs:complexContent>
+<xs:extension base="tns:cmisPropertyDefinitionType">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="defaultValue" type="tns:cmisPropertyBoolean"/>
+<xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceBoolean"/>
+</xs:sequence>
+<xs:anyAttribute namespace="##other" processContents="skip"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="cmisPropertyDefinitionType">
+<xs:sequence>
+<xs:element form="qualified" name="id" type="xs:string"/>
+<xs:element form="qualified" name="localName" type="xs:string"/>
+<xs:element form="qualified" minOccurs="0" name="localNamespace" type="xs:anyURI"/>
+<xs:element form="qualified" minOccurs="0" name="displayName" type="xs:string"/>
+<xs:element form="qualified" minOccurs="0" name="queryName" type="xs:string"/>
+<xs:element form="qualified" minOccurs="0" name="description" type="xs:string"/>
+<xs:element form="qualified" name="propertyType" type="tns:enumPropertyType"/>
+<xs:element form="qualified" name="cardinality" type="tns:enumCardinality"/>
+<xs:element form="qualified" name="updatability" type="tns:enumUpdatability"/>
+<xs:element form="qualified" minOccurs="0" name="inherited" type="xs:boolean"/>
+<xs:element form="qualified" name="required" type="xs:boolean"/>
+<xs:element form="qualified" name="queryable" type="xs:boolean"/>
+<xs:element form="qualified" name="orderable" type="xs:boolean"/>
+<xs:element form="qualified" minOccurs="0" name="openChoice" type="xs:boolean"/>
+<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="cmisChoiceBoolean">
+<xs:complexContent>
+<xs:extension base="tns:cmisChoice">
+<xs:sequence>
+<xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" type="xs:boolean"/>
+<xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceBoolean"/>
+</xs:sequence>
+<xs:anyAttribute namespace="##other" processContents="skip"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="cmisChoice">
+<xs:sequence/>
+<xs:attribute name="displayName" type="xs:anySimpleType" use="required"/>
+</xs:complexType>
+<xs:complexType name="cmisChoiceId">
+<xs:complexContent>
+<xs:extension base="tns:cmisChoice">
+<xs:sequence>
+<xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" nillable="true" type="xs:string"/>
+<xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceId"/>
+</xs:sequence>
+<xs:anyAttribute namespace="##other" processContents="skip"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="cmisChoiceDateTime">
+<xs:complexContent>
+<xs:extension base="tns:cmisChoice">
+<xs:sequence>
+<xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" nillable="true" type="xs:dateTime"/>
+<xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceDateTime"/>
+</xs:sequence>
+<xs:anyAttribute namespace="##other" processContents="skip"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="cmisChoiceDecimal">
+<xs:complexContent>
+<xs:extension base="tns:cmisChoice">
+<xs:sequence>
+<xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" nillable="true" type="xs:decimal"/>
+<xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceDecimal"/>
+</xs:sequence>
+<xs:anyAttribute namespace="##other" processContents="skip"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="cmisChoiceHtml">
+<xs:complexContent>
+<xs:extension base="tns:cmisChoice">
+<xs:sequence>
+<xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" nillable="true" type="xs:string"/>
+<xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceHtml"/>
+</xs:sequence>
+<xs:anyAttribute namespace="##other" processContents="skip"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="cmisChoiceUri">
+<xs:complexContent>
+<xs:extension base="tns:cmisChoice">
+<xs:sequence>
+<xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" nillable="true" type="xs:anyURI"/>
+<xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceUri"/>
+</xs:sequence>
+<xs:anyAttribute namespace="##other" processContents="skip"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="cmisChoiceInteger">
+<xs:complexContent>
+<xs:extension base="tns:cmisChoice">
+<xs:sequence>
+<xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" nillable="true" type="xs:integer"/>
+<xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceInteger"/>
+</xs:sequence>
+<xs:anyAttribute namespace="##other" processContents="skip"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="cmisChoiceString">
+<xs:complexContent>
+<xs:extension base="tns:cmisChoice">
+<xs:sequence>
+<xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" nillable="true" type="xs:string"/>
+<xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceString"/>
+</xs:sequence>
+<xs:anyAttribute namespace="##other" processContents="skip"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="cmisPropertyHtmlDefinitionType">
+<xs:complexContent>
+<xs:extension base="tns:cmisPropertyDefinitionType">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="defaultValue" type="tns:cmisPropertyHtml"/>
+<xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceHtml"/>
+</xs:sequence>
+<xs:anyAttribute namespace="##other" processContents="skip"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="cmisPropertyUriDefinitionType">
+<xs:complexContent>
+<xs:extension base="tns:cmisPropertyDefinitionType">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="defaultValue" type="tns:cmisPropertyUri"/>
+<xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceUri"/>
+</xs:sequence>
+<xs:anyAttribute namespace="##other" processContents="skip"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="cmisPropertyIdDefinitionType">
+<xs:complexContent>
+<xs:extension base="tns:cmisPropertyDefinitionType">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="defaultValue" type="tns:cmisPropertyId"/>
+<xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceId"/>
+</xs:sequence>
+<xs:anyAttribute namespace="##other" processContents="skip"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="cmisPropertyIntegerDefinitionType">
+<xs:complexContent>
+<xs:extension base="tns:cmisPropertyDefinitionType">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="defaultValue" type="tns:cmisPropertyInteger"/>
+<xs:element form="qualified" minOccurs="0" name="maxValue" type="xs:integer"/>
+<xs:element form="qualified" minOccurs="0" name="minValue" type="xs:integer"/>
+<xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceInteger"/>
+</xs:sequence>
+<xs:anyAttribute namespace="##other" processContents="skip"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="cmisPropertyDateTimeDefinitionType">
+<xs:complexContent>
+<xs:extension base="tns:cmisPropertyDefinitionType">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="defaultValue" type="tns:cmisPropertyDateTime"/>
+<xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceDateTime"/>
+</xs:sequence>
+<xs:anyAttribute namespace="##other" processContents="skip"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="cmisPropertyDecimalDefinitionType">
+<xs:complexContent>
+<xs:extension base="tns:cmisPropertyDefinitionType">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="defaultValue" type="tns:cmisPropertyDecimal"/>
+<xs:element form="qualified" minOccurs="0" name="maxValue" type="xs:decimal"/>
+<xs:element form="qualified" minOccurs="0" name="minValue" type="xs:decimal"/>
+<xs:element form="qualified" minOccurs="0" name="precision" type="xs:integer"/>
+<xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceDecimal"/>
+</xs:sequence>
+<xs:anyAttribute namespace="##other" processContents="skip"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="cmisPropertyStringDefinitionType">
+<xs:complexContent>
+<xs:extension base="tns:cmisPropertyDefinitionType">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="defaultValue" type="tns:cmisPropertyString"/>
+<xs:element form="qualified" minOccurs="0" name="maxLength" type="xs:integer"/>
+<xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceString"/>
+</xs:sequence>
+<xs:anyAttribute namespace="##other" processContents="skip"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="cmisTypeDocumentDefinitionType">
+<xs:complexContent>
+<xs:extension base="tns:cmisTypeDefinitionType">
+<xs:sequence>
+<xs:element form="qualified" name="versionable" type="xs:boolean"/>
+<xs:element form="qualified" name="contentStreamAllowed" type="tns:enumContentStreamAllowed"/>
+</xs:sequence>
+<xs:anyAttribute namespace="##other" processContents="skip"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="cmisTypePolicyDefinitionType">
+<xs:complexContent>
+<xs:extension base="tns:cmisTypeDefinitionType">
+<xs:sequence/>
+<xs:anyAttribute namespace="##other" processContents="skip"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="cmisTypeFolderDefinitionType">
+<xs:complexContent>
+<xs:extension base="tns:cmisTypeDefinitionType">
+<xs:sequence/>
+<xs:anyAttribute namespace="##other" processContents="skip"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="cmisTypeRelationshipDefinitionType">
+<xs:complexContent>
+<xs:extension base="tns:cmisTypeDefinitionType">
+<xs:sequence>
+<xs:element form="qualified" maxOccurs="unbounded" name="allowedSourceTypes" type="xs:string"/>
+<xs:element form="qualified" maxOccurs="unbounded" name="allowedTargetTypes" type="xs:string"/>
+</xs:sequence>
+<xs:anyAttribute namespace="##other" processContents="skip"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="cmisACLCapabilityType">
+<xs:sequence>
+<xs:element form="qualified" name="propagation" type="tns:enumACLPropagation"/>
+<xs:element form="qualified" maxOccurs="unbounded" name="permissions" type="tns:cmisPermissionDefinition"/>
+<xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="mapping" nillable="true" type="tns:cmisPermissionMapping"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="cmisPermissionDefinition">
+<xs:sequence>
+<xs:element form="qualified" name="permission" type="xs:string"/>
+<xs:element form="qualified" minOccurs="0" name="description" type="xs:string"/>
+<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="cmisPermissionMapping">
+<xs:sequence>
+<xs:element form="qualified" name="key" type="tns:enumAllowableActionsKey"/>
+<xs:element form="qualified" maxOccurs="unbounded" name="permission" type="xs:string"/>
+<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="cmisRepositoryInfoType">
+<xs:sequence>
+<xs:element form="qualified" name="repositoryId" type="xs:string"/>
+<xs:element form="qualified" name="repositoryName" type="xs:string"/>
+<xs:element form="qualified" name="repositoryDescription" type="xs:string"/>
+<xs:element form="qualified" name="vendorName" type="xs:string"/>
+<xs:element form="qualified" name="productName" type="xs:string"/>
+<xs:element form="qualified" name="productVersion" type="xs:string"/>
+<xs:element form="qualified" name="rootFolderId" type="xs:string"/>
+<xs:element form="qualified" minOccurs="0" name="latestChangeLogToken" type="xs:string"/>
+<xs:element form="qualified" name="capabilities" type="tns:cmisRepositoryCapabilitiesType"/>
+<xs:element form="qualified" minOccurs="0" name="aclCapability" type="tns:cmisACLCapabilityType"/>
+<xs:element form="qualified" name="cmisVersionSupported" type="xs:decimal"/>
+<xs:element form="qualified" minOccurs="0" name="thinClientURI" type="xs:anyURI"/>
+<xs:element form="qualified" minOccurs="0" name="changesIncomplete" type="xs:boolean"/>
+<xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="changesOnType" nillable="true" type="tns:enumBaseObjectTypeIds"/>
+<xs:element form="qualified" minOccurs="0" name="principalAnonymous" type="xs:string"/>
+<xs:element form="qualified" minOccurs="0" name="principalAnyone" type="xs:string"/>
+<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="cmisRepositoryCapabilitiesType">
+<xs:sequence>
+<xs:element form="qualified" name="capabilityACL" type="tns:enumCapabilityACL"/>
+<xs:element form="qualified" name="capabilityAllVersionsSearchable" type="xs:boolean"/>
+<xs:element form="qualified" name="capabilityChanges" type="tns:enumCapabilityChanges"/>
+<xs:element form="qualified" name="capabilityContentStreamUpdatability" type="tns:enumCapabilityContentStreamUpdates"/>
+<xs:element form="qualified" name="capabilityGetDescendants" type="xs:boolean"/>
+<xs:element form="qualified" name="capabilityGetFolderTree" type="xs:boolean"/>
+<xs:element form="qualified" name="capabilityMultifiling" type="xs:boolean"/>
+<xs:element form="qualified" name="capabilityPWCSearchable" type="xs:boolean"/>
+<xs:element form="qualified" name="capabilityPWCUpdatable" type="xs:boolean"/>
+<xs:element form="qualified" name="capabilityQuery" type="tns:enumCapabilityQuery"/>
+<xs:element form="qualified" name="capabilityRenditions" type="tns:enumCapabilityRendition"/>
+<xs:element form="qualified" name="capabilityUnfiling" type="xs:boolean"/>
+<xs:element form="qualified" name="capabilityVersionSpecificFiling" type="xs:boolean"/>
+<xs:element form="qualified" name="capabilityJoin" type="tns:enumCapabilityJoin"/>
+<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="skip"/>
+</xs:sequence>
+</xs:complexType>
+<xs:simpleType name="enumIncludeRelationships">
+<xs:restriction base="xs:string">
+<xs:enumeration value="none"/>
+<xs:enumeration value="source"/>
+<xs:enumeration value="target"/>
+<xs:enumeration value="both"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="enumTypeOfChanges">
+<xs:restriction base="xs:string">
+<xs:enumeration value="created"/>
+<xs:enumeration value="updated"/>
+<xs:enumeration value="deleted"/>
+<xs:enumeration value="security"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="enumBaseObjectTypeIds">
+<xs:restriction base="xs:string">
+<xs:enumeration value="cmis:document"/>
+<xs:enumeration value="cmis:folder"/>
+<xs:enumeration value="cmis:relationship"/>
+<xs:enumeration value="cmis:policy"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="enumPropertyType">
+<xs:restriction base="xs:string">
+<xs:enumeration value="boolean"/>
+<xs:enumeration value="id"/>
+<xs:enumeration value="integer"/>
+<xs:enumeration value="datetime"/>
+<xs:enumeration value="decimal"/>
+<xs:enumeration value="html"/>
+<xs:enumeration value="string"/>
+<xs:enumeration value="uri"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="enumCardinality">
+<xs:restriction base="xs:string">
+<xs:enumeration value="single"/>
+<xs:enumeration value="multi"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="enumUpdatability">
+<xs:restriction base="xs:string">
+<xs:enumeration value="readonly"/>
+<xs:enumeration value="readwrite"/>
+<xs:enumeration value="whencheckedout"/>
+<xs:enumeration value="oncreate"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="enumContentStreamAllowed">
+<xs:restriction base="xs:string">
+<xs:enumeration value="notallowed"/>
+<xs:enumeration value="allowed"/>
+<xs:enumeration value="required"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="enumACLPropagation">
+<xs:restriction base="xs:string">
+<xs:enumeration value="repositorydetermined"/>
+<xs:enumeration value="objectonly"/>
+<xs:enumeration value="propagate"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="enumAllowableActionsKey">
+<xs:restriction base="xs:string">
+<xs:enumeration value="canGetDescendents.Folder"/>
+<xs:enumeration value="canGetChildren.Folder"/>
+<xs:enumeration value="canGetParents.Folder"/>
+<xs:enumeration value="canGetFolderParent.Object"/>
+<xs:enumeration value="canCreateDocument.Type"/>
+<xs:enumeration value="canCreateDocument.Folder"/>
+<xs:enumeration value="canCreateFolder.Type"/>
+<xs:enumeration value="canCreateFolder.Folder"/>
+<xs:enumeration value="canCreateRelationship.Type"/>
+<xs:enumeration value="canCreateRelationship.Source"/>
+<xs:enumeration value="canCreateRelationship.Target"/>
+<xs:enumeration value="canCreatePolicy.Type"/>
+<xs:enumeration value="canGetProperties.Object"/>
+<xs:enumeration value="canViewContent.Object"/>
+<xs:enumeration value="canUpdateProperties.Object"/>
+<xs:enumeration value="canMove.Object"/>
+<xs:enumeration value="canMove.Target"/>
+<xs:enumeration value="canMove.Source"/>
+<xs:enumeration value="canDelete.Object"/>
+<xs:enumeration value="canDeleteTree.Folder"/>
+<xs:enumeration value="canSetContent.Document"/>
+<xs:enumeration value="canDeleteContent.Document"/>
+<xs:enumeration value="canAddToFolder.Object"/>
+<xs:enumeration value="canAddToFolder.Folder"/>
+<xs:enumeration value="canRemoveFromFolder.Object"/>
+<xs:enumeration value="canRemoveFromFolder.Folder"/>
+<xs:enumeration value="canCheckout.Document"/>
+<xs:enumeration value="canCancelCheckout.Document"/>
+<xs:enumeration value="canCheckin.Document"/>
+<xs:enumeration value="canGetAllVersions.VersionSeries"/>
+<xs:enumeration value="canGetObjectRelationships.Object"/>
+<xs:enumeration value="canAddPolicy.Object"/>
+<xs:enumeration value="canAddPolicy.Policy"/>
+<xs:enumeration value="canRemovePolicy.Object"/>
+<xs:enumeration value="canRemovePolicy.Policy"/>
+<xs:enumeration value="canGetAppliedPolicies.Object"/>
+<xs:enumeration value="canGetACL.Object"/>
+<xs:enumeration value="canApplyACL.Object"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="enumCapabilityACL">
+<xs:restriction base="xs:string">
+<xs:enumeration value="none"/>
+<xs:enumeration value="discover"/>
+<xs:enumeration value="manage"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="enumCapabilityChanges">
+<xs:restriction base="xs:string">
+<xs:enumeration value="none"/>
+<xs:enumeration value="objectidsonly"/>
+<xs:enumeration value="properties"/>
+<xs:enumeration value="all"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="enumCapabilityContentStreamUpdates">
+<xs:restriction base="xs:string">
+<xs:enumeration value="anytime"/>
+<xs:enumeration value="pwconly"/>
+<xs:enumeration value="none"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="enumCapabilityQuery">
+<xs:restriction base="xs:string">
+<xs:enumeration value="none"/>
+<xs:enumeration value="metadataonly"/>
+<xs:enumeration value="fulltextonly"/>
+<xs:enumeration value="bothseparate"/>
+<xs:enumeration value="bothcombined"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="enumCapabilityRendition">
+<xs:restriction base="xs:string">
+<xs:enumeration value="none"/>
+<xs:enumeration value="read"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="enumCapabilityJoin">
+<xs:restriction base="xs:string">
+<xs:enumeration value="none"/>
+<xs:enumeration value="inneronly"/>
+<xs:enumeration value="innerandouter"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="enumVersioningState">
+<xs:restriction base="xs:string">
+<xs:enumeration value="none"/>
+<xs:enumeration value="checkedout"/>
+<xs:enumeration value="minor"/>
+<xs:enumeration value="major"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="enumUnfileObject">
+<xs:restriction base="xs:string">
+<xs:enumeration value="unfile"/>
+<xs:enumeration value="deletesinglefiled"/>
+<xs:enumeration value="delete"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="enumRelationshipDirection">
+<xs:restriction base="xs:string">
+<xs:enumeration value="source"/>
+<xs:enumeration value="target"/>
+<xs:enumeration value="either"/>
+</xs:restriction>
+</xs:simpleType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getProperties">
+    <wsdl:part element="ns1:getProperties" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAllowableActions">
+    <wsdl:part element="ns1:getAllowableActions" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRenditionsResponse">
+    <wsdl:part element="ns1:getRenditionsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getObjectByPathResponse">
+    <wsdl:part element="ns1:getObjectByPathResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateProperties">
+    <wsdl:part element="ns1:updateProperties" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createPolicy">
+    <wsdl:part element="ns1:createPolicy" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="moveObjectResponse">
+    <wsdl:part element="ns1:moveObjectResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRenditions">
+    <wsdl:part element="ns1:getRenditions" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setContentStream">
+    <wsdl:part element="ns1:setContentStream" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createRelationship">
+    <wsdl:part element="ns1:createRelationship" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CmisException">
+    <wsdl:part element="ns1:cmisFault" name="CmisException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getContentStreamResponse">
+    <wsdl:part element="ns1:getContentStreamResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createPolicyResponse">
+    <wsdl:part element="ns1:createPolicyResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="moveObject">
+    <wsdl:part element="ns1:moveObject" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteObject">
+    <wsdl:part element="ns1:deleteObject" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createFolder">
+    <wsdl:part element="ns1:createFolder" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createDocumentFromSourceResponse">
+    <wsdl:part element="ns1:createDocumentFromSourceResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getObjectResponse">
+    <wsdl:part element="ns1:getObjectResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getObjectByPath">
+    <wsdl:part element="ns1:getObjectByPath" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteTree">
+    <wsdl:part element="ns1:deleteTree" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createDocumentResponse">
+    <wsdl:part element="ns1:createDocumentResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createFolderResponse">
+    <wsdl:part element="ns1:createFolderResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteContentStreamResponse">
+    <wsdl:part element="ns1:deleteContentStreamResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createDocumentFromSource">
+    <wsdl:part element="ns1:createDocumentFromSource" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updatePropertiesResponse">
+    <wsdl:part element="ns1:updatePropertiesResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteContentStream">
+    <wsdl:part element="ns1:deleteContentStream" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createRelationshipResponse">
+    <wsdl:part element="ns1:createRelationshipResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getObject">
+    <wsdl:part element="ns1:getObject" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getPropertiesResponse">
+    <wsdl:part element="ns1:getPropertiesResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteTreeResponse">
+    <wsdl:part element="ns1:deleteTreeResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteObjectResponse">
+    <wsdl:part element="ns1:deleteObjectResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAllowableActionsResponse">
+    <wsdl:part element="ns1:getAllowableActionsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createDocument">
+    <wsdl:part element="ns1:createDocument" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getContentStream">
+    <wsdl:part element="ns1:getContentStream" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setContentStreamResponse">
+    <wsdl:part element="ns1:setContentStreamResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="ObjectServicePort">
+    <wsdl:operation name="getObject">
+      <wsdl:input message="tns:getObject" name="getObject">
+    </wsdl:input>
+      <wsdl:output message="tns:getObjectResponse" name="getObjectResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:CmisException" name="CmisException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getProperties">
+      <wsdl:input message="tns:getProperties" name="getProperties">
+    </wsdl:input>
+      <wsdl:output message="tns:getPropertiesResponse" name="getPropertiesResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:CmisException" name="CmisException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getContentStream">
+      <wsdl:input message="tns:getContentStream" name="getContentStream">
+    </wsdl:input>
+      <wsdl:output message="tns:getContentStreamResponse" name="getContentStreamResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:CmisException" name="CmisException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getAllowableActions">
+      <wsdl:input message="tns:getAllowableActions" name="getAllowableActions">
+    </wsdl:input>
+      <wsdl:output message="tns:getAllowableActionsResponse" name="getAllowableActionsResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:CmisException" name="CmisException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deleteObject">
+      <wsdl:input message="tns:deleteObject" name="deleteObject">
+    </wsdl:input>
+      <wsdl:output message="tns:deleteObjectResponse" name="deleteObjectResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:CmisException" name="CmisException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deleteContentStream">
+      <wsdl:input message="tns:deleteContentStream" name="deleteContentStream">
+    </wsdl:input>
+      <wsdl:output message="tns:deleteContentStreamResponse" name="deleteContentStreamResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:CmisException" name="CmisException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createRelationship">
+      <wsdl:input message="tns:createRelationship" name="createRelationship">
+    </wsdl:input>
+      <wsdl:output message="tns:createRelationshipResponse" name="createRelationshipResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:CmisException" name="CmisException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createDocumentFromSource">
+      <wsdl:input message="tns:createDocumentFromSource" name="createDocumentFromSource">
+    </wsdl:input>
+      <wsdl:output message="tns:createDocumentFromSourceResponse" name="createDocumentFromSourceResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:CmisException" name="CmisException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateProperties">
+      <wsdl:input message="tns:updateProperties" name="updateProperties">
+    </wsdl:input>
+      <wsdl:output message="tns:updatePropertiesResponse" name="updatePropertiesResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:CmisException" name="CmisException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="moveObject">
+      <wsdl:input message="tns:moveObject" name="moveObject">
+    </wsdl:input>
+      <wsdl:output message="tns:moveObjectResponse" name="moveObjectResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:CmisException" name="CmisException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createDocument">
+      <wsdl:input message="tns:createDocument" name="createDocument">
+    </wsdl:input>
+      <wsdl:output message="tns:createDocumentResponse" name="createDocumentResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:CmisException" name="CmisException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRenditions">
+      <wsdl:input message="tns:getRenditions" name="getRenditions">
+    </wsdl:input>
+      <wsdl:output message="tns:getRenditionsResponse" name="getRenditionsResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:CmisException" name="CmisException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deleteTree">
+      <wsdl:input message="tns:deleteTree" name="deleteTree">
+    </wsdl:input>
+      <wsdl:output message="tns:deleteTreeResponse" name="deleteTreeResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:CmisException" name="CmisException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getObjectByPath">
+      <wsdl:input message="tns:getObjectByPath" name="getObjectByPath">
+    </wsdl:input>
+      <wsdl:output message="tns:getObjectByPathResponse" name="getObjectByPathResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:CmisException" name="CmisException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createFolder">
+      <wsdl:input message="tns:createFolder" name="createFolder">
+    </wsdl:input>
+      <wsdl:output message="tns:createFolderResponse" name="createFolderResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:CmisException" name="CmisException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createPolicy">
+      <wsdl:input message="tns:createPolicy" name="createPolicy">
+    </wsdl:input>
+      <wsdl:output message="tns:createPolicyResponse" name="createPolicyResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:CmisException" name="CmisException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setContentStream">
+      <wsdl:input message="tns:setContentStream" name="setContentStream">
+    </wsdl:input>
+      <wsdl:output message="tns:setContentStreamResponse" name="setContentStreamResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:CmisException" name="CmisException">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ObjectServiceSoapBinding" type="tns:ObjectServicePort">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getObject">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getObject">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getObjectResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="CmisException">
+        <soap:fault name="CmisException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getProperties">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getProperties">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getPropertiesResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="CmisException">
+        <soap:fault name="CmisException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getContentStream">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getContentStream">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getContentStreamResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="CmisException">
+        <soap:fault name="CmisException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getAllowableActions">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getAllowableActions">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getAllowableActionsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="CmisException">
+        <soap:fault name="CmisException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deleteContentStream">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="deleteContentStream">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="deleteContentStreamResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="CmisException">
+        <soap:fault name="CmisException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deleteObject">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="deleteObject">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="deleteObjectResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="CmisException">
+        <soap:fault name="CmisException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createRelationship">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="createRelationship">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createRelationshipResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="CmisException">
+        <soap:fault name="CmisException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createDocumentFromSource">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="createDocumentFromSource">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createDocumentFromSourceResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="CmisException">
+        <soap:fault name="CmisException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateProperties">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="updateProperties">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="updatePropertiesResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="CmisException">
+        <soap:fault name="CmisException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createDocument">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="createDocument">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createDocumentResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="CmisException">
+        <soap:fault name="CmisException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="moveObject">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="moveObject">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="moveObjectResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="CmisException">
+        <soap:fault name="CmisException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deleteTree">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="deleteTree">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="deleteTreeResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="CmisException">
+        <soap:fault name="CmisException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRenditions">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getRenditions">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getRenditionsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="CmisException">
+        <soap:fault name="CmisException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createFolder">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="createFolder">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createFolderResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="CmisException">
+        <soap:fault name="CmisException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getObjectByPath">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getObjectByPath">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getObjectByPathResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="CmisException">
+        <soap:fault name="CmisException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createPolicy">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="createPolicy">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createPolicyResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="CmisException">
+        <soap:fault name="CmisException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setContentStream">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="setContentStream">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="setContentStreamResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="CmisException">
+        <soap:fault name="CmisException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ObjectService">
+    <wsdl:port binding="tns:ObjectServiceSoapBinding" name="ObjectServicePort">
+      <soap:address location="http://cmis.alfresco.com/cmis/ObjectService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

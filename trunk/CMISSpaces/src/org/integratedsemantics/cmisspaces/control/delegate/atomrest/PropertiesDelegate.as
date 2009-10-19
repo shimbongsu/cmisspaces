@@ -81,9 +81,9 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
       
             var cmis:Namespace = new Namespace("cmis", CMISConstants.CMIS_CORE); 
             var nameXML:XML =  
-               <cmis:object xmlns:cmis="http://docs.oasis-open.org/ns/cmis/core/200901">
+               <cmis:object xmlns:cmis="http://docs.oasis-open.org/ns/cmis/core/200908/">
                   <cmis:properties>               
-                     <cmis:propertyString xmlns:cmis="http://docs.oasis-open.org/ns/cmis/core/200901" cmis:name="Name">
+                     <cmis:propertyString xmlns:cmis="http://docs.oasis-open.org/ns/cmis/core/200908/" cmis:name="Name">
                         <cmis:value>{name}</cmis:value>
                      </cmis:propertyString>     
                   </cmis:properties>
