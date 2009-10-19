@@ -164,7 +164,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
                     {
                         node.cmisSelf = link.href.toString();
                     }
-                    else if (link.rel == "all-versions")
+                    else if (link.rel == "version-history")
                     {
                         node.cmisAllVersions = link.href.toString();
                     }    

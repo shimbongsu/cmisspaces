@@ -12,9 +12,9 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
     
     import org.integratedsemantics.cmis.atom.CMISConstants;
     import org.integratedsemantics.cmis.atom.CMISObject;
-    import org.integratedsemantics.cmis.webservice.discoveryservice.CmisQueryType;
-    import org.integratedsemantics.cmis.webservice.discoveryservice.DiscoveryService;
-    import org.integratedsemantics.cmis.webservice.discoveryservice.QueryResultEvent;
+    import org.integratedsemantics.cmis.soap.discovery.CmisQueryType;
+    import org.integratedsemantics.cmis.soap.discovery.DiscoveryService;
+    import org.integratedsemantics.cmis.soap.discovery.QueryResultEvent;
     import org.integratedsemantics.cmisspaces.model.config.CMISConfig;
     import org.integratedsemantics.flexspaces.model.AppModelLocator;
     import org.integratedsemantics.flexspaces.model.folder.Node;
@@ -62,7 +62,8 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
             var cmisQueryType:CmisQueryType = new CmisQueryType();
             cmisQueryType.statement = queryStr;
             cmisQueryType.repositoryId = cmisConfig.repositoryId;
-            discoveryService.query(cmisQueryType);                   
+            //discoveryService.query(cmisQueryType);        
+            discoveryService.query(cmisQueryType,cmisConfig.repositoryId,queryStr,false,false,null,null,100,0,null)
         }
         
         /**
@@ -84,7 +85,8 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
             var cmisQueryType:CmisQueryType = new CmisQueryType();
             cmisQueryType.statement = queryStr;
             cmisQueryType.repositoryId = cmisConfig.repositoryId;
-            discoveryService.query(cmisQueryType);                   
+            //discoveryService.query(cmisQueryType);        
+            discoveryService.query(cmisQueryType,cmisConfig.repositoryId,queryStr,false,false,null,null,100,0,null)
         }
         
         /**

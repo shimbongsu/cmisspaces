@@ -84,7 +84,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
             {
                 var collection:AtomCollection = workspace.collections[c];
      
-                var collectionType:String = collection._src.@cmisra::collectionType;
+                var collectionType:String = collection._src.cmisra::collectionType;
 
                 if (collectionType == "checkedout")
                 {

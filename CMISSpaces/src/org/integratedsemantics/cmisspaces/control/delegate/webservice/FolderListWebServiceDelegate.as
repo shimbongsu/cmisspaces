@@ -12,8 +12,8 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
     
     import org.integratedsemantics.cmis.atom.CMISConstants;
     import org.integratedsemantics.cmis.atom.CMISObject;
-    import org.integratedsemantics.cmis.webservice.navigationservice.GetChildrenResultEvent;
-    import org.integratedsemantics.cmis.webservice.navigationservice.NavigationService;
+    import org.integratedsemantics.cmis.soap.navigation.GetChildrenResultEvent;
+    import org.integratedsemantics.cmis.soap.navigation.NavigationService;
     import org.integratedsemantics.cmisspaces.model.config.CMISConfig;
     import org.integratedsemantics.flexspaces.model.AppModelLocator;
     import org.integratedsemantics.flexspaces.model.folder.Folder;
@@ -70,7 +70,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
             
 			navigationService.addgetChildrenEventListener(onCompleteGetChildren);
 			navigationService.addNavigationServiceFaultEventListener(onFaultNavigationService);            
-            navigationService.getChildren(cmisConfig.repositoryId, parentFolderId, null, null, false, null, 0, 0, null);
+            navigationService.getChildren(cmisConfig.repositoryId, parentFolderId, null, null,   false, null,   null, false,   100, 0, null);
             
             //if (pageSize != 0)
             //{
