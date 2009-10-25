@@ -8,7 +8,7 @@
 		<!--  cmis service atompub rest url of cmis repository -->
 		<!--property name="cmisUrl" value="http://localhost:8080/alfresco/service/api/cmis"/-->
 		<!--property name="cmisUrl" value="http://localhost:8080/nuxeo/site/cmis/repository"/-->
-		<property name="cmisUrl" value="http://cmis.alfresco.com:80/service/api/cmis"/>
+		<property name="cmisUrl" value="http://cmis.alfresco.com:80/service/cmis"/>
 		
 		<!--  cmis service soap / webservice url --> 
 		<!--property name="cmisWebServicesUrl" value="http://localhost:80/alfresco/cmis"/-->
