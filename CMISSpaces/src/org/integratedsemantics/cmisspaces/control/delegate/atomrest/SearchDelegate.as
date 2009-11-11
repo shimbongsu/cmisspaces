@@ -15,6 +15,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
     import org.integratedsemantics.cmis.atom.CMISAtomEntry;
     import org.integratedsemantics.cmis.atom.CMISAtomFeed;
     import org.integratedsemantics.cmis.atom.CMISObject;
+    import org.integratedsemantics.cmis.atom.property.CMISProperty;
     import org.integratedsemantics.cmisspaces.model.config.CMISConfig;
     import org.integratedsemantics.flexspaces.model.AppModelLocator;
     import org.integratedsemantics.flexspaces.model.folder.Node;
@@ -166,9 +167,19 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
                         {
                             node.viewurl = content.src.toString();
                         }
-                    }                    node.mimetype = cmisObj.getContentStreamMimeType().getValue();            
+                    }                    
+                    
+                    node.mimetype = cmisObj.getContentStreamMimeType().getValue();            
+                    
                     node.size = cmisObj.getContentStreamLength().getValue();                                                                  
-                    node.isLocked = cmisObj.isVersionSeriesCheckedOut().getBooleanValue();                    
+                    
+                    node.isLocked = false;
+                    var checkedOutProp:CMISProperty = cmisObj.isVersionSeriesCheckedOut();
+                    if (checkedOutProp != null)
+                    {
+                        node.isLocked = checkedOutProp.getBooleanValue();
+                    }                    
+                    
                     // working copies not returned                
                     node.isWorkingCopy = false;                    
                 }
