@@ -1,10 +1,5 @@
 #CMIS Spaces In Browser
 
-= Introduction =
-
-
-= Details =
-
 Application Server
 
 1. Install "cmis-spaces" webapp folder  in your tomcat/webapps folder
