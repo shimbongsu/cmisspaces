@@ -11,6 +11,7 @@ Application Server
 
 2. Configure /cmis-spaces/cmis-spaces-flex/CMISSpacesConfig.xml
 
+3. The dynamic urls in cmis-spaces/WEB-INF/flex/proxy-config.xml need to have the cmis atompub service path for your repository (if not alfresco)
 
 Run in your browser
 
