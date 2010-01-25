@@ -56,11 +56,6 @@ package org.integratedsemantics.cmisspacesair.app
         	cmisSpacesAirPresModel.showWCM = false;
         	cmisSpacesAirPresModel.showShare = false;                       
             
-            if ((cmisConfig.crossDomainFileUrl != null) && (cmisConfig.crossDomainFileUrl != ""))
-            {
-                Security.loadPolicyFile(cmisConfig.crossDomainFileUrl);
-            }  
-
             model.configComplete = true;                                                                                                                                                                                                                    	                                       	 	                                                                                     
         }                        	
         
