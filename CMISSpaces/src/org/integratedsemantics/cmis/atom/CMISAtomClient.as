@@ -2,20 +2,13 @@ package org.integratedsemantics.cmis.atom
 {
     import com.adobe.net.URI;
     
-    import flash.events.ErrorEvent;
-    import flash.events.Event;
-    import flash.events.IOErrorEvent;
-    import flash.events.SecurityErrorEvent;
     import flash.utils.ByteArray;
     
     import org.coderepos.atompub.AtomMediaType;
     import org.coderepos.atompub.AtompubClient;
     import org.coderepos.atompub.AtompubRequest;
     import org.coderepos.xml.atom.AtomEntry;
-    import org.httpclient.events.HttpDataEvent;
-    import org.httpclient.events.HttpStatusEvent;
     import org.integratedsemantics.cmisspaces.model.config.CMISConfig;
-    import org.integratedsemantics.flexspaces.control.command.IUploadHandlers;
     import org.integratedsemantics.flexspaces.model.AppModelLocator;
 
 
@@ -30,9 +23,7 @@ package org.integratedsemantics.cmis.atom
 
             var model:AppModelLocator = AppModelLocator.getInstance();            
             
-            cmisConfig = model.ecmServerConfig as CMISConfig;         
-              
-            this.useSockets = cmisConfig.useSockets; 
+            cmisConfig = model.ecmServerConfig as CMISConfig;                       
         }
         
         public function createDoc(cmisChildrenUri:URI, docData:String, name:String, mimetype:String):void 
@@ -51,39 +42,34 @@ package org.integratedsemantics.cmis.atom
             newEntry.summary = name;
             newEntry.addCMISObject();
             
-            var atomNS:Namespace = new Namespace("atom", "http://www.w3.org/2005/Atom");                                   
-            
-            newEntry._src.atomNS::content = docData;   
-            newEntry._src.atomNS::content.@type = mimetype;     
+            var cmisraNS:Namespace = new Namespace("cmisra", CMISConstants.CMIS_RESTATOM);                                   
+
+            newEntry._src.cmisraNS::content.cmisraNS::mediatype = mimetype;
+            newEntry._src.cmisraNS::content.cmisraNS::base64 = docData;                  
                 
             var entryData:ByteArray = new ByteArray();       
-            //var line1:String = new String('<?xml version="1.0" encoding="utf-8"?>');       
             var xmlStr:String = newEntry.toXMLString();       
             entryData.writeUTFBytes(xmlStr);      
             entryData.position = 0;
       
             initializeHttpClient(onCompleteToCreateEntry);
-            //_client.listener.onComplete = onCompleteToCreateEntry;
             
             var req:AtompubRequest = new AtompubRequest("POST");
-            req.addHeader("Slug", name);
+            
             req.addHeader("Content-Type", AtomMediaType.ENTRY.toString());
-            req.body = entryData;
-    
-            if (useSockets == true)
+            
+            // test proxy
+            //req.body = entryData;
+            req.body = xmlStr; 
+            
+            if (cmisConfig.useProxy == true)
             {
-                request(cmisChildrenUri, req);          
-            }
+                requestHttpService(cmisChildrenUri, req);    
+            }            
             else
-            {
-                // only send basic auth header
-                //req.header.remove("Content-Length");
-                //req.header.remove("Content-Type");            
-                //req.header.remove("Slug"); 
-                //req.header.remove("Connection");
-                                           
-                requestURLLoader(cmisChildrenUri, req);                    
-            }                         
+            {                          
+                requestURLLoader(cmisChildrenUri, req); 
+            }                                            
         }
                 
         public function query(cmisQuery:String):void 
@@ -106,7 +92,6 @@ package org.integratedsemantics.cmis.atom
 				</cmis:query>;
 			
             var queryData:ByteArray = new ByteArray();       
-            //var line1:String = new String('<?xml version="1.0" encoding="utf-8"?>');       
             var xmlStr:String = queryXML.toXMLString();       
             queryData.writeUTFBytes(xmlStr);      
             queryData.position = 0;
@@ -119,19 +104,20 @@ package org.integratedsemantics.cmis.atom
     
             var queryCollectionURI:URI = new URI(cmisConfig.queryCollection);
             
-            if (useSockets == true)
+            // only send basic auth header
+            req.header.remove("Content-Length");
+            //req.header.remove("Content-Type");            
+            req.header.remove("Connection");
+            
+
+            if (cmisConfig.useProxy == true)
             {
-                request(queryCollectionURI, req);          
-            }
+                requestHttpService(queryCollectionURI, req);    
+            }            
             else
-            {
-                // only send basic auth header
-                req.header.remove("Content-Length");
-                //req.header.remove("Content-Type");            
-                req.header.remove("Connection");
-                
-                requestURLLoader(queryCollectionURI, req);                    
-            }  
+            {                          
+                requestURLLoader(queryCollectionURI, req); 
+            }                                           
         }
 
         public function createFolder(cmisChildrenUri:URI, folderName:String):void 
@@ -162,7 +148,6 @@ package org.integratedsemantics.cmis.atom
             var newEntry:CMISAtomEntry = new CMISAtomEntry(folderXML);           
             
             var entryData:ByteArray = new ByteArray();       
-            //var line1:String = new String('<?xml version="1.0" encoding="utf-8"?>');       
             var xmlStr:String = newEntry.toXMLString();       
             entryData.writeUTFBytes(xmlStr);      
             entryData.position = 0;
@@ -170,25 +155,20 @@ package org.integratedsemantics.cmis.atom
             initializeHttpClient(onCompleteToCreateEntry);
             
             var req:AtompubRequest = new AtompubRequest("POST");
-            req.addHeader("Slug", folderName);
             req.addHeader("Content-Type", AtomMediaType.ENTRY.toString());
-            req.body = entryData;
-    
-            if (useSockets == true)
+            
+            // test proxy
+            //req.body = entryData;
+            req.body = xmlStr;
+            
+            if (cmisConfig.useProxy == true)
             {
-                request(cmisChildrenUri, req);          
-            }
+                requestHttpService(cmisChildrenUri, req);    
+            }            
             else
-            {
-                // only send basic auth header
-                //req.header.remove("Content-Length");
-                //req.header.remove("Content-Type");            
-                //req.header.remove("Slug");       
-                //req.header.remove("Connection");
-                //req.header.remove("Connection");
-                     
-                requestURLLoader(cmisChildrenUri, req);                    
-            }                                   
+            {                          
+                requestURLLoader(cmisChildrenUri, req); 
+            }                             
         }
        
         public function checkin(uri:URI, entry:AtomEntry, major:Boolean, comment:String=""):void 
@@ -213,14 +193,14 @@ package org.integratedsemantics.cmis.atom
             uri.setQueryValue("major", major.toString());
             uri.setQueryValue("checkinComment", comment);
             
-            if (useSockets == true)
+            if (cmisConfig.useProxy == true)
             {
-                request(uri, req);          
-            }
+                requestHttpService(uri, req);    
+            }            
             else
-            {
-                requestURLLoader(uri, req);                    
-            }                                   
+            {                          
+                requestURLLoader(uri, req); 
+            }                   
         }  
                                                                  
     }

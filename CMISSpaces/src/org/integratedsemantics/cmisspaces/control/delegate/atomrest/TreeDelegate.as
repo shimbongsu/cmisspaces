@@ -107,6 +107,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
             for (var linkIndex:int = 0; linkIndex < feed.links.length; linkIndex++)
             {
                 var link:AtomLink = feed.links[linkIndex] as AtomLink;    
+                //if ((link.rel == "down") && (link.type != CMISConstants.MIMETYPE_CMIS_TREE))
                 if (link.rel == "self")
                 {
                     currentNode.cmisChildren = link.href.toString();

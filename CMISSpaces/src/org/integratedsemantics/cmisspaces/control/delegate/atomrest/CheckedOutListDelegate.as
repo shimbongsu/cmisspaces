@@ -106,13 +106,24 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
                 node.icon64 = model.appConfig.srcPath + "images/filetypes64/_default.png";                                    
                 node.thumbnailUrl = node.icon64;
                 node.type = "Document";
-                node.viewurl = cmisObj.getContentStreamURI().getValue();
+                
+                if (cmisObj.getContentStreamURI() != null)
+                {
+                    node.viewurl = cmisObj.getContentStreamURI().getValue();
+                }
                 
                 node.nodeRef = cmisObj.getObjectId().getValue();
                 node.id = node.nodeRef;
 
-                node.mimetype = cmisObj.getContentStreamMimeType().getValue();            
-                node.size = cmisObj.getContentStreamLength().getValue();                                                                  
+                if (cmisObj.getContentStreamMimeType() != null)
+                {
+                    node.mimetype = cmisObj.getContentStreamMimeType().getValue();            
+                }
+                
+                if (cmisObj.getContentStreamLength() != null)
+                {
+                    node.size = cmisObj.getContentStreamLength().getValue();                                                                  
+                }
                 
                 //node.isLocked = cmisObj.isVersionSeriesCheckedOut().getBooleanValue();
                 node.isLocked = false;

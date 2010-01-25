@@ -53,11 +53,6 @@ package org.integratedsemantics.cmisspaces.app
         	cmisSpacesPresModel.showTasks = false;
         	cmisSpacesPresModel.showWCM = false;                                     
             
-            if ((cmisConfig.crossDomainFileUrl != null) && (cmisConfig.crossDomainFileUrl != ""))
-            {
-                Security.loadPolicyFile(cmisConfig.crossDomainFileUrl);
-            }    
-            
             model.configComplete = true;                                             	                                       	 	                                                                         
         }                        	
                 

@@ -38,7 +38,7 @@ package org.httpclient {
    */
   public class HttpClient extends EventDispatcher {
 
-    private var _socket:HttpSocket;  
+    //sreiner private var _socket:HttpSocket;  
     private var _listener:*;
     private var _timeout:int;
     private var _proxy:URI;
@@ -91,7 +91,7 @@ package org.httpclient {
      * Cancel current request by closing the socket.
      */
     public function cancel():void {
-      _socket.close();
+      // sreiner _socket.close();
     }
     
     /**
@@ -111,13 +111,16 @@ package org.httpclient {
      * @param timeout Timeout (in millis)
      * @param listener Http listener to handle events, if null, the http client will handle events.
      */
-    public function request(uri:URI, request:HttpRequest, timeout:int = -1, listener:HttpListener = null):void {
+    public function request(uri:URI, request:HttpRequest, timeout:int = -1, listener:HttpListener = null):void 
+    {
+      /* sreiner took out use of sockets
       if (timeout == -1) timeout = _timeout;
       var dispatcher:EventDispatcher = null;
       if (listener != null) dispatcher = listener.register();
       else dispatcher = this;
       _socket = new HttpSocket(dispatcher, timeout, _proxy);
       _socket.request(uri, request);
+      */ 
     }
     
     /**

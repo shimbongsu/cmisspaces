@@ -11,12 +11,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 
-//
-// sreiner
-// todo: add an AIR mode that would leave in headers (that AIR allows) in non socket mode
-//
-
-
 package org.coderepos.atompub {
 
   import com.adobe.net.URI;
@@ -25,14 +19,9 @@ package org.coderepos.atompub {
   import flash.events.ErrorEvent;
   import flash.events.Event;
   import flash.events.EventDispatcher;
-  import flash.events.HTTPStatusEvent;
-  import flash.events.IEventDispatcher;
   import flash.events.IOErrorEvent;
-  import flash.events.ProgressEvent;
   import flash.events.SecurityErrorEvent;
   import flash.utils.ByteArray;
-  
-  import mx.controls.Alert;
   
   import org.coderepos.atompub.cache.*;
   import org.coderepos.atompub.credentials.*;
@@ -42,6 +31,8 @@ package org.coderepos.atompub {
   import org.httpclient.events.*;
   import org.httpclient.http.*;
   import org.integratedsemantics.cmis.atom.CMISAtomFeed;
+  import org.integratedsemantics.cmisspaces.model.config.CMISConfig;
+  import org.integratedsemantics.flexspaces.model.AppModelLocator;
   import org.integratedsemantics.util.HttpClient2;
   
   /**
@@ -236,8 +227,6 @@ package org.coderepos.atompub {
     protected var _lastRequestURI:URI;
     protected var _cache:AtompubCache;
     protected var _timeout:int;
-    // sreiner
-    public var useSockets:Boolean = true;
 
     /**
      * Constructor
@@ -434,6 +423,7 @@ package org.coderepos.atompub {
      * @param req
      * 
      */
+    /* sreiner took out use of sockets 
     protected function request(uri:URI, req:AtompubRequest):void {
       //trace("AtompubClient request()");  
       setCommonRequestHeaders(uri, req);
@@ -441,7 +431,8 @@ package org.coderepos.atompub {
       _lastRequestURI = uri;
       _client.request(uri, req, _timeout);      
     }
-
+    */
+    
     /**
      * Request using HttpService 
      * @param uri
@@ -497,19 +488,8 @@ package org.coderepos.atompub {
       //var parms:Array = [ { name: "name", value: "value" } ];
       //req.setFormData(parms);
       
-      if (useSockets == true)
-      {
-        request(uri, req);          
-      }
-      else
-      {
-          // only send basic auth header
-          req.header.remove("Content-Length");
-          req.header.remove("Content-Type");
-          req.header.remove("Connection");
-          
-          requestHttpService(uri, req);                                      
-      }      
+      // sreiner request(uri, req);          
+      requestHttpService(uri, req);                                      
     }
 
     protected function onCompleteToGetService(e:HttpResponseEvent):void
@@ -558,7 +538,7 @@ package org.coderepos.atompub {
       if (_isFetching) { throw new Error("AtompubClient is fetching."); };
       clear();
       initializeHttpClient(onCompleteToGetCategories);
-      request(uri, new AtompubRequest("GET"));
+      // sreiner request(uri, new AtompubRequest("GET"));
     }
 
     protected function onCompleteToGetCategories():void {
@@ -611,19 +591,8 @@ package org.coderepos.atompub {
 
         var req:AtompubRequest = new AtompubRequest("GET");
         
-        if (useSockets == true)
-        {
-            request(uri, req);          
-        }
-        else
-        {
-            // only send basic auth header
-            req.header.remove("Content-Length");
-            req.header.remove("Content-Type");
-            req.header.remove("Connection");
-            
-            requestHttpService(uri, req);                    
-        }                      
+        // sreiner request(uri, req);          
+        requestHttpService(uri, req);                    
     }
 
     // sreiner httpclient now returns e:HttpResponseEvent
@@ -686,20 +655,9 @@ package org.coderepos.atompub {
             req.addHeader("If-Modified-Since", cr.lastModified);
         }
       }
-      if (useSockets == true)
-      {
-        request(uri, req);
-      }
-      else
-      {
-          // only send basic auth header
-          req.header.remove("Content-Length");
-          req.header.remove("Content-Type");
-          req.header.remove("Connection");
-          
-          requestHttpService(uri, req);                              
-      }    
-          
+      
+      // sreiner request(uri, req);
+      requestHttpService(uri, req);                                        
     }
 
     protected function setCacheResourceForCurrentResponse():void
@@ -798,7 +756,7 @@ package org.coderepos.atompub {
         if (cr.lastModified)
           req.addHeader("If-Modified-Since", cr.lastModified);
       }
-      request(uri, req);
+      // sreiner request(uri, req);
     }
 
     protected function onCompleteToGetMedia():void {
@@ -862,24 +820,27 @@ package org.coderepos.atompub {
       
         var req:AtompubRequest = new AtompubRequest("POST");
       
-        if (slug != null)
-        {
-          req.addHeader("Slug", encodeURIComponent(decodeURIComponent(slug)));
-        }
+        //if (slug != null)
+        //{
+        //  req.addHeader("Slug", encodeURIComponent(decodeURIComponent(slug)));
+        //}
         req.addHeader("Content-Type", AtomMediaType.ENTRY.toString());
       
         req.body = content;
       
-        if (useSockets == true)
+        //sreiner request(uri, req);          
+        //req.header.remove("Connection");
+        
+        var model:AppModelLocator = AppModelLocator.getInstance();
+        var cmisConfig:CMISConfig = CMISConfig(model.ecmServerConfig);
+        if (cmisConfig.useProxy == true)
         {
-            request(uri, req);          
-        }
+            requestHttpService(uri, req);    
+        }            
         else
-        {
-            //req.header.remove("Connection");
-            
-            requestURLLoader(uri, req);                    
-        }                            
+        {                          
+            requestURLLoader(uri, req); 
+        }                                          
     }
 
     protected function onCompleteToCreateEntry(event:HttpResponseEvent):void {
@@ -946,7 +907,7 @@ package org.coderepos.atompub {
         req.addHeader("Slug", encodeURIComponent(decodeURIComponent(slug)));
       req.addHeader("Content-Type", type);
       req.body = content;
-      request(uri, req);
+      // sreiner request(uri, req);
     }
 
     protected function onCompleteToCreateMedia():void {
@@ -1015,7 +976,7 @@ package org.coderepos.atompub {
       var content:ByteArray = new ByteArray();
       content.writeUTFBytes(entry.toXMLString());
       req.body = content;
-      request(uri, req);
+      // sreiner request(uri, req);
     }
 
     protected function onCompleteToUpdateEntry(event:HttpResponseEvent):void {
@@ -1081,7 +1042,7 @@ package org.coderepos.atompub {
           req.addHeader("If-Not-Modified-Since", cr.lastModified);
       }
       req.body = content;
-      request(uri, req);
+      // sreiner request(uri, req);
     }
 
     protected function onCompleteToUpdateMedia():void {
@@ -1138,19 +1099,20 @@ package org.coderepos.atompub {
          
         var req:AtompubRequest = new AtompubRequest("DELETE");
         
-        if (useSockets == true)
+        // sreiner request(uri, req);          
+                  
+        // todo: add check for non air, and put up msg not supported unless using proxy
+        
+        var model:AppModelLocator = AppModelLocator.getInstance();
+        var cmisConfig:CMISConfig = CMISConfig(model.ecmServerConfig);
+        if (cmisConfig.useProxy == true)
         {
-            request(uri, req);          
-        }
+            requestHttpService(uri, req);    
+        }            
         else
-        {
-            // only send basic auth header
-            //req.header.remove("Connection"); 
-                      
-            // todo: add check for non air, and put up msg not supported
-                                      
-            requestURLLoader(uri, req);                    
-        }                                   
+        {                          
+            requestURLLoader(uri, req); 
+        }                   
     }
 
     protected function onCompleteToDeleteEntry(event:HttpResponseEvent):void
@@ -1185,7 +1147,7 @@ package org.coderepos.atompub {
       if (_isFetching) { throw new Error("AtompubClient is fetching."); };
       clear(); 
       initializeHttpClient(onCompleteToDeleteMedia);
-      request(uri, new AtompubRequest("DELETE"));
+      // sreiner request(uri, new AtompubRequest("DELETE"));
     }
 
     protected function onCompleteToDeleteMedia():void {

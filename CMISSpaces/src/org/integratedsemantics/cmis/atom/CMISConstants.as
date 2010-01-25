@@ -13,6 +13,7 @@ package org.integratedsemantics.cmis.atom
         // Namespace
         public static const CMIS_CORE:String = "http://docs.oasis-open.org/ns/cmis/core/200908/";
         public static const CMIS_RESTATOM:String = "http://docs.oasis-open.org/ns/cmis/restatom/200908/";
+        public static const ATOM:String = "http://www.w3.org/2005/Atom";
         
         // Mimetypes
         public static const MIMETYPE_QUERY:String = "application/cmisquery+xml";

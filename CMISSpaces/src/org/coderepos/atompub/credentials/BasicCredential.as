@@ -12,7 +12,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 package org.coderepos.atompub.credentials {
 
-  //import com.hurlant.util.Base64;
+  //sreiner import com.hurlant.util.Base64;
   import com.adobe.net.URI;
   
   import mx.utils.Base64Encoder;
