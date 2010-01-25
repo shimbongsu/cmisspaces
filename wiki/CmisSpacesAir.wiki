@@ -11,4 +11,4 @@ Install Instructions
 
 2. Run CMISSpacesAir-BldNum.air 
 
-2. The CMISSpacesConfig.xml file (in <program files>/CMISSpaces needs to be configured for the CMIS atompub service URL for your  repository.
+2. The CMISSpacesConfig.xml file in <program files>/CMISSpaces needs to be configured for the CMIS atompub service URL for your  repository.
