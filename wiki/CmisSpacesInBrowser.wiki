@@ -1,0 +1,17 @@
+#CMIS Spaces In Browser
+
+= Introduction =
+
+
+= Details =
+
+Application Server
+
+1. Install "cmis-spaces" webapp folder  in your tomcat/webapps folder
+
+2. Configure /cmis-spaces/cmis-spaces-flex/CMISSpacesConfig.xml
+
+
+Run in your browser
+
+http://localhost:8080/cmis-spaces/cmis-spaces-flex/CMISSpaces.html
