@@ -1,4 +1,3 @@
-
 Application Server:
 
 1. Install "cmis-spaces" webapp folder  in your tomcat/webapps folder
@@ -7,6 +6,10 @@ Application Server:
 
 3. The dynamic urls in cmis-spaces/WEB-INF/flex/proxy-config.xml need to have the cmis atompub service path for your repository (if not alfresco)
 
-Run in your browser:
+Client machine:
+
+1. Install Flash player 10 or newer (requires a flash 10 feature) for your browser
+
+2. Run in your browser:
 
 http://localhost:8080/cmis-spaces/cmis-spaces-flex/CMISSpaces.html
