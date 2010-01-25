@@ -1,4 +1,4 @@
-CMIS Spaces AIR
+CMIS Spaces AIR Install instructions:
 
 1. Install Adobe AIR 1.5+
 
