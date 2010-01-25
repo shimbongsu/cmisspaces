@@ -13,7 +13,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
     import flash.net.URLRequest;
     import flash.net.URLRequestHeader;
     import flash.net.URLRequestMethod;
-    import flash.net.URLVariables;
+    import flash.utils.ByteArray;
     
     import mx.rpc.IResponder;
     import mx.rpc.events.ResultEvent;
@@ -76,25 +76,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
             this.statusHandlers = statusHandlers;
             this.nodeType = nodeType;
             
-            // cmis
-            var model:AppModelLocator = AppModelLocator.getInstance();
-            var cmisConfig:CMISConfig = model.ecmServerConfig as CMISConfig;           
-                        
             cmisParent = parentNode as Node;
-            var url:String = cmisParent.cmisSelf;
-            
-            // setup the url request
-
-        	this.uploadURLRequest = new URLRequest(url);
-            
-            var encoder:Base64Encoder = new Base64Encoder();
-            encoder.encode(model.userInfo.loginUserName + ":" + model.userInfo.loginPassword);
-            var authHeader:URLRequestHeader = new URLRequestHeader("Authorization", "Basic " + encoder.toString());
-            uploadURLRequest.requestHeaders.push(authHeader);		
-            var contentTypeHeader:URLRequestHeader = new URLRequestHeader("Content-Type", AtomMediaType.ENTRY.toString());            	
-            uploadURLRequest.requestHeaders.push(contentTypeHeader);		
-
-            uploadURLRequest.method = URLRequestMethod.POST;
             
             folderPath = parentNode.getPath();
             
@@ -120,19 +102,30 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
             this.statusHandlers = statusHandlers;
             this.existingNode = repoNode;
             
+            // todo
+            
+            // cmis
+            var model:AppModelLocator = AppModelLocator.getInstance();
+            var cmisConfig:CMISConfig = model.ecmServerConfig as CMISConfig;                                   
+            
             // setup the url request
 
-            var model:AppModelLocator = AppModelLocator.getInstance();
-            if (model.ecmServerConfig.isLiveCycleContentServices == true)
-            {
-                //var url:String = ConfigService.instance.url +  "/flexspaces/uploadExisting";
-            }
-            else
-            {
-                //url = ConfigService.instance.url +  "/flexspaces/uploadExisting" + "?alf_ticket=" + AuthenticationService.instance.ticket;            	
-            }            
-            //this.uploadURLRequest = new URLRequest(url);
-            //uploadURLRequest.method = URLRequestMethod.POST;
+            this.uploadURLRequest = new URLRequest();
+            
+            var encoder:Base64Encoder = new Base64Encoder();
+            encoder.encode(model.userInfo.loginUserName + ":" + model.userInfo.loginPassword);
+            var authHeader:URLRequestHeader = new URLRequestHeader("Authorization", "Basic " + encoder.toString());
+            uploadURLRequest.requestHeaders.push(authHeader);       
+            var contentTypeHeader:URLRequestHeader = new URLRequestHeader("Content-Type", AtomMediaType.ENTRY.toString());              
+            uploadURLRequest.requestHeaders.push(contentTypeHeader);        
+
+            var methodOverrideHeader:URLRequestHeader = new URLRequestHeader("X-HTTP-Method-Override", "PUT");              
+            uploadURLRequest.requestHeaders.push(methodOverrideHeader);        
+
+            uploadURLRequest.method = URLRequestMethod.POST;
+
+            // todo
+            // uploadURLRequest.url =  needs to be set to edit media link url
             
             //pendingFiles = new Array();
             //addPendingFile(fileRef);
@@ -179,64 +172,8 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
                     file.addEventListener(HTTPStatusEvent.HTTP_STATUS, statusHandlers.httpStatusHandler);                    
                 }
 
-                var params:URLVariables = new URLVariables();
-
-                if (existingNode != null)
-                {
-                    if (storeId == null)
-                    {
-                        params.nodeid = existingNode.getId();
-                    }
-                    else
-                    {
-                        params.storeid = storeId;
-                        params.path = existingNode.getPath();              
-                    }
-                }
-                else
-                {
-                    if (storeId == null)
-                    {
-                        params.path = folderPath;         
-                    }
-                    else
-                    {
-                        params.storeid = storeId;
-                        params.path = folderPath;
-                    }                                        
-                }
-                                
-                params.mimetype = FormatUtil.getMimeType(file);
-                
-                //params.thumbnails = "doclib";
-                
-                params.type = nodeType;                
-                
-                uploadURLRequest.data = params;
-                
-                // cmisfile.upload(uploadURLRequest, "file");
-                
-            var client:CMISAtomClient = new CMISAtomClient();
-            var model:AppModelLocator = AppModelLocator.getInstance();
-            client.credential = new BasicCredential(model.userInfo.loginUserName, model.userInfo.loginPassword);
-       
-            client.addEventListener(AtompubEvent.CREATE_ENTRY_COMPLETED, onCompletedToCreateEntry);
-            client.addEventListener(AtompubEvent.CREATE_ENTRY_FAILED, onFailedToCreateEntry);
-               
-            //var newEntry:CMISAtomEntry = new CMISAtomEntry();
-            //newEntry.title = file.name;
-            //newEntry.summary = "This is a new entry";
-            //newEntry.addCMISObject();
-           
-            //client.createEntry(new URI(cmisParent.cmisChildren), newEntry, file.name);
-            
-            var mimetype:String = FormatUtil.getMimeType(file);
-            
-            // create doc                 
-            client.createDoc(new URI(cmisParent.cmisChildren), "", file.name, mimetype);
-            
-            // find a way to set content stream as a second step              
-                
+                // load the file (flashplayer 10 or newer only) to get the file data   
+                file.load();                            
             }
             catch (error:Error)
             {
@@ -244,19 +181,6 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
             }
         }
              
-
-        private function onCompletedToCreateEntry(event:AtompubEvent):void 
-        {
-          var location:URI = event.result.location;
-          var entry:AtomEntry = event.result.entry;
-        }
-       
-        private function onFailedToCreateEntry(event:AtompubEvent):void 
-        {
-          var message:String = "Error: [" + event.result.code + "] " + event.result.message; 
-          //showErrorMessage(message);
-        }
-     
         /**
          * Remove file from list of pending files to upload
          * 
@@ -278,7 +202,67 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
                 }
             }
         }
-          
+
+        private function onCompletedToCreateEntry(event:AtompubEvent):void 
+        {
+            var location:URI = event.result.location;
+            var entry:AtomEntry = event.result.entry;      
+            
+            var title:String = entry.title;
+            for (var i:uint=0; i < pendingFiles.length; i++)
+            {
+                if (pendingFiles[i].name == title) 
+                {
+                    var file:FileReference = pendingFiles[i] as FileReference;
+                    trace("UploadFilesDelegate onCompletedToCreateEntry: name=" + file.name);
+                    result.push(file.name);
+                    removePendingFile(file);
+                    if (statusHandlers != null)
+                    {
+                        statusHandlers.complete(file);
+                    }                            
+                    break;
+                }
+            }                  
+        }
+       
+        private function onFailedToCreateEntry(event:AtompubEvent):void 
+        {
+            var message:String = "Error: [" + event.result.code + "] " + event.result.message; 
+            trace("onFailedToCreateEntry: " + message);
+        }
+              
+        /**
+         * File upload complete handler
+         *  
+         * @param event complete event
+         * 
+         */
+        protected function completeHandler(event:Event):void
+        {
+            var file:FileReference = FileReference(event.target);            
+           
+            //trace("completeHandler: name=" + file.name);
+
+            // create doc with loaded file data
+            
+            var client:CMISAtomClient = new CMISAtomClient();
+            var model:AppModelLocator = AppModelLocator.getInstance();
+            client.credential = new BasicCredential(model.userInfo.loginUserName, model.userInfo.loginPassword);
+       
+            client.addEventListener(AtompubEvent.CREATE_ENTRY_COMPLETED, onCompletedToCreateEntry);
+            client.addEventListener(AtompubEvent.CREATE_ENTRY_FAILED, onFailedToCreateEntry);
+               
+            var mimetype:String = FormatUtil.getMimeType(file);
+            
+            var encoder:Base64Encoder = new Base64Encoder();      
+            var bytes:ByteArray = ByteArray(file.data);      
+            encoder.encodeBytes(bytes);
+            var encodedStr:String = encoder.toString();
+                       
+            client.createDoc(new URI(cmisParent.cmisChildren), encodedStr, file.name, mimetype);            
+        }
+
         /**
          * File open event
          * 
@@ -302,21 +286,9 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
             var file:FileReference = FileReference(event.target);
             //trace("progressHandler: name=" + file.name + " bytesLoaded=" + event.bytesLoaded + " bytesTotal=" + event.bytesTotal);
         }
-     
+          
         /**
-         * File upload complete handler
-         *  
-         * @param event complete event
-         * 
-         */
-        protected function completeHandler(event:Event):void
-        {
-            var file:FileReference = FileReference(event.target);
-            //trace("completeHandler: name=" + file.name);
-        }
-     
-        /**
-         * File uploaded and data returned event handler
+         * File loaded and data returned event handler
          * (note: this event requires at least flash 9.028)
          *  
          * @param event upload data complete event
@@ -326,8 +298,6 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
         {
             var file:FileReference = FileReference(event.target);
             //trace("uploadCompleteDataHandler: name=" + file.name);
-            result.push(event.data);
-            removePendingFile(file);
         }
 
         /**
@@ -363,8 +333,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
         {
             var file:FileReference = FileReference(event.target);
             trace("securityErrorHandler: name= " + file.name + ", error text: " + event.text);
-        }                 
-        
+        }                         
         
     }
 }

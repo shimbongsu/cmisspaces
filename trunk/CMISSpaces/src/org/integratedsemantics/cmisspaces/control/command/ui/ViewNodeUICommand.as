@@ -68,8 +68,7 @@ package org.integratedsemantics.cmisspaces.control.command.ui
         {
             var model : AppModelLocator = AppModelLocator.getInstance();                            
             var selectedItem:Object = event.selectedItem;
-            //var urlStr:String = selectedItem.viewurl;
-            var urlStr:String = "http://localhost:8080/index.html";
+            var urlStr:String = selectedItem.viewurl;
             
             var loader:URLLoader = new URLLoader();
             configureListeners(loader);
@@ -77,7 +76,7 @@ package org.integratedsemantics.cmisspaces.control.command.ui
             var creds:String = model.userInfo.loginUserName + ":" + model.userInfo.loginPassword;
        
             var request:URLRequest = new URLRequest(urlStr);
-            request.data = new URLVariables("name=John+Doe");
+            //request.data = new URLVariables("name=John+Doe");
             request.method = URLRequestMethod.GET;
            
             var header:URLRequestHeader;

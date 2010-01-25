@@ -26,29 +26,29 @@ package org.integratedsemantics.cmis.atom
         }  
 
         private var objXML:XML = 
-        <cmis:object xmlns:cmis="http://docs.oasis-open.org/ns/cmis/core/200908/">
+        <cmisra:object xmlns:cmis="http://docs.oasis-open.org/ns/cmis/core/200908/"
+                       xmlns:cmisra="http://docs.oasis-open.org/ns/cmis/restatom/200908/">
             <cmis:properties>
-                <cmis:propertyId cmis:name="ObjectTypeId">
-                    <cmis:value>document</cmis:value>
+                <cmis:propertyId propertyDefinitionId="cmis:objectTypeId">
+                    <cmis:value>cmis:document</cmis:value>
                 </cmis:propertyId>
             </cmis:properties>
-        </cmis:object>;
+        </cmisra:object>;
 
         private var contentXML:XML =
         <content type="text/plain"></content>;
                 
         public function addCMISObject():void
         {
-            var cmis:Namespace = new Namespace("cmis", CMISConstants.CMIS_CORE); 
-            var atomNS:Namespace = new Namespace("atom", "http://www.w3.org/2005/Atom");                                   
+            var cmisNS:Namespace = new Namespace("cmis", CMISConstants.CMIS_CORE); 
+            var atomNS:Namespace = new Namespace("atom", CMISConstants.ATOM);  
+            var cmisraNS:Namespace = new Namespace("cmisra", CMISConstants.CMIS_RESTATOM);                                                                                
             _src.setNamespace(atomNS);
-            _src.addNamespace(cmis);
-            
-            var contentElem:AtomElement = new AtomElement(contentXML);           
-            addAtomElement(atomNS, "content", contentElem);            
+            _src.addNamespace(cmisNS);
+            _src.addNamespace(cmisraNS);
             
             var cmisObj:CMISObject = new CMISObject(objXML);       
-            addAtomElement(cmis, "object", cmisObj);                                    
+            addAtomElement(cmisraNS, "object", cmisObj);                                    
         }      
         
     }

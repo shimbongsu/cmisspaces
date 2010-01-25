@@ -13,7 +13,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 package org.coderepos.xml.atom {
 
   import flash.utils.ByteArray;
-  import com.hurlant.util.Base64;
+  // sreiner import com.hurlant.util.Base64;
   import com.adobe.net.URI;
 
   public class AtomContent extends AtomElement {

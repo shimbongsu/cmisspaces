@@ -13,6 +13,9 @@ package org.integratedsemantics.util
 	import flash.net.URLRequestHeader;
 	import flash.utils.ByteArray;
 	
+	import mx.messaging.ChannelSet;
+	import mx.messaging.channels.HTTPChannel;
+	import mx.messaging.channels.SecureHTTPChannel;
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
 	import mx.rpc.http.HTTPService;
@@ -26,6 +29,8 @@ package org.integratedsemantics.util
 	import org.httpclient.events.HttpRequestEvent;
 	import org.httpclient.events.HttpResponseEvent;
 	import org.httpclient.events.HttpStatusEvent;
+	import org.integratedsemantics.cmisspaces.model.config.CMISConfig;
+	import org.integratedsemantics.flexspaces.model.AppModelLocator;
     
 	[Event(name=Event.CLOSE, type="flash.events.Event")]  
 
@@ -46,7 +51,6 @@ package org.integratedsemantics.util
 	 * in addition to Socket request support in HttpClient
 	 * (note that URLLoader and HttpService requests have limitations in Flex
 	 * in terms of the headers and http methods use can use 
-	 * (Flex+Browser more limited than Flex+AIR)
 	 *  
 	 */
 	public class HttpClient2 extends HttpClient
@@ -71,13 +75,14 @@ package org.integratedsemantics.util
 
 			var request:URLRequest = new URLRequest(uri.toString());		
 			
+
             var headers:Array = httpRequest.header._headers;
             for (var h:int = 0; h < headers.length; h++)
             {
                 var header:URLRequestHeader = new URLRequestHeader(headers[h]["name"], headers[h]["value"]);
                 request.requestHeaders.push(header);		
             }
-
+            
             request.method = httpRequest.method;                        
 
 			request.data = httpRequest.body;
@@ -131,13 +136,38 @@ package org.integratedsemantics.util
 			
 			dispatchEvent(new HttpRequestEvent(httpRequest, httpRequest.header.toString(), HttpRequestEvent.CONNECT));
 			dispatchEvent(new HttpRequestEvent(httpRequest, httpRequest.header.toString()));
-
-			httpService.send();
+			
+            var model:AppModelLocator = AppModelLocator.getInstance();
+            var cmisConfig:CMISConfig = CMISConfig(model.ecmServerConfig);
+            
+            if (cmisConfig.useProxy == true)
+            {
+    			if ( (httpRequest.method == "POST") || (httpRequest.method == "PUT") || (httpRequest.method == "DELETE") )
+    			{
+        			httpService.useProxy = true;
+        
+                    if (model.remotingChannelSet == null)
+                    {
+                        setupChannels();
+                    }                   
+                    httpService.channelSet = model.remotingChannelSet;
+                    var body:String = String(httpRequest.body);
+                    httpService.send(body);
+                }
+                else
+                {
+                    httpService.send();                    
+                }
+            }
+            else
+            {
+			    httpService.send();
+            }
 		}
 
 		private function onStatus(e:HTTPStatusEvent):void 
 		{
-		    //trace("URLLoaderHttpClient onStatus()");
+		    trace("URLLoaderHttpClient onStatus()");
 
     		// todo create/init diff type status: HttpStatusEvent
     		//dispatchEvent(e.clone());
@@ -145,28 +175,28 @@ package org.integratedsemantics.util
 
 		private function onProgress(e:ProgressEvent):void 
 		{
-		    //trace("URLLoaderHttpClient onProgress()");
+		    trace("URLLoaderHttpClient onProgress()");
 
 			dispatchEvent(e.clone());
 		}
 		
 		private function onIOError(e:IOErrorEvent):void 
 		{
-		    //trace("URLLoaderHttpClient onIOError()");
+		    trace("URLLoaderHttpClient onIOError()");
 
 			dispatchEvent(e.clone());
 		}
 		
 		private function onSecurityError(e:SecurityErrorEvent):void 
 		{
-		    //trace("URLLoaderHttpClient onSecurityError()");
+		    trace("URLLoaderHttpClient onSecurityError()");
 
 			dispatchEvent(e.clone());
 		}
 		
 		private function onComplete(event:Event):void 
 		{
-		    //trace("URLLoaderHttpClient onComplete()");
+		    trace("URLLoaderHttpClient onComplete()");
 
 			var loader:URLLoader = URLLoader(event.target);
 		    
@@ -186,17 +216,20 @@ package org.integratedsemantics.util
 		
 		private function onFault(event:FaultEvent):void 
 		{
-		    //trace("URLLoaderHttpClient onFault()");
+		    trace("URLLoaderHttpClient onFault()");
 		}
 		
 		private function onResult(event:ResultEvent):void 
 		{
-		    //trace("URLLoaderHttpClient onResult()");
+		    trace("URLLoaderHttpClient onResult()");
 
-			var strData:String = event.result as String
-			var ba:ByteArray = new ByteArray()
-			ba.writeUTFBytes(strData); 
-		    
+			var ba:ByteArray = new ByteArray();
+            if (event.result != null)
+            {
+                var strData:String = event.result as String
+    			ba.writeUTFBytes(strData); 
+            }
+            
 			var headers:Array = [];      
 			
 			var httpResponse:HttpResponse = new HttpResponse("1.1", "200", "", new HttpHeader(headers));
@@ -209,7 +242,35 @@ package org.integratedsemantics.util
 
 			//construct response event
 			dispatchEvent(new HttpResponseEvent(httpResponse));			
-		}	
+		}
+		
+        private function setupChannels():void
+        {
+            var model:AppModelLocator = AppModelLocator.getInstance();
+            
+            var cmisConfig:CMISConfig = CMISConfig(model.ecmServerConfig);
+                     
+            var channelSet:ChannelSet = new ChannelSet();
+
+            var baseUrl:String = cmisConfig.proxyProtocol + "://" + cmisConfig.proxyDomain + ":" + cmisConfig.proxyPort + cmisConfig.proxyPrefixUrl;   
+
+            if (cmisConfig.proxyProtocol == "http")
+            {
+                var channelUrl:String = baseUrl + "/messagebroker/http";
+                var channelId:String = "remoting-http";
+                var channel:HTTPChannel = new HTTPChannel(channelId, channelUrl);            
+                channelSet.addChannel(channel);
+            }
+            else if (cmisConfig.proxyProtocol == "https")
+            {   
+                var channelUrl3:String = baseUrl + "/messagebroker/httpsecure";
+                var channelId3:String = "remoting-secure-http";
+                var channel3:SecureHTTPChannel = new SecureHTTPChannel(channelId3, channelUrl3);            
+                channelSet.addChannel(channel3);
+            }                                                                                   
+            model.remotingChannelSet = channelSet;  
+        }
+			
 				
 	}
 	

@@ -6,10 +6,12 @@ package org.httpclient {
   
   import com.adobe.net.URI;
   import com.adobe.net.URIEncodingBitmap;
-  import com.hurlant.util.Base64;
+  
   import flash.errors.IllegalOperationError;
-
   import flash.utils.ByteArray;
+  
+  import mx.utils.Base64Encoder;
+  
   import org.httpclient.http.multipart.Multipart;
 
   public class HttpRequest {
@@ -57,12 +59,12 @@ package org.httpclient {
      * Include headers here that are global to every request.
      */
     protected function loadDefaultHeaders():void {
-      addHeader("Connection", "close");      
+      // sreiner addHeader("Connection", "close");      
       
-      //addHeader("Accept-Encoding", "gzip, deflate");
-      //addHeader("Accept-Language", "en-us");            
-      //addHeader("User-Agent", "as3httpclientlib 0.1");
-      //addHeader("Accept", "*/*");
+      //sreiner addHeader("Accept-Encoding", "gzip, deflate");
+      //sreiner addHeader("Accept-Language", "en-us");            
+      //sreiner addHeader("User-Agent", "as3httpclientlib 0.1");
+      //sreiner addHeader("Accept", "*/*");
     }
     
     /**
@@ -99,7 +101,8 @@ package org.httpclient {
      */
     public function set body(body:*):void {
       _body = body;
-      _header.replace("Content-Length", _body.length);
+      // todo is this needed
+      //_header.replace("Content-Length", _body.length);
     }
     
     /**
@@ -188,7 +191,10 @@ package org.httpclient {
       
       if (proxy && proxy.username && proxy.password) {
         var credential:String = proxy.username + ":" + proxy.password;
-        addHeader("Proxy-Authorization", "Basic " + Base64.encode(credential));
+        // sreiner addHeader("Proxy-Authorization", "Basic " + Base64.encode(credential));
+        var encoder:Base64Encoder = new Base64Encoder();      
+        encoder.encode(credential);
+        addHeader("Proxy-Authorization", "Basic " + encoder.toString());
       }
 
       if (!header.isEmpty)

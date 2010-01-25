@@ -127,13 +127,20 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
             propertiesVO.title = entry.title;
             propertiesVO.description = entry.summary;
             propertiesVO.author = entry.author.name;
-            propertiesVO.size = cmisObj.getContentStreamLength().getValue();
+            if (cmisObj.getContentStreamLength() != null)
+            {
+                propertiesVO.size = cmisObj.getContentStreamLength().getValue();
+            }
             propertiesVO.creator = cmisObj.getCreatedBy().getValue();
             propertiesVO.created = cmisObj.getCreationDate().getValue();
             propertiesVO.modifier = cmisObj.getLastModifiedBy().getValue();
             propertiesVO.modified = cmisObj.getLastModificationDate().getValue();
             propertiesVO.emailid = "";
-            propertiesVO.mimetype = cmisObj.getContentStreamMimeType().getValue();
+            if (cmisObj.getContentStreamMimeType() != null)
+            {
+                propertiesVO.mimetype = cmisObj.getContentStreamMimeType().getValue();
+            }
+            
             if (baseType == "folder")
             {
                 propertiesVO.isFolder = true;

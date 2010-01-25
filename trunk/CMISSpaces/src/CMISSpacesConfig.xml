@@ -3,30 +3,33 @@
          xsi:schemaLocation="http://www.pranaframework.org/objects
                              http://www.pranaframework.org/schema/objects/prana-objects-0.6.xsd">
 
-	<object id="cmisConfig" class="org.integratedsemantics.cmisspaces.model.config.CMISConfig">
-	
-		<!--  cmis service atompub rest url of cmis repository -->
-		<!--property name="cmisUrl" value="http://localhost:8080/alfresco/service/api/cmis"/-->
-		<!--property name="cmisUrl" value="http://localhost:8080/nuxeo/site/cmis/repository"/-->
-		<property name="cmisUrl" value="http://cmis.alfresco.com:80/service/cmis"/>
-		
-		<!--  cmis service soap / webservice url --> 
-		<!--property name="cmisWebServicesUrl" value="http://localhost:80/alfresco/cmis"/-->
-		<property name="cmisWebServicesUrl" value="http://cmis.alfresco.com:80/cmis"/>
-        
-		<!-- whether to use soap web services or rest atom apis -->  
-		<property name="useWebServices" value="false"/>
-		
-		<!-- (for both flex+browser and flex+air) path to cross domain file to load (say from Tomcat ROOT webapp)
-		    1. "allow-access-from domain= to-ports=" needed to use flash sockets api even on local domain, 
-		    2. allow use of http headers even on local domain with "allow-http-request-headers-from domain= headers=",		
-		    3. and "allow-access-from domain= to-ports=" for cross domain use --> 
-		<property name="crossDomainFileUrl" value="http://localhost:8080/crossdomain.xml"/>  			
+   <object id="cmisConfig" class="org.integratedsemantics.cmisspaces.model.config.CMISConfig">
 
-		<!-- whether to use sockets or non sockets (HttpService, URLLoader) communication -->  
-		<property name="useSockets" value="false"/>
-					
-	</object>
+        <!-- web app with blazeds (or lcds) proxy to be able to do crud in cmis spaces "non-air" browser version -->
+        <!-- (thus allows do http put, delete), set useProxy to true -->
+        <!-- for cmis spaces air, on client computer, set userProxy to false -->
+        <property name="useProxy" value="false"/>
+        <property name="proxyPrefixUrl" value="/cmis-spaces"/>
+        <property name="proxyProtocol" value="http"/>
+        <property name="proxyDomain" value="localhost"/>
+        <property name="proxyPort" value="8080"/>
+   
+        <!--  cmis service atompub rest url of cmis repository -->
+        <property name="cmisUrl" value="http://localhost:8080/alfresco/service/api/cmis"/>
+        <!-- property name="cmisUrl" value="http://cmis.alfresco.com:80/service/cmis"/-->
+        <!-- property name="cmisUrl" value="http://localhost:8080/nuxeo/site/cmis/repository"/-->
+        <!-- property name="cmisUrl" value="http://cmis.demo.nuxeo.org/nuxeo/site/cmis/repository"/-->        
+        <!-- property name="cmisUrl" value="http://localhost:9080/emc-cmis-ea/resources/"/-->
+
+        <!-- whether to use cmis soap web services (true) or cmis atompub rest apis (false) -->  
+        <property name="useWebServices" value="false"/>
+      
+        <!--  cmis service soap / webservice url --> 
+        <property name="cmisWebServicesUrl" value="http://localhost:8080/alfresco/cmis"/>
+        <!-- property name="cmisWebServicesUrl" value="http://cmis.alfresco.com:80/cmis"/-->
+        <!-- property name="cmisWebServicesUrl" value="http://localhost:9080/emc-cmis-ea/services"/-->              
+      
+   </object>
 
     <object id="appConfig" class="org.integratedsemantics.flexspaces.model.global.AppConfig">
         <!-- default locale -->  

@@ -10,16 +10,19 @@ package org.integratedsemantics.cmisspaces.model.config
     	// url for rest atom
         public var cmisUrl:String;
         
+        // info for web app with blazeds/lcds proxy for non-air browser version
+        public var useProxy:Boolean = false;
+        public var proxyPrefixUrl:String;
+        public var proxyProtocol:String;
+        public var proxyDomain:String;
+        public var proxyPort:String;
+        
         // url for webservices
         public var cmisWebServicesUrl:String;
         
         // whether to use web services or rest atom apis
         public var useWebServices:Boolean;
 
-	    public var crossDomainFileUrl:String;
-	        
-	    public var useSockets:Boolean = true;
-        
         //  Info back from CMIS REST Atom               
         // cmis collection urls returned by main cmis service url
         public var cmisRootChildren:String;
