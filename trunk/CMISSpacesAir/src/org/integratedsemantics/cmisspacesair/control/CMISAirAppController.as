@@ -43,6 +43,8 @@ package org.integratedsemantics.cmisspacesair.control
 
             addCommand(AirOfflineUploadUIEvent.AIR_OFFLINE_UPLOAD, AirOfflineUploadUICommand);
             
+            addCommand(AirOfflineEditUIEvent.AIR_OFFLINE_EDIT, AirOfflineEditUICommand);
+
             // different upload file implemenation for air
             this.removeCommand(UploadFilesUIEvent.UPLOAD_FILES_UI);
             this.removeCommand(UploadFilesEvent.UPLOAD_FILES);

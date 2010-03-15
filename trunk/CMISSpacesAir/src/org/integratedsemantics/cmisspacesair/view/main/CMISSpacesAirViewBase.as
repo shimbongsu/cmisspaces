@@ -140,8 +140,11 @@ package org.integratedsemantics.cmisspacesair.view.main
             var enablePaste:Boolean = formatToPaste();
             mainMenu.enableMenuItem("edit", "paste", enablePaste);
 
-            this.pasteBtn.enabled = enablePaste;                    
-
+            if (this.toolbar1 != null)
+            {
+                this.pasteBtn.enabled = enablePaste;                    
+            }
+            
             // TODO: also need to add check for formatToPaste when switching/activating the flexpacesair window 
             // for now have to switch tabs or select nodes for the paste menu enabling to be updated            
         }        
@@ -166,7 +169,14 @@ package org.integratedsemantics.cmisspacesair.view.main
             var tabIndex:int = tabNav.selectedIndex;
             if ((tabIndex == docLibTabIndex) || (tabIndex == wcmTabIndex))
             {
-                mainMenu.enableMenuItem("edit", "paste", true);
+                if (mainMenu != null)
+                {
+                    mainMenu.enableMenuItem("edit", "paste", true);
+                }
+                if (pasteBtn != null)
+                {
+                    pasteBtn.enabled = true;                    
+                }                
             }                                                                                                           
         }
         
@@ -186,7 +196,14 @@ package org.integratedsemantics.cmisspacesair.view.main
             var tabIndex:int = tabNav.selectedIndex;
             if ((tabIndex == docLibTabIndex) || (tabIndex == wcmTabIndex))
             {
-                mainMenu.enableMenuItem("edit", "paste", true);
+                if (mainMenu != null)
+                {
+                    mainMenu.enableMenuItem("edit", "paste", true);
+                }
+                if (pasteBtn != null)
+                {
+                    pasteBtn.enabled = true;                    
+                }                
             }                                                                                                           
         }        
             
@@ -408,6 +425,9 @@ package org.integratedsemantics.cmisspacesair.view.main
                 case 'download':
                     downloadFile(selectedItem);
                     break;                   
+                case 'edit':
+                    downloadFile(selectedItem);
+                    break;                                   
                 case "localfiles":
                     showHideLocalFilesBrowser();
                     break;                    
@@ -720,7 +740,52 @@ package org.integratedsemantics.cmisspacesair.view.main
             {
                 return false;
             }           
-        }        
+        }
+        
+        protected function offlineEdit():void
+        {
+            var selectedItem:Object = flexSpacesAirPresModel.selectedItem;
+            var event:AirOfflineEditUIEvent = new AirOfflineEditUIEvent(AirOfflineEditUIEvent.AIR_OFFLINE_EDIT, null, selectedItem, tabNav);
+            event.dispatch();                                                                    
+        }
+
+        override protected function onEditBtn(event:MouseEvent):void
+        {   
+            if (model.appConfig.useLessStepsEdit == true)
+            {
+                offlineEdit();  
+            }
+            else
+            {
+                var selectedItem:Object = flexSpacesAirPresModel.selectedItem;      
+                downloadFile(selectedItem);          
+            }
+        }               
+
+        override protected function onUpdateBtn(event:MouseEvent):void
+        {
+            if (model.appConfig.useLessStepsEdit == true)
+            {
+                offlineUpload(false); 
+            }
+            else
+            {
+                var selectedItem:Object = flexSpacesAirPresModel.selectedItem;                
+                flexSpacesAirPresModel.updateNode(selectedItem, this);
+            }
+        }   
+        
+        /**
+         * Handle paste toolbar button with special air native paste from desktop/folder
+         * or from a cut/copy from inside flexspaces
+         * 
+         * @param event click event
+         * 
+         */
+        override protected function onPasteBtn(event:MouseEvent):void
+        {
+            pasteNodes();                        
+        }                                       
         
     }
 }
