@@ -41,6 +41,11 @@
         <!-- when short term data storage is used (useSessionData true), how long (in minutes) -->
         <!-- can data still be used to restore state when app restarts -->
         <property name="sessionDataValidTime" value="30"/>  
+          
+        <!-- air only, less steps editing (edit button saves offline without prompt or browse dialog, launches app -->
+        <property name="useLessStepsEdit" value="false"/>                 
+        <!-- air only, when using less step editing, whether to do auto update online, when user saves in app -->
+        <property name="autoUpdateOnlineOnAppSave" value="false"/>                 
                                 
     </object>
 

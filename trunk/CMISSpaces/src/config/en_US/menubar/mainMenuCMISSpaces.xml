@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu>
     <menuitem label="File" data="file">
-        <menuitem label="Create Space" data="newspace" enabled="false"/>
+        <menuitem label="New Folder" data="newspace" enabled="false"/>
         <menuitem label="Create Content" data="" enabled="false"/>
         <menuitem type="separator" data=""/>
         <menuitem label="Upload Files" data="upload" enabled="false"/>

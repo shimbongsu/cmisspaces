@@ -23,6 +23,8 @@ package org.integratedsemantics.cmisspaces.view.main
     import org.integratedsemantics.flexspaces.view.login.LoginDoneEvent;
     import org.integratedsemantics.flexspaces.view.main.FlexSpacesViewBase;
     import org.integratedsemantics.flexspaces.view.menu.event.MenuConfiguredEvent;
+    import org.integratedsemantics.flexspaces.view.nav.TreeChangePathEvent;
+    import org.integratedsemantics.flexspaces.view.nav.TreeNavBase;
     import org.integratedsemantics.flexspaces.view.search.advanced.AdvancedSearchEvent;
     import org.integratedsemantics.flexspaces.view.search.event.SearchResultsEvent;
     
@@ -33,6 +35,7 @@ package org.integratedsemantics.cmisspaces.view.main
      */
     public class CMISSpacesViewBase extends FlexSpacesViewBase
     {        
+        public var treeNav:TreeNavBase;
         
         public function CMISSpacesViewBase()
         {
@@ -74,50 +77,108 @@ package org.integratedsemantics.cmisspaces.view.main
                 this.header.visible = false;
                 this.header.includeInLayout = false;
             }
-            else
+
+            // init basic search box, advanced search link
+            if (cmisSpacesPresModel.showSearch == true)
             {
-                if (cmisSpacesPresModel.showSearch == true)
-                {
-                    searchView.addEventListener(SearchResultsEvent.SEARCH_RESULTS_AVAILABLE, onSearchResults);
-                    searchView.addEventListener(AdvancedSearchEvent.ADVANCED_SEARCH_REQUEST, advancedSearch);   
-                }    
+                searchView.addEventListener(SearchResultsEvent.SEARCH_RESULTS_AVAILABLE, onSearchResults);
+                searchView.addEventListener(AdvancedSearchEvent.ADVANCED_SEARCH_REQUEST, advancedSearch);   
+            }    
                 
-                //logoutView.addEventListener(LogoutDoneEvent.LOGOUT_DONE, onLogoutDone);              
-            }
+            // init logout link
+            if (logoutView != null)
+            {
+                // todo logoutView.addEventListener(LogoutDoneEvent.LOGOUT_DONE, onLogoutDone);
+            }              
           
             // init main menu
-            mainMenu.addEventListener(MenuConfiguredEvent.MENU_CONFIGURED, onMainMenuConfigured);
-            mainMenu.addEventListener(MenuEvent.ITEM_CLICK, menuHandler); 
-            
+            if (mainMenu != null)
+            {
+                mainMenu.addEventListener(MenuConfiguredEvent.MENU_CONFIGURED, onMainMenuConfigured);
+                mainMenu.addEventListener(MenuEvent.ITEM_CLICK, menuHandler); 
+            }
+               
             // keyboard handlers
             this.addEventListener(KeyboardEvent.KEY_DOWN,onKeyDown);  
 
             // init toolbar
-            this.cutBtn.addEventListener(MouseEvent.CLICK, onCutBtn);
-            this.copyBtn.addEventListener(MouseEvent.CLICK, onCopyBtn);
-            this.pasteBtn.addEventListener(MouseEvent.CLICK, onPasteBtn);
-            this.deleteBtn.addEventListener(MouseEvent.CLICK, onDeleteBtn);
-            this.createSpaceBtn.addEventListener(MouseEvent.CLICK, onCreateSpaceBtn);
-            this.uploadFileBtn.addEventListener(MouseEvent.CLICK, onUploadFileBtn);                    
-            this.tagsBtn.addEventListener(MouseEvent.CLICK, onTagsBtn);     
+            if (toolbar1 != null)
+            {
+                // todo: should condition these 
+                this.createSpaceBtn.addEventListener(MouseEvent.CLICK, onCreateSpaceBtn);
+                this.uploadFileBtn.addEventListener(MouseEvent.CLICK, onUploadFileBtn);                    
+                this.cutBtn.addEventListener(MouseEvent.CLICK, onCutBtn);
+                this.copyBtn.addEventListener(MouseEvent.CLICK, onCopyBtn);
+                this.pasteBtn.addEventListener(MouseEvent.CLICK, onPasteBtn);
+                this.deleteBtn.addEventListener(MouseEvent.CLICK, onDeleteBtn);
+                this.editBtn.addEventListener(MouseEvent.CLICK, onEditBtn);                    
+                this.updateBtn.addEventListener(MouseEvent.CLICK, onUpdateBtn);     
+                this.checkoutBtn.addEventListener(MouseEvent.CLICK, onCheckoutBtn);     
+                this.cancelCheckoutBtn.addEventListener(MouseEvent.CLICK, onCancelCheckoutBtn);     
+                this.checkinBtn.addEventListener(MouseEvent.CLICK, onCheckinBtn);     
+                this.tagsBtn.addEventListener(MouseEvent.CLICK, onTagsBtn);     
+                this.propertiesBtn.addEventListener(MouseEvent.CLICK, onPropertiesBtn);     
+                //this.tagsBtn.addEventListener(MouseEvent.CLICK, onTagsBtn);  
+            }   
 
-            // get index values of tabs
-            docLibTabIndex = tabNav.getChildIndex(docLibTab);
-            searchTabIndex = tabNav.getChildIndex(searchTab);
-            checkedOutTabIndex = tabNav.getChildIndex(checkedOutTab);        
+            // init tree nav panel
+            if (treeNav != null)
+            {
+                treeNav.addEventListener(TreeChangePathEvent.TREE_CHANGE_PATH, onChangeTree);
+            }
 
             // init tab navigator
-            tabNav.addEventListener(IndexChangedEvent.CHANGE, tabChange);   
-            tabNav.popUpButtonPolicy = SuperTabNavigator.POPUPPOLICY_OFF;
-            tabNav.setClosePolicyForTab(docLibTabIndex, SuperTab.CLOSE_NEVER);                    
-            tabNav.setClosePolicyForTab(searchTabIndex, SuperTab.CLOSE_NEVER);  
-            tabNav.setClosePolicyForTab(checkedOutTabIndex, SuperTab.CLOSE_NEVER);  
-            tabNav.dragEnabled = false;
-            tabNav.dropEnabled = false; 
-            tabNav.addEventListener(SuperTabEvent.TAB_CLOSE, onTabClose);
-			           
+            if (tabNav != null)
+            {
+                tabNav.addEventListener(IndexChangedEvent.CHANGE, tabChange);   
+                tabNav.popUpButtonPolicy = SuperTabNavigator.POPUPPOLICY_OFF;
+                tabNav.addEventListener(SuperTabEvent.TAB_CLOSE, onTabClose);
+                tabNav.dragEnabled = false;
+                tabNav.dropEnabled = false; 
+            }
+
+            // get index values of tabs, prevent closing of view tabs, hide if should
+
+            if (docLibTab != null)
+            {
+                docLibTabIndex = tabNav.getChildIndex(docLibTab);
+                tabNav.setClosePolicyForTab(docLibTabIndex, SuperTab.CLOSE_NEVER);                                
+                if (cmisSpacesPresModel.showDocLib == false)
+                {
+                    tabNav.getTabAt(docLibTabIndex).visible = false;
+                    tabNav.getTabAt(docLibTabIndex).includeInLayout = false;
+                }   
+            }
+            
+            if (searchTab != null)
+            {
+                searchTabIndex = tabNav.getChildIndex(searchTab);
+                tabNav.setClosePolicyForTab(searchTabIndex, SuperTab.CLOSE_NEVER);  
+                if (cmisSpacesPresModel.showSearch == false)
+                {
+                    tabNav.getTabAt(searchTabIndex).visible = false;
+                    tabNav.getTabAt(searchTabIndex).includeInLayout = false;
+                    if (searchView != null)
+                    {
+                        searchView.visible = false;
+                    }
+                    this.header.invalidateDisplayList();
+                }   
+            }
+            
+            if (checkedOutTab != null)
+            {
+                checkedOutTabIndex = tabNav.getChildIndex(checkedOutTab);        
+                tabNav.setClosePolicyForTab(checkedOutTabIndex, SuperTab.CLOSE_NEVER);  
+                if (cmisSpacesPresModel.showCheckedOut == false)
+                {
+                    tabNav.getTabAt(checkedOutTabIndex).visible = false;
+                    tabNav.getTabAt(checkedOutTabIndex).includeInLayout = false;
+                }   
+            }        
+                          			           
             // init doclib view
-            if (cmisSpacesPresModel.showDocLib == true)
+            if ( (cmisSpacesPresModel.showDocLib == true) && (browserView != null) )
             {
                 browserView.viewActive(true);
                 browserView.setContextMenuHandler(onContextMenu);
@@ -129,40 +190,21 @@ package org.integratedsemantics.cmisspaces.view.main
             }
             
             // init search view
-            if (cmisSpacesPresModel.showSearch == true)
+            if ( (cmisSpacesPresModel.showSearch == true) && (searchResultsView != null) )
             {
                 searchResultsView.addEventListener(FolderViewContextMenuEvent.FOLDERLIST_CONTEXTMENU, onContextMenu);
                 searchResultsView.addEventListener(DoubleClickDocEvent.DOUBLE_CLICK_DOC, onDoubleClickDoc);
-                searchResultsView.addEventListener(ClickNodeEvent.CLICK_NODE, onClickNode);   
+                searchResultsView.addEventListener(ClickNodeEvent.CLICK_NODE, onClickNode); 
             }
             
             // init checked out view
-            if (cmisSpacesPresModel.showCheckedOut == true)
+            if ( (cmisSpacesPresModel.showCheckedOut == true) && (checkedOutView != null) )
             {
                 checkedOutView.addEventListener(FolderViewContextMenuEvent.FOLDERLIST_CONTEXTMENU, onContextMenu);
                 checkedOutView.addEventListener(DoubleClickDocEvent.DOUBLE_CLICK_DOC, onDoubleClickDoc);
                 checkedOutView.addEventListener(ClickNodeEvent.CLICK_NODE, onClickNode);   
             }
-            
-            // hide tabs for views not to show
-            if (cmisSpacesPresModel.showDocLib == false)
-            {
-                tabNav.getTabAt(docLibTabIndex).visible = false;
-                tabNav.getTabAt(docLibTabIndex).includeInLayout = false;
-            }   
-            if (cmisSpacesPresModel.showSearch == false)
-            {
-                tabNav.getTabAt(searchTabIndex).visible = false;
-                tabNav.getTabAt(searchTabIndex).includeInLayout = false;
-                searchView.visible = false;
-                this.header.invalidateDisplayList();
-            }   
-            if (cmisSpacesPresModel.showCheckedOut == false)
-            {
-                tabNav.getTabAt(checkedOutTabIndex).visible = false;
-                tabNav.getTabAt(checkedOutTabIndex).includeInLayout = false;
-            }   
-            
+                        
             // select the first enabled main view tab
             var tabIndex:int = 0;
             if (cmisSpacesPresModel.showDocLib == true)
@@ -197,20 +239,27 @@ package org.integratedsemantics.cmisspaces.view.main
             */
             
             // cmis
-            ChangeWatcher.watch(browserView.treeView.treePresModel, "doneTreeData", onDoneTreeDataChange);
+            ChangeWatcher.watch(treeNav.treeView.treePresModel, "doneTreeData", onDoneTreeDataChange);
             ChangeWatcher.watch(browserView.fileView1.folderViewPresModel, "doneFolderViewData", onDoneFolderViewDataChange);                            
+
+            // todo: need to localize
+            if ((model.userInfo.loginUserName != null) && (welcomeText != null))
+            {
+                var loggedInAs:String = resourceManager.getString('FlexSpacesView', 'loggedInAsLabel_text');
+                welcomeText.text = loggedInAs + " " + model.userInfo.loginUserName;
+            }                                                                      
         }
               
         // cmis
         protected function onDoneTreeDataChange(event:Event):void
         {
             //trace("CMISSpacesViewBase onDoneTreeDataChange " + browserView.treeView.treePresModel.doneTreeData);
-            if (browserView.treeView.treePresModel.doneTreeData == true)
+            if (treeNav.treeView.treePresModel.doneTreeData == true)
             {
-                browserView.treeView.treePresModel.doneTreeData = false;                
-                if (browserView.treeView.selectedItem != null)
+                treeNav.treeView.treePresModel.doneTreeData = false;                
+                if (treeNav.treeView.selectedItem != null)
                 {
-                    var selectedTreeNode:Node = browserView.treeView.selectedItem as Node;
+                    var selectedTreeNode:Node = treeNav.treeView.selectedItem as Node;
                     var cmisChildren:String = selectedTreeNode.cmisChildren;
                     browserView.fileView1.folderViewPresModel.getCmisChildren(selectedTreeNode.path, cmisChildren);
                     
@@ -290,6 +339,9 @@ package org.integratedsemantics.cmisspaces.view.main
                     if (browserView != null)
                     {
                         browserView.viewActive(false);
+                    }
+                    if (checkedOutView != null)
+                    {
                         checkedOutView.redraw();                                    
                     }
                 }
@@ -366,7 +418,7 @@ package org.integratedsemantics.cmisspaces.view.main
         {              
             var tabIndex:int = tabNav.selectedIndex;
             
-            if ((selectedItem != null) && (mainMenu.configurationDone == true))
+            if ((selectedItem != null) && (mainMenu != null) && (mainMenu.configurationDone == true))
             {
                 var node:Node = selectedItem as Node;                
                 var isLocked:Boolean = node.isLocked;
@@ -398,6 +450,7 @@ package org.integratedsemantics.cmisspaces.view.main
                     mainMenu.enableMenuItem("file", "edit", false);
                     mainMenu.enableMenuItem("file", "view", false);
                     mainMenu.enableMenuItem("file", "preview", false);                    
+                    this.editBtn.enabled = false; 
 
                     // checkin menus, update
                     mainMenu.enableMenuItem("edit", "checkin", false);
@@ -405,6 +458,10 @@ package org.integratedsemantics.cmisspaces.view.main
                     mainMenu.enableMenuItem("edit", "cancelcheckout", false);
                     mainMenu.enableMenuItem("edit", "makeversion", false);
                     mainMenu.enableMenuItem("edit", "update", false);
+                    this.checkinBtn.enabled = false; 
+                    this.checkoutBtn.enabled = false; 
+                    this.cancelCheckoutBtn.enabled = false; 
+                    this.updateBtn.enabled = false; 
                     
                     // make pdf, make flash, startworkflow    
                     mainMenu.enableMenuItem("tools", "makepdf", false);
@@ -427,15 +484,10 @@ package org.integratedsemantics.cmisspaces.view.main
                         browserView.enableContextMenuItem("view", readPermission, fileContextMenu);
                         browserView.enableContextMenuItem("playVideo", readPermission, fileContextMenu);
                     }  
-                    if (wcmBrowserView != null)
+                    if (searchResultsView != null)
                     {  
-                        wcmBrowserView.enableContextMenuItem("view", readPermission, fileContextMenu);
-                        wcmBrowserView.enableContextMenuItem("playVideo", readPermission, fileContextMenu);
-                    } 
-                    if (searchPanel != null)
-                    {  
-                        searchPanel.searchResultsView.enableContextMenuItem("view", readPermission, fileContextMenu);
-                        searchPanel.searchResultsView.enableContextMenuItem("playVideo", readPermission, fileContextMenu);
+                        searchResultsView.enableContextMenuItem("view", readPermission, fileContextMenu);
+                        searchResultsView.enableContextMenuItem("playVideo", readPermission, fileContextMenu);
                     }
                     if (tasksPanelView != null)
                     {  
@@ -467,6 +519,7 @@ package org.integratedsemantics.cmisspaces.view.main
                         mainMenu.enableMenuItem("edit", "properties", readPermission);
                         mainMenu.enableMenuItem("edit", "tags", false);                     
                         this.tagsBtn.enabled = false;                        
+                        this.propertiesBtn.enabled = readPermission;                        
                         checkedOutView.enableContextMenuItem("rename", writePermission, fileContextMenu);  
                         checkedOutView.enableContextMenuItem("properties", readPermission, fileContextMenu);  
                         checkedOutView.enableContextMenuItem("tags", false, fileContextMenu);
@@ -475,22 +528,34 @@ package org.integratedsemantics.cmisspaces.view.main
                         var canCheckin:Boolean = writePermission && isWorkingCopy;
                         mainMenu.enableMenuItem("edit", "checkin", canCheckin);
                         checkedOutView.enableContextMenuItem("checkin", canCheckin, fileContextMenu);  
+                        this.checkinBtn.enabled = canCheckin; 
                         
-                        // checkout, edit
+                        // checkout
                         var canCheckout:Boolean = writePermission && !isLocked && !isWorkingCopy;
-                         mainMenu.enableMenuItem("edit", "checkout", canCheckout);
-                        // edit disabled for now
-                        mainMenu.enableMenuItem("file", "edit", false);
-                        checkedOutView.enableContextMenuItem("checkout", canCheckout, fileContextMenu);  
+                        mainMenu.enableMenuItem("edit", "checkout", false);
+                        checkedOutView.enableContextMenuItem("checkout", false, fileContextMenu);  
+                        this.checkoutBtn.enabled = false; 
+                        
+                        // edit menu currently just download but don't enable if checked out, will ok on working copy
+                        var canEdit:Boolean = writePermission && !isLocked; 
+                        mainMenu.enableMenuItem("file", "edit", canEdit);                                                       
+                        // edit btn currently edit offline (air) if feature enabled or download 
+                        this.editBtn.enabled = canEdit;
                         
                         // cancel checkout
                         var canCancelCheckout:Boolean = writePermission && isWorkingCopy;
                         mainMenu.enableMenuItem("edit", "cancelcheckout", canCancelCheckout);
                         checkedOutView.enableContextMenuItem("cancelcheckout", canCancelCheckout, fileContextMenu);  
+                        this.cancelCheckoutBtn.enabled = canCancelCheckout; 
+                        
+                        // make versionable
+                        var canMakeVersionable:Boolean = writePermission && !isLocked;
+                        mainMenu.enableMenuItem("edit", "makeversion", false);
                         
                         // update
                         var canUpdate:Boolean = writePermission && !isLocked;
                         mainMenu.enableMenuItem("edit", "update", canUpdate);
+                        this.updateBtn.enabled = canUpdate; 
 
                         // make pdf, make flash, startworkflow
                         mainMenu.enableMenuItem("tools", "makepdf", false);
@@ -519,6 +584,7 @@ package org.integratedsemantics.cmisspaces.view.main
                         mainMenu.enableMenuItem("edit", "properties", readPermission);
                         mainMenu.enableMenuItem("edit", "tags", false);                     
                         this.tagsBtn.enabled = false;                        
+                        this.propertiesBtn.enabled = readPermission;                        
                         browserView.enableContextMenuItem("rename", writePermission, fileContextMenu);  
                         browserView.enableContextMenuItem("properties", readPermission, fileContextMenu);  
                         browserView.enableContextMenuItem("tags", false, fileContextMenu);
@@ -529,26 +595,34 @@ package org.integratedsemantics.cmisspaces.view.main
                             canCheckin = writePermission && isWorkingCopy;
                             mainMenu.enableMenuItem("edit", "checkin", canCheckin);
                             browserView.enableContextMenuItem("checkin", canCheckin, fileContextMenu);  
+                            this.checkinBtn.enabled = canCheckin; 
                             
-                            // checkout, edit
+                            // checkout
                             canCheckout = writePermission && !isLocked && !isWorkingCopy;
                             mainMenu.enableMenuItem("edit", "checkout", canCheckout);
-                            // edit disabled for now
-                            mainMenu.enableMenuItem("file", "edit", false);
                             browserView.enableContextMenuItem("checkout", canCheckout, fileContextMenu);  
+                            this.checkoutBtn.enabled = canCheckout; 
+                            
+                            // edit menu currently just download but don't enable if checked out, will ok on working copy
+                            canEdit = writePermission && !isLocked; 
+                            mainMenu.enableMenuItem("file", "edit", canEdit);                                                       
+                            // edit btn currently edit offline (air) if feature enabled or download 
+                            this.editBtn.enabled = canEdit;
                             
                             // cancel checkout
                             canCancelCheckout = writePermission && isWorkingCopy;
                             mainMenu.enableMenuItem("edit", "cancelcheckout", canCancelCheckout);
                             browserView.enableContextMenuItem("cancelcheckout", canCancelCheckout, fileContextMenu);  
+                            this.cancelCheckoutBtn.enabled = canCancelCheckout; 
                             
                             // make versionable
-                            var canMakeVersionable:Boolean = writePermission && !isLocked;
+                            canMakeVersionable = writePermission && !isLocked;
                             mainMenu.enableMenuItem("edit", "makeversion", false);
                             
                             // update
                             canUpdate = writePermission && !isLocked;
                             mainMenu.enableMenuItem("edit", "update", canUpdate);
+                            this.updateBtn.enabled = canUpdate; 
 
                             // make pdf, make flash, startworkflow
                             mainMenu.enableMenuItem("tools", "makepdf", false);
@@ -567,40 +641,36 @@ package org.integratedsemantics.cmisspaces.view.main
                         this.copyBtn.enabled = readPermission;
                         this.pasteBtn.enabled = false;                    
                         this.deleteBtn.enabled = false;
-                        if (searchPanel != null)
+                        if (searchResultsView != null)
                         {
-                            searchPanel.searchResultsView.enableContextMenuItem("copy", readPermission, fileContextMenu);
-                        }  
-                        if (tasksPanelView != null)
-                        {
-                            tasksPanelView.taskAttachmentsView.enableContextMenuItem("copy", readPermission, fileContextMenu);
+                            searchResultsView.enableContextMenuItem("copy", readPermission, fileContextMenu);
                         }  
 
                         // rename, properties, tags
                         mainMenu.enableMenuItem("edit", "rename", writePermission);
                         mainMenu.enableMenuItem("edit", "properties", readPermission);
                         mainMenu.enableMenuItem("edit", "tags", false);                     
+
                         this.tagsBtn.enabled = false;            
+                        this.propertiesBtn.enabled = readPermission;            
                         
-                        if (searchPanel != null)
+                        if (searchResultsView != null)
                         {
-                            searchPanel.searchResultsView.enableContextMenuItem("rename", writePermission, fileContextMenu);
-                            searchPanel.searchResultsView.enableContextMenuItem("properties", readPermission, fileContextMenu);
-                            searchPanel.searchResultsView.enableContextMenuItem("tags", false, fileContextMenu);
-                            searchPanel.searchResultsView.enableContextMenuItem( "gotoParent", false, fileContextMenu);
+                            searchResultsView.enableContextMenuItem("rename", writePermission, fileContextMenu);
+                            searchResultsView.enableContextMenuItem("properties", readPermission, fileContextMenu);
+                            searchResultsView.enableContextMenuItem("tags", false, fileContextMenu);
+                            searchResultsView.enableContextMenuItem( "gotoParent", false, fileContextMenu);
                         }        
-                        if (tasksPanelView != null)
-                        {
-                            tasksPanelView.taskAttachmentsView.enableContextMenuItem("rename", writePermission, fileContextMenu);
-                            tasksPanelView.taskAttachmentsView.enableContextMenuItem("properties", readPermission, fileContextMenu);
-                            tasksPanelView.taskAttachmentsView.enableContextMenuItem("tags", readPermission, fileContextMenu);
-                            tasksPanelView.taskAttachmentsView.enableContextMenuItem( "gotoParent", flexSpacesPresModel.showDocLib, fileContextMenu);
-                        }        
+                        
                         // checkin menus
                         mainMenu.enableMenuItem("edit", "checkin", false);
                         mainMenu.enableMenuItem("edit", "checkout", false);
                         mainMenu.enableMenuItem("edit", "cancelcheckout", false);
                         mainMenu.enableMenuItem("edit", "makeversion", false);                       
+                        this.checkinBtn.enabled = false; 
+                        this.checkoutBtn.enabled = false; 
+                        this.cancelCheckoutBtn.enabled = false; 
+                        
                         // make pdf, make flash, startworkflow    
                         mainMenu.enableMenuItem("tools", "makepdf", false);
                         mainMenu.enableMenuItem("tools", "makepreview", false);
@@ -619,6 +689,27 @@ package org.integratedsemantics.cmisspaces.view.main
         override protected function enableMenusAfterTabChange(tabIndex:int):void
         {
             super.enableMenusAfterTabChange(tabIndex);     
+        }        
+
+        override protected function onBrowserChangePath(event:RepoBrowserChangePathEvent):void
+        {
+            if (treeNav != null)
+            {
+                treeNav.setPath(event.path);
+            }
+            super.onBrowserChangePath(event);
+        }
+        
+        override protected function updateSessionData():void
+        {
+            if (model.appConfig.useSessionData == true)
+            {
+                if (treeNav != null)
+                {
+                    sessionData.data.docLibPath = treeNav.getPath();    
+                }
+            }
+            super.updateSessionData();
         }        
 
     }

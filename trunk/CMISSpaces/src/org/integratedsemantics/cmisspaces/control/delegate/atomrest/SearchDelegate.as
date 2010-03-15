@@ -121,7 +121,15 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
                 
                 node.name = cmisObj.getName().getValue();
                 
-                var baseType:String = cmisObj.getBaseType().getValue();
+                var baseType:String = "cmis:document";
+                if (cmisObj.getBaseType() != null)
+                {
+                    baseType = cmisObj.getBaseType().getValue();
+                }
+                else if (cmisObj.getObjectTypeId() != null)
+                {
+                    baseType = cmisObj.getObjectTypeId().getValue();                    
+                }
                 
                 // description, title, author not return in cmis object properties, use from atom fields?                
                 

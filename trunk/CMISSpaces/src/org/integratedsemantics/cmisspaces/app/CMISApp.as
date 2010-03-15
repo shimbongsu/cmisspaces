@@ -1,11 +1,10 @@
 package org.integratedsemantics.cmisspaces.app
 {	
-    import flash.system.Security;
-    
     import org.integratedsemantics.cmisspaces.model.config.CMISConfig;
     import org.integratedsemantics.cmisspaces.presmodel.main.CMISSpacesPresModel;
     import org.integratedsemantics.flexspaces.app.AppBase;
     import org.integratedsemantics.flexspaces.model.global.AppConfig;
+    import org.integratedsemantics.flexspaces.presmodel.search.results.SearchResultsPresModel;
     import org.springextensions.actionscript.context.support.FlexXMLApplicationContext;
 
 
@@ -47,8 +46,8 @@ package org.integratedsemantics.cmisspaces.app
             cmisSpacesPresModel = model.applicationContext.getObject("presModel");
             model.flexSpacesPresModel = cmisSpacesPresModel;     
             
-            // setup search panel pres model after all the config done
-            cmisSpacesPresModel.searchPanelPresModel.setupSubViews();        
+            // setup search results
+            cmisSpacesPresModel.searchResultsPresModel = new SearchResultsPresModel();                     
             
         	cmisSpacesPresModel.showTasks = false;
         	cmisSpacesPresModel.showWCM = false;                                     
