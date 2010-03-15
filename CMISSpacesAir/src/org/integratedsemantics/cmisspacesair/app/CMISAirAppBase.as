@@ -1,11 +1,11 @@
 package org.integratedsemantics.cmisspacesair.app
 {
     import flash.events.Event;
-    import flash.system.Security;
     
     import org.integratedsemantics.cmisspaces.model.config.CMISConfig;
     import org.integratedsemantics.cmisspaces.presmodel.main.CMISSpacesPresModel;
     import org.integratedsemantics.flexspaces.model.global.AppConfig;
+    import org.integratedsemantics.flexspaces.presmodel.search.results.SearchResultsPresModel;
     import org.integratedsemantics.flexspacesair.app.AirAppBase;
     import org.springextensions.actionscript.context.support.FlexXMLApplicationContext;
     
@@ -49,8 +49,8 @@ package org.integratedsemantics.cmisspacesair.app
             cmisSpacesAirPresModel = new CMISSpacesPresModel();
             model.flexSpacesPresModel = cmisSpacesAirPresModel;            
 
-            // setup search panel pres model after all the config done
-            cmisSpacesAirPresModel.searchPanelPresModel.setupSubViews();        
+            // setup search results
+            cmisSpacesAirPresModel.searchResultsPresModel = new SearchResultsPresModel();                     
 
         	cmisSpacesAirPresModel.showTasks = false;
         	cmisSpacesAirPresModel.showWCM = false;

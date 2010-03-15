@@ -84,13 +84,37 @@ package org.integratedsemantics.cmisspacesair.control.command
         {
             this.selectedItems = event.selectedItems;  
             
-            // confirm with user
             if ((selectedItems.length > 0) && selectedItems[0] != null)
             {
-                var offlinePath:String = AirOfflineUtil.offlineFolderPathForNode(selectedItems[0], model.flexSpacesPresModel.wcmMode);
-                var localDir:File = AirOfflineUtil.makeOfflineDirForPath(offlinePath);
-                var msg:String = "Ok to download selected files and possibly overwrite files with same names within " + localDir.nativePath + " ?";
-                var a:Alert = Alert.show(msg, "Confirmation",  Alert.YES|Alert.NO, event.parent as Sprite, onConfirm, confirmIcon, Alert.NO);                                
+                // confirm with user
+                if (event.promptForConfirm == true)
+                {
+                    var offlinePath:String = AirOfflineUtil.offlineFolderPathForNode(selectedItems[0], model.flexSpacesPresModel.wcmMode);
+                    var localDir:File = AirOfflineUtil.makeOfflineDirForPath(offlinePath);
+                    var msg:String = "Ok to download selected files and possibly overwrite files with same names within " + localDir.nativePath + " ?";
+                    var a:Alert = Alert.show(msg, "Confirmation",  Alert.YES|Alert.NO, event.parent as Sprite, onConfirm, confirmIcon, Alert.NO); 
+                }
+                else
+                {
+                    for each (var selectedItem:Object in selectedItems)
+                    {
+                        if (selectedItem != null)
+                        {
+                            offlinePath = AirOfflineUtil.offlineFolderPathForNode(selectedItem, model.flexSpacesPresModel.wcmMode);
+                            
+                            if (selectedItem.isFolder == true)
+                            {
+                                // for now just offline the subfolder without its children
+                                AirOfflineUtil.makeOfflineDirForPath(offlinePath);
+                                // todo: support deep folder offlining 
+                            }  
+                            else
+                            {
+                                makeNodeAvailOffline(selectedItem, offlinePath); 
+                            }
+                        }
+                    }                      
+                }                                                   
             }
         }
         

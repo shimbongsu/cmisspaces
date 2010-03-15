@@ -86,12 +86,38 @@ package org.integratedsemantics.cmisspacesair.control.command
     
                 if (selectedItem != null && selectedItem.isFolder != true)
                 {
-                    // confirm with user
-                    var flexspacesDocDir:File = File.documentsDirectory.resolvePath("FlexSpaces");
-                    var docRepoPath:String = selectedItem.displayPath;              
-                    var offlineFile:File = flexspacesDocDir.resolvePath( docRepoPath.substr(1));
-                    var msg:String = "Ok to update content of selected file with content from " + offlineFile.nativePath + " ?";
-                    var a:Alert = Alert.show(msg, "Confirmation",  Alert.YES|Alert.NO, event.parent as Sprite, onConfirm, confirmIcon, Alert.NO);                                                    
+                    if (event.promptForConfirm == true)
+                    {                    
+                        // confirm with user
+                        var flexspacesDocDir:File = File.documentsDirectory.resolvePath("FlexSpaces");
+                        var docRepoPath:String = selectedItem.displayPath;              
+                        var offlineFile:File = flexspacesDocDir.resolvePath( docRepoPath.substr(1));
+                        var msg:String = "Ok to update content of selected file with content from " + offlineFile.nativePath + " ?";
+                        var a:Alert = Alert.show(msg, "Confirmation",  Alert.YES|Alert.NO, event.parent as Sprite, onConfirm, confirmIcon, Alert.NO);                                                    
+                    }
+                    else  
+                    {
+                        var folder:Folder = flexSpacesPresModel.currentNodeList as Folder;
+                        var parentNode:IRepoNode = folder.folderNode;
+        
+                        // get offline file
+                        flexspacesDocDir = File.documentsDirectory.resolvePath("FlexSpaces");
+                        docRepoPath = selectedItem.displayPath;                
+                        offlineFile = flexspacesDocDir.resolvePath( docRepoPath.substr(1));
+                        
+                        var fileReferences:Array = new Array();
+                        fileReferences.push(offlineFile);
+                        if (parent != null)
+                        {
+                            var uploadStatusView:UploadStatusView = UploadStatusView(PopUpManager.createPopUp(parent, UploadStatusView, false));
+                            var uploadStatusPresModel:UploadStatusPresModel = new UploadStatusPresModel(fileReferences);
+                            uploadStatusView.uploadStatusPresModel = uploadStatusPresModel;
+                        }
+                                                
+                        // upload offline file into existing object
+                        var uploadAir:UploadAir = new UploadAir(uploadStatusView);
+                        uploadAir.uploadAir(offlineFile, parentNode, onComplete, selectedItem as IRepoNode, checkin);                        
+                    }
                 }          
             }  
         }
