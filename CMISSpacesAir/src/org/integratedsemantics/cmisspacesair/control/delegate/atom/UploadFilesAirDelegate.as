@@ -5,6 +5,7 @@ package org.integratedsemantics.cmisspacesair.control.delegate.atom
     
     import flash.filesystem.File;
     import flash.net.FileReference;
+    import flash.utils.ByteArray;
     
     import mx.rpc.IResponder;
     import mx.rpc.events.ResultEvent;
@@ -30,7 +31,7 @@ package org.integratedsemantics.cmisspacesair.control.delegate.atom
     {
         protected var pendingFiles:Array;
         protected var statusHandlers:IUploadHandlers;
-        protected var existingNode:IRepoNode = null;
+        protected var existingNode:Node = null;
         protected var nodeType:String;
         protected var result:Array = new Array();
 
@@ -63,11 +64,7 @@ package org.integratedsemantics.cmisspacesair.control.delegate.atom
             this.nodeType = nodeType;
             
             // cmis
-            var model:AppModelLocator = AppModelLocator.getInstance();
-            var cmisConfig:CMISConfig = model.ecmServerConfig as CMISConfig;           
-                        
             cmisParent = parentNode as Node;
-            var url:String = cmisParent.cmisSelf;
                        
             pendingFiles = new Array();
             var file:File;
@@ -89,8 +86,8 @@ package org.integratedsemantics.cmisspacesair.control.delegate.atom
         public function updateNode(repoNode:IRepoNode, file:File, statusHandlers:IUploadHandlers=null):void
         {
             this.statusHandlers = statusHandlers;
-            this.existingNode = repoNode;
-                       
+            this.existingNode = repoNode as Node;
+
             pendingFiles = new Array();
             addPendingFile(file);
         }
@@ -120,16 +117,26 @@ package org.integratedsemantics.cmisspacesair.control.delegate.atom
             var client:CMISAtomClient = new CMISAtomClient();
             var model:AppModelLocator = AppModelLocator.getInstance();
             client.credential = new BasicCredential(model.userInfo.loginUserName, model.userInfo.loginPassword);
-       
-            client.addEventListener(AtompubEvent.CREATE_ENTRY_COMPLETED, onCompletedToCreateEntry);
-            client.addEventListener(AtompubEvent.CREATE_ENTRY_FAILED, onFailedToCreateEntry);
-               
-            var mimetype:String = FormatUtil.getMimeType(file);
-
-			var content:String = FileUtil.getContent(file);
-            
-            // create doc                 
-            client.createDoc(new URI(cmisParent.cmisChildren), content, file.name, mimetype);
+                                           
+            if (existingNode != null)
+            {
+                // update content on an existing document                
+                client.addEventListener(AtompubEvent.UPDATE_MEDIA_COMPLETED, onCompletedToUpdateMedia);
+                client.addEventListener(AtompubEvent.UPDATE_MEDIA_FAILED, onFailedToUpdateMedia);
+                var mimetype:String = FormatUtil.getMimeType(file);    
+                var data:ByteArray = FileUtil.getContent(file);                
+                var editMedia:String = existingNode.cmisEditMedia;
+                client.updateDoc(new URI(editMedia), data, mimetype);
+            }        
+            else
+            {
+                // create a new document                
+                client.addEventListener(AtompubEvent.CREATE_ENTRY_COMPLETED, onCompletedToCreateEntry);
+                client.addEventListener(AtompubEvent.CREATE_ENTRY_FAILED, onFailedToCreateEntry);                   
+                mimetype = FormatUtil.getMimeType(file);    
+                var content:String = FileUtil.getContentEncoded(file);                
+                client.createDoc(new URI(cmisParent.cmisChildren), content, file.name, mimetype);                
+            }    
         }
              
         protected function onCompletedToCreateEntry(event:AtompubEvent):void 
@@ -159,6 +166,24 @@ package org.integratedsemantics.cmisspacesair.control.delegate.atom
             var message:String = "UploadFilesAirDelegate onFailedToCreateEntry: [" + event.result.code + "] " + event.result.message; 
             trace(message);
         }
+          
+        protected function onCompletedToUpdateMedia(event:AtompubEvent):void
+        {
+            var file:File = pendingFiles[0] as File;
+            trace("UploadFilesAirDelegate onCompletedToUpdateMedia: name=" + file.name);
+            result.push(file.name);
+            removePendingFile(file);
+            if (statusHandlers != null)
+            {
+                statusHandlers.complete(file);
+            }                            
+        }
+        
+        protected function onFailedToUpdateMedia(event:AtompubEvent):void
+        {
+            var message:String = "UploadFilesAirDelegate onFailedToUpdateMedia: [" + event.result.code + "] " + event.result.message; 
+            trace(message);
+        }                
      
         /**
          * Remove file from list of pending files to upload

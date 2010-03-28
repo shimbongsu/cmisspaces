@@ -17,9 +17,11 @@ package org.integratedsemantics.cmisspacesair.control.command
     import flash.net.URLLoader;
     import flash.net.URLLoaderDataFormat;
     import flash.net.URLRequest;
+    import flash.net.URLRequestHeader;
     import flash.net.navigateToURL;
     
     import mx.containers.ViewStack;
+    import mx.utils.Base64Encoder;
     
     import org.integratedsemantics.flexspaces.model.AppModelLocator;
     import org.integratedsemantics.flexspacesair.control.event.AirOfflineEditUIEvent;
@@ -108,20 +110,22 @@ package org.integratedsemantics.cmisspacesair.control.command
             if (selectedItem != null && selectedItem.isFolder == false)
             {                
                 var model : AppModelLocator = AppModelLocator.getInstance();                            
-                if (model.ecmServerConfig.isLiveCycleContentServices == true)
-                {
-                    var url:String = model.ecmServerConfig.urlPrefix + "/adobe/formfetch?storeprotocol=" + selectedItem.storeProtocol + 
-                        "&storeid=" + selectedItem.storeId + "&formid=" + selectedItem.id +  "&ticket=" + model.userInfo.loginTicket;                     
-                }
-                else
-                {
-                    url = selectedItem.viewurl + "?alf_ticket=" + model.userInfo.loginTicket;
-                }
+
+                // cmis
+                var url:String = selectedItem.viewurl;
                                 
                 var request:URLRequest = new URLRequest(url);
+
+                // cmis: basic auth header
+                var encoder:Base64Encoder = new Base64Encoder();
+                encoder.encode(model.userInfo.loginUserName + ":" + model.userInfo.loginPassword);
+                var basicAuth:URLRequestHeader = new URLRequestHeader("Authorization", "Basic " + encoder.toString() );
+                request.requestHeaders.push(basicAuth);                         
+                
                 urlLoader = new URLLoader();
                 urlLoader.dataFormat = URLLoaderDataFormat.BINARY;
                 configureListeners(urlLoader);      
+                
                 try 
                 {      
                     urlLoader.load(request);      
@@ -264,39 +268,9 @@ package org.integratedsemantics.cmisspacesair.control.command
                     
                     var localDir:File = AirOfflineUtil.makeOfflineDirForPath(offlinePath);
                     var file:File = localDir.resolvePath(filename);
-                    /*
-                    var stream:FileStream = new FileStream();
-                    stream.open(file, FileMode.WRITE);
-                    stream.writeBytes(loader.data, 0, loader.bytesTotal);
-                    stream.close();
-                    */
-                    /*
-                    if ( WebkitUtil.isWebKitViewableFormat(file.extension) == true )
-                    {
-                        // add tab for file
-                        var count:int = container.numChildren;
-                        var tab:VBox = new VBox();
-                        tab.percentHeight = 100;
-                        tab.percentWidth = 100;
-                        tab.label = filename;
-                        tab.id = filename;
-                        tab.setStyle("backgroundColor", 0x000000);
-                        container.addChild(tab);                       
-                        container.selectedIndex = count;            
-                                
-                        // setup tab to display file with webkit html control
-                        var htmlControl:HTML = new HTML();
-                        htmlControl.percentWidth = 100;
-                        htmlControl.percentHeight = 100;
-                        htmlControl.location = file.url;
-                        tab.addChild(htmlControl);                        
-                    }
-                    else
-                    {
-                    */
-                        var request:URLRequest = new URLRequest(file.url);
-                        navigateToURL(request);
-                    //}
+
+                    var request:URLRequest = new URLRequest(file.url);
+                    navigateToURL(request);
                 }
                 catch (e:Error)
                 {

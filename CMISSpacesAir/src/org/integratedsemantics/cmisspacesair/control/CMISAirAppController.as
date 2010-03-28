@@ -2,8 +2,10 @@ package org.integratedsemantics.cmisspacesair.control
 {
     import org.integratedsemantics.cmisspaces.control.CMISAppController;
     import org.integratedsemantics.cmisspacesair.control.command.*;
+    import org.integratedsemantics.cmisspacesair.control.event.UpdateNodeAirEvent;
     import org.integratedsemantics.cmisspacesair.control.event.UploadFilesAirEvent;
     import org.integratedsemantics.flexspaces.control.event.UploadFilesEvent;
+    import org.integratedsemantics.flexspaces.control.event.ui.UpdateNodeUIEvent;
     import org.integratedsemantics.flexspaces.control.event.ui.UploadFilesUIEvent;
     import org.integratedsemantics.flexspacesair.control.event.*;
 
@@ -49,7 +51,11 @@ package org.integratedsemantics.cmisspacesair.control
             this.removeCommand(UploadFilesUIEvent.UPLOAD_FILES_UI);
             this.removeCommand(UploadFilesEvent.UPLOAD_FILES);
             addCommand(UploadFilesUIEvent.UPLOAD_FILES_UI, UploadFilesAirUICommand);
-            addCommand(UploadFilesAirEvent.UPLOAD_FILES, UploadFilesAirCommand);                        
+            addCommand(UploadFilesAirEvent.UPLOAD_FILES, UploadFilesAirCommand); 
+            
+            // have update only in air for now
+            addCommand(UpdateNodeUIEvent.UPDATE_NODE_UI, UpdateNodeAirUICommand);                       
+            addCommand(UpdateNodeAirEvent.UPDATE_NODE, UploadFilesAirCommand);
         }
         
     }
