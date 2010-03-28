@@ -11,20 +11,16 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
     import flash.events.SecurityErrorEvent;
     import flash.net.FileReference;
     import flash.net.URLRequest;
-    import flash.net.URLRequestHeader;
-    import flash.net.URLRequestMethod;
     import flash.utils.ByteArray;
     
     import mx.rpc.IResponder;
     import mx.rpc.events.ResultEvent;
     import mx.utils.Base64Encoder;
     
-    import org.coderepos.atompub.AtomMediaType;
     import org.coderepos.atompub.credentials.BasicCredential;
     import org.coderepos.atompub.events.AtompubEvent;
     import org.coderepos.xml.atom.AtomEntry;
     import org.integratedsemantics.cmis.atom.CMISAtomClient;
-    import org.integratedsemantics.cmisspaces.model.config.CMISConfig;
     import org.integratedsemantics.flexspaces.control.command.IUploadHandlers;
     import org.integratedsemantics.flexspaces.control.error.ErrorMgr;
     import org.integratedsemantics.flexspaces.model.AppModelLocator;
@@ -35,7 +31,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
 
     /**
      * 
-     * Browses for multiple files and uploads selected files to either adm or avm via web scripts 
+     * Browses for multiple files and uploads selected files or updates a existing node with a single file
      */
     public class UploadFilesDelegate extends Delegate
     {
@@ -44,7 +40,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
         protected var folderPath:String;
         protected var storeId:String = null;
         protected var statusHandlers:IUploadHandlers;
-        protected var existingNode:IRepoNode = null;
+        protected var existingNode:Node = null;
         protected var nodeType:String;
         protected var result:Array = new Array();
 
@@ -100,35 +96,10 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
         public function updateNode(repoNode:IRepoNode, fileRef:FileReference, statusHandlers:IUploadHandlers=null):void
         {
             this.statusHandlers = statusHandlers;
-            this.existingNode = repoNode;
-            
-            // todo
-            
-            // cmis
-            var model:AppModelLocator = AppModelLocator.getInstance();
-            var cmisConfig:CMISConfig = model.ecmServerConfig as CMISConfig;                                   
-            
-            // setup the url request
-
-            this.uploadURLRequest = new URLRequest();
-            
-            var encoder:Base64Encoder = new Base64Encoder();
-            encoder.encode(model.userInfo.loginUserName + ":" + model.userInfo.loginPassword);
-            var authHeader:URLRequestHeader = new URLRequestHeader("Authorization", "Basic " + encoder.toString());
-            uploadURLRequest.requestHeaders.push(authHeader);       
-            var contentTypeHeader:URLRequestHeader = new URLRequestHeader("Content-Type", AtomMediaType.ENTRY.toString());              
-            uploadURLRequest.requestHeaders.push(contentTypeHeader);        
-
-            var methodOverrideHeader:URLRequestHeader = new URLRequestHeader("X-HTTP-Method-Override", "PUT");              
-            uploadURLRequest.requestHeaders.push(methodOverrideHeader);        
-
-            uploadURLRequest.method = URLRequestMethod.POST;
-
-            // todo
-            // uploadURLRequest.url =  needs to be set to edit media link url
-            
-            //pendingFiles = new Array();
-            //addPendingFile(fileRef);
+            this.existingNode = repoNode as Node;
+                       
+            pendingFiles = new Array();
+            addPendingFile(fileRef);
         }
 
         /**
@@ -229,9 +200,27 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
         private function onFailedToCreateEntry(event:AtompubEvent):void 
         {
             var message:String = "Error: [" + event.result.code + "] " + event.result.message; 
-            trace("onFailedToCreateEntry: " + message);
+            trace("UploadFilesDelegate onFailedToCreateEntry: " + message);
         }
-              
+
+        protected function onCompletedToUpdateMedia(event:AtompubEvent):void
+        {
+            var file:FileReference = pendingFiles[0] as FileReference;
+            trace("UploadFilesDelegate onCompletedToUpdateMedia: name=" + file.name);
+            result.push(file.name);
+            removePendingFile(file);
+            if (statusHandlers != null)
+            {
+                statusHandlers.complete(file);
+            }                            
+        }
+        
+        protected function onFailedToUpdateMedia(event:AtompubEvent):void
+        {
+            var message:String = "UploadFilesDelegate onFailedToUpdateMedia: [" + event.result.code + "] " + event.result.message; 
+            trace(message);
+        }  
+                      
         /**
          * File upload complete handler
          *  
@@ -242,25 +231,34 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
         {
             var file:FileReference = FileReference(event.target);            
            
-            //trace("completeHandler: name=" + file.name);
-
-            // create doc with loaded file data
+            trace("UploadFilesDelegate completeHandler: name=" + file.name);
             
             var client:CMISAtomClient = new CMISAtomClient();
             var model:AppModelLocator = AppModelLocator.getInstance();
             client.credential = new BasicCredential(model.userInfo.loginUserName, model.userInfo.loginPassword);
-       
-            client.addEventListener(AtompubEvent.CREATE_ENTRY_COMPLETED, onCompletedToCreateEntry);
-            client.addEventListener(AtompubEvent.CREATE_ENTRY_FAILED, onFailedToCreateEntry);
-               
-            var mimetype:String = FormatUtil.getMimeType(file);
-            
-            var encoder:Base64Encoder = new Base64Encoder();      
-            var bytes:ByteArray = ByteArray(file.data);      
-            encoder.encodeBytes(bytes);
-            var encodedStr:String = encoder.toString();
-                       
-            client.createDoc(new URI(cmisParent.cmisChildren), encodedStr, file.name, mimetype);            
+              
+            if (existingNode != null)
+            {
+                // update content on an existing document                
+                client.addEventListener(AtompubEvent.UPDATE_MEDIA_COMPLETED, onCompletedToUpdateMedia);
+                client.addEventListener(AtompubEvent.UPDATE_MEDIA_FAILED, onFailedToUpdateMedia);
+                var mimetype:String = FormatUtil.getMimeType(file);    
+                var data:ByteArray = ByteArray(file.data);                
+                var editMedia:String = existingNode.cmisEditMedia;
+                client.updateDoc(new URI(editMedia), data, mimetype);
+            }        
+            else
+            {
+                // create a new document                       
+                client.addEventListener(AtompubEvent.CREATE_ENTRY_COMPLETED, onCompletedToCreateEntry);
+                client.addEventListener(AtompubEvent.CREATE_ENTRY_FAILED, onFailedToCreateEntry);               
+                mimetype = FormatUtil.getMimeType(file);            
+                var encoder:Base64Encoder = new Base64Encoder();      
+                var bytes:ByteArray = ByteArray(file.data);      
+                encoder.encodeBytes(bytes);
+                var encodedStr:String = encoder.toString();                       
+                client.createDoc(new URI(cmisParent.cmisChildren), encodedStr, file.name, mimetype);
+            }            
         }
 
         /**

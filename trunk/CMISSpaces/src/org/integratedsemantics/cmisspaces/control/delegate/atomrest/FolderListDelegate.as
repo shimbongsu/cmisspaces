@@ -206,6 +206,11 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
                     	node.size = cmisObj.getContentStreamLength().getValue();
                     }
                     
+                    if (entry.editMediaLink != null)
+                    {
+                        node.cmisEditMedia = entry.editMediaLink.toString();
+                    }
+                    
                     node.isLocked = cmisObj.isVersionSeriesCheckedOut().getBooleanValue();                    
                     // working copies not returned                
                     node.isWorkingCopy = false;                    

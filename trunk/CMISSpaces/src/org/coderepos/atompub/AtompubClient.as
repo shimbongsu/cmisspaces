@@ -1045,7 +1045,8 @@ package org.coderepos.atompub {
       // sreiner request(uri, req);
     }
 
-    protected function onCompleteToUpdateMedia():void {
+    protected function onCompleteToUpdateMedia(event:HttpResponseEvent):void
+    {
       trace("AtompubClient onCompleteToUpdateMedia()");  
       var code:uint = uint(_response.code); 
       var result:AtompubEventResult = new AtompubEventResult();
