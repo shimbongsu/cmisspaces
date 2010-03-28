@@ -5,14 +5,14 @@ package org.integratedsemantics.cmisspaces.control.command.ui
     
     import flash.display.DisplayObject;
     import flash.events.Event;
-    import flash.net.FileReferenceList;
+    import flash.net.FileReference;
     
     import mx.managers.PopUpManager;
     import mx.rpc.IResponder;
     import mx.rpc.Responder;
     
-    import org.integratedsemantics.flexspaces.control.event.UploadFilesEvent;
-    import org.integratedsemantics.flexspaces.control.event.ui.UploadFilesUIEvent;
+    import org.integratedsemantics.flexspaces.control.event.UpdateNodeEvent;
+    import org.integratedsemantics.flexspaces.control.event.ui.UpdateNodeUIEvent;
     import org.integratedsemantics.flexspaces.model.AppModelLocator;
     import org.integratedsemantics.flexspaces.model.repo.IRepoNode;
     import org.integratedsemantics.flexspaces.presmodel.main.FlexSpacesPresModel;
@@ -21,14 +21,15 @@ package org.integratedsemantics.cmisspaces.control.command.ui
     
 
     /**
-     * Display the UI for upload files and progress UI
+     * Display single file upload dialog and update selected node with new content
+     * while displaying upload progress bar dialog
      * 
      */
-    public class UploadFilesUICommand extends Command
+    public class UpdateNodeUICommand extends Command
     {
         protected var model:FlexSpacesPresModel = AppModelLocator.getInstance().flexSpacesPresModel;
-        protected var parentNode:IRepoNode;
-        protected var fileRefList:FileReferenceList;
+        protected var repoNode:IRepoNode;
+        protected var fileRef:FileReference
         protected var handlers:IResponder;
         public var parent:DisplayObject;
 
@@ -36,7 +37,7 @@ package org.integratedsemantics.cmisspaces.control.command.ui
         /**
          * Constructor
          */
-        public function UploadFilesUICommand()
+        public function UpdateNodeUICommand()
         {
             super();
         }
@@ -55,8 +56,8 @@ package org.integratedsemantics.cmisspaces.control.command.ui
  
             switch(event.type)
             {
-                case UploadFilesUIEvent.UPLOAD_FILES_UI:
-                    uploadFilesUI(event as UploadFilesUIEvent); 
+                case UpdateNodeUIEvent.UPDATE_NODE_UI:
+                    updateNodeUI(event as UpdateNodeUIEvent); 
                     break;
             }
         }       
@@ -66,17 +67,17 @@ package org.integratedsemantics.cmisspaces.control.command.ui
          * 
          * @param upload files UI event
          */
-        public function uploadFilesUI(event:UploadFilesUIEvent):void
+        public function updateNodeUI(event:UpdateNodeUIEvent):void
         {
-            parentNode = event.parentNode;
+            repoNode = event.repoNode;
             handlers = event.responder;
             parent = event.parent;
             
             // start process off with with browse for multiple files
-            this.fileRefList = new FileReferenceList();
-            fileRefList.addEventListener(Event.SELECT, selectHandler);
-            fileRefList.addEventListener(Event.CANCEL, cancelHandler);
-            fileRefList.browse(null);            
+            this.fileRef = new FileReference();
+            fileRef.addEventListener(Event.SELECT, selectHandler);
+            fileRef.addEventListener(Event.CANCEL, cancelHandler);
+            fileRef.browse(null);            
         }
         
         /**
@@ -87,15 +88,17 @@ package org.integratedsemantics.cmisspaces.control.command.ui
          */
         protected function selectHandler(event:Event):void
         {
-            //trace("selectHandler: " + this.fileRefList.fileList.length + " files");
+            trace("selectHandler: " + fileRef.name);
 
+            var fileReferences:Array = new Array();
+            fileReferences.push(this.fileRef);
             var uploadStatusView:UploadStatusView = UploadStatusView(PopUpManager.createPopUp(parent, UploadStatusView, false));
-            var uploadStatusPresModel:UploadStatusPresModel = new UploadStatusPresModel(fileRefList.fileList);
+            var uploadStatusPresModel:UploadStatusPresModel = new UploadStatusPresModel(fileReferences);
             uploadStatusView.uploadStatusPresModel = uploadStatusPresModel;
-          
+                      
             var responder:Responder = new Responder(handlers.result, handlers.fault);
-            var uploadFilesEvent:UploadFilesEvent = new UploadFilesEvent(UploadFilesEvent.UPLOAD_FILES, responder, parentNode, fileRefList, uploadStatusView);
-            uploadFilesEvent.dispatch();                                    
+            var updateNodeEvent:UpdateNodeEvent = new UpdateNodeEvent(UpdateNodeEvent.UPDATE_NODE, responder, repoNode, fileRef, uploadStatusView);
+            updateNodeEvent.dispatch();                                    
         }
      
         /**
@@ -106,7 +109,7 @@ package org.integratedsemantics.cmisspaces.control.command.ui
          */
         protected function cancelHandler(event:Event):void
         {
-            //trace("cancelHandler:");
+            trace("cancelHandler:");
         }        
         
     }

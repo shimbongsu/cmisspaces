@@ -71,7 +71,7 @@ package org.integratedsemantics.cmis.atom
                 requestURLLoader(cmisChildrenUri, req); 
             }                                            
         }
-                
+        
         public function query(cmisQuery:String):void 
         {
             trace("CMISAtomClient query()");   
@@ -157,8 +157,6 @@ package org.integratedsemantics.cmis.atom
             var req:AtompubRequest = new AtompubRequest("POST");
             req.addHeader("Content-Type", AtomMediaType.ENTRY.toString());
             
-            // test proxy
-            //req.body = entryData;
             req.body = xmlStr;
             
             if (cmisConfig.useProxy == true)
@@ -173,7 +171,7 @@ package org.integratedsemantics.cmis.atom
        
         public function checkin(uri:URI, entry:AtomEntry, major:Boolean, comment:String=""):void 
         {
-            trace("AtompubClient updateEntry()");  
+            trace("CMISAtomClient checkin()");  
             if (_isFetching) 
             { 
                 throw new Error("AtompubClient is fetching.");
@@ -202,6 +200,32 @@ package org.integratedsemantics.cmis.atom
                 requestURLLoader(uri, req); 
             }                   
         }  
+                
+        public function updateDoc(uri:URI, content:ByteArray, type:String):void
+        {
+            trace("CMISAtomClient updateDoc()");
+              
+            if (_isFetching)
+            { 
+                throw new Error("AtompubClient is fetching."); 
+            };
+            clear(); 
+            initializeHttpClient(onCompleteToUpdateMedia);
+            
+            var req:AtompubRequest = new AtompubRequest("PUT");
+            req.addHeader("Content-Type", type);
+            
+            req.body = content;
+            
+            if (cmisConfig.useProxy == true)
+            {
+                requestHttpService(uri, req);    
+            }            
+            else
+            {                          
+                requestURLLoader(uri, req); 
+            }                   
+        }       
                                                                  
     }
 }

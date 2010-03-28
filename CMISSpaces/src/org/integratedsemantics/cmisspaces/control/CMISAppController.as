@@ -86,7 +86,7 @@ package org.integratedsemantics.cmisspaces.control
 
             addCommand(TreeDataEvent.TREE_DATA, TreeCommand);            
 
-			//addCommand(UpdateNodeEvent.UPDATE_NODE, UploadFilesCommand);
+			addCommand(UpdateNodeEvent.UPDATE_NODE, UploadFilesCommand);
 
             addCommand(UploadFilesEvent.UPLOAD_FILES, UploadFilesCommand);
             
@@ -114,7 +114,7 @@ package org.integratedsemantics.cmisspaces.control
 			
 			//addCommand(TagsCategoriesUIEvent.TAGS_CATEGORIES_UI, TagsCategoriesUICommand);
 			
-			//addCommand(UpdateNodeUIEvent.UPDATE_NODE_UI, UpdateNodeUICommand);
+			addCommand(UpdateNodeUIEvent.UPDATE_NODE_UI, UpdateNodeUICommand);
 
             addCommand(UploadFilesUIEvent.UPLOAD_FILES_UI, UploadFilesUICommand);
 
