@@ -5,9 +5,8 @@ package org.integratedsemantics.cmisspacesair.control.command
     import com.universalmind.cairngorm.events.Callbacks;
     
     import org.integratedsemantics.cmisspacesair.control.delegate.atom.UploadFilesAirDelegate;
+    import org.integratedsemantics.cmisspacesair.control.event.UpdateNodeAirEvent;
     import org.integratedsemantics.cmisspacesair.control.event.UploadFilesAirEvent;
-    import org.integratedsemantics.flexspaces.control.event.UpdateNodeEvent;
-    import org.integratedsemantics.flexspaces.control.event.UploadFilesEvent;
 
 	
 	/**
@@ -41,8 +40,8 @@ package org.integratedsemantics.cmisspacesair.control.command
                 case UploadFilesAirEvent.UPLOAD_FILES:
                     uploadFiles(event as UploadFilesAirEvent);  
                     break;
-                case UpdateNodeEvent.UPDATE_NODE:
-                    updateNode(event as UpdateNodeEvent);  
+                case UpdateNodeAirEvent.UPDATE_NODE:
+                    updateNode(event as UpdateNodeAirEvent);  
                     break;
             }
         }       
@@ -66,11 +65,11 @@ package org.integratedsemantics.cmisspacesair.control.command
          * @param event update node event
          * 
          */
-        public function updateNode(event:UpdateNodeEvent):void
+        public function updateNode(event:UpdateNodeAirEvent):void
         {
-            //todo var handlers:Callbacks = new Callbacks(onUploadFilesSuccess, onFault);
-            //todo var delegate:UploadFilesDelegate = new UploadFilesDelegate(handlers);
-            //todo delegate.updateNode(event.repoNode, event.fileRef, event.statusHandlers);                  
+            var handlers:Callbacks = new Callbacks(onUploadFilesSuccess, onFault);
+            var delegate:UploadFilesAirDelegate = new UploadFilesAirDelegate(handlers);
+            delegate.updateNode(event.repoNode, event.fileRef, event.statusHandlers);                  
         }
 
         /**

@@ -3,7 +3,6 @@ package org.integratedsemantics.cmisspacesair.util
     import flash.filesystem.File;
     import flash.filesystem.FileMode;
     import flash.filesystem.FileStream;
-    import flash.net.FileReference;
     import flash.utils.ByteArray;
     
     import mx.utils.Base64Encoder;
@@ -15,7 +14,7 @@ package org.integratedsemantics.cmisspacesair.util
 		{
 		}
 
-    	public static function getContent(fileRef:File):String 
+    	public static function getContentEncoded(fileRef:File):String 
     	{
     		var contentStr:String = new String();
 
@@ -31,6 +30,17 @@ package org.integratedsemantics.cmisspacesair.util
     		    		   		
     		return contentStr;
     	}                       
+
+        public static function getContent(fileRef:File):ByteArray
+        {
+            var byteArray:ByteArray = new ByteArray();
+            var fileStream:FileStream = new FileStream();           
+            fileStream.open(fileRef, FileMode.READ);
+            fileStream.readBytes(byteArray, fileStream.position, fileStream.bytesAvailable);
+            fileStream.close();
+                                                    
+            return byteArray;
+        }                       
 
 	}
 }

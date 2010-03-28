@@ -663,8 +663,8 @@ package org.integratedsemantics.cmisspacesair.view.main
                         browserView.enableContextMenuItem("paste", enablePaste, true);  
                         this.pasteBtn.enabled = enablePaste;                    
                         // make avail offline, offline upload
-                        mainMenu.enableMenuItem("tools", "availoffline", false);
-                        mainMenu.enableMenuItem("tools", "offlineupload", false);
+                        mainMenu.enableMenuItem("tools", "availoffline", readPermission);
+                        mainMenu.enableMenuItem("tools", "offlineupload", writePermission);
                         break;                     
                     case searchTabIndex:
                         // make avail offline, offline upload

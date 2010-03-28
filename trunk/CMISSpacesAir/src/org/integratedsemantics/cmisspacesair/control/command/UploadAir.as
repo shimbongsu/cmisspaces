@@ -2,13 +2,8 @@ package org.integratedsemantics.cmisspacesair.control.command
 {
     import com.adobe.net.URI;
     
-    import flash.events.DataEvent;
-    import flash.events.Event;
-    import flash.events.HTTPStatusEvent;
-    import flash.events.IOErrorEvent;
-    import flash.events.ProgressEvent;
-    import flash.events.SecurityErrorEvent;
     import flash.filesystem.File;
+    import flash.utils.ByteArray;
     
     import org.coderepos.atompub.credentials.BasicCredential;
     import org.coderepos.atompub.events.AtompubEvent;
@@ -57,13 +52,13 @@ package org.integratedsemantics.cmisspacesair.control.command
          * @param fileRef file reference
          * @param parentNode target folder to upload to
          * @parm onComplete function to call on complete
-         * @param existingNode optional existing node item to update content, 
+         * @param existingRepoNode optional existing node item to update content, 
          *        otherwise creates new node with uploaded file                   
          * @param checkin should node be checked in also
          * 
          */
         public function uploadAir(fileRef:File, parentNode:IRepoNode, onComplete:Function=null, 
-                                  existingNode:IRepoNode=null, checkin:Boolean=false):void
+                                  existingRepoNode:IRepoNode=null, checkin:Boolean=false):void
         {
             trace("UploadAir uploadAir()");
             
@@ -76,22 +71,28 @@ package org.integratedsemantics.cmisspacesair.control.command
             var model:AppModelLocator = AppModelLocator.getInstance();                            
             client.credential = new BasicCredential(model.userInfo.loginUserName, model.userInfo.loginPassword);
                        
-            // todo add support for update
-            //if (existingNode != null)
-            //{
-            //    params.nodeid = existingNode.getId();
-            //    params.checkin = checkin.toString().toLowerCase();
-            //}
+            if (existingRepoNode != null)
+            {
+                var existingNode:Node = existingRepoNode as Node;
 
-            var mimetype:String = FormatUtil.getMimeType(fileRef);
-                                    		    
-            client.addEventListener(AtompubEvent.CREATE_ENTRY_COMPLETED, onCompletedToCreateEntry);
-            client.addEventListener(AtompubEvent.CREATE_ENTRY_FAILED, onFailedToCreateEntry);
-		
-			var content:String = FileUtil.getContent(fileRef);
+                // update content on an existing document                
+                client.addEventListener(AtompubEvent.UPDATE_MEDIA_COMPLETED, onCompletedToUpdateMedia);
+                client.addEventListener(AtompubEvent.UPDATE_MEDIA_FAILED, onFailedToUpdateMedia);
+                var mimetype:String = FormatUtil.getMimeType(fileRef);    
+                var data:ByteArray = FileUtil.getContent(fileRef);                
+                var editMedia:String = existingNode.cmisEditMedia;
+                client.updateDoc(new URI(editMedia), data, mimetype);                
+            }
+            else
+            {
+                // create a new document                                              		    
+                client.addEventListener(AtompubEvent.CREATE_ENTRY_COMPLETED, onCompletedToCreateEntry);
+                client.addEventListener(AtompubEvent.CREATE_ENTRY_FAILED, onFailedToCreateEntry);
+                mimetype = FormatUtil.getMimeType(fileRef);    		
+    			var content:String = FileUtil.getContentEncoded(fileRef);                
+                client.createDoc(new URI(cmisParent.cmisChildren), content, fileRef.name, mimetype);              
+            }
             
-            client.createDoc(new URI(cmisParent.cmisChildren), content, fileRef.name, mimetype);              
-
             function onCompletedToCreateEntry(event:AtompubEvent):void 
             {
                 var entry:AtomEntry = event.result.entry;
@@ -109,10 +110,30 @@ package org.integratedsemantics.cmisspacesair.control.command
            
             function onFailedToCreateEntry(event:AtompubEvent):void 
             {
-                var message:String = "Error: [" + event.result.code + "] " + event.result.message; 
-            }                                          
+                var message:String = "uploadAir onFailedToCreateEntry: [" + event.result.code + "] " + event.result.message; 
+                trace(message);
+            }       
+            
+            function onCompletedToUpdateMedia(event:AtompubEvent):void
+            {
+                trace("uploadAir onCompletedToUpdateMedia: name=" + file.name);
+                if (statusHandlers != null)
+                {
+                    statusHandlers.complete(file);
+                }                            
+                
+                if (onComplete != null)
+                {
+                    onComplete();
+                }                
+            }
+            
+            function onFailedToUpdateMedia(event:AtompubEvent):void
+            {
+                var message:String = "uploadAir onFailedToUpdateMedia: [" + event.result.code + "] " + event.result.message; 
+                trace(message);
+            }                                                              
         }
-
 
     }
 }

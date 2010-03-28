@@ -51,8 +51,8 @@
         <!-- menuitem type="separator" data=""/-->
         <menuitem label="Advanced Search" data="advancedsearch"/>                                                        
         <!-- menuitem type="separator" data="" /-->
-        <!-- menuitem label="Make Available Offline" data="availoffline" enabled="false"/-->                                    
-        <!-- menuitem label="Update from Offline" data="offlineupload" enabled="false"/-->
+        <menuitem label="Make Available Offline" data="availoffline" enabled="false"/>                                    
+        <menuitem label="Update from Offline" data="offlineupload" enabled="false"/>
         <!-- menuitem type="separator" data=""/-->
         <!-- menuitem label="Automatically Tag with Calais" data="autoTag"/-->                                                        
         <!-- menuitem label="Suggest Tags with Calais" data="suggestTags"/-->                                                        
