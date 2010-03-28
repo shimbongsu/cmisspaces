@@ -53,7 +53,9 @@ package org.integratedsemantics.cmisspacesair.control
             addCommand(UploadFilesUIEvent.UPLOAD_FILES_UI, UploadFilesAirUICommand);
             addCommand(UploadFilesAirEvent.UPLOAD_FILES, UploadFilesAirCommand); 
             
-            // have update only in air for now
+            // different update implemenation for air
+            this.removeCommand(UpdateNodeUIEvent.UPDATE_NODE_UI);
+            this.removeCommand(UpdateNodeAirEvent.UPDATE_NODE);
             addCommand(UpdateNodeUIEvent.UPDATE_NODE_UI, UpdateNodeAirUICommand);                       
             addCommand(UpdateNodeAirEvent.UPDATE_NODE, UploadFilesAirCommand);
         }
