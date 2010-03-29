@@ -15,8 +15,8 @@
         <property name="proxyPort" value="8080"/>
    
         <!--  cmis service atompub rest url of cmis repository -->
-        <property name="cmisUrl" value="http://localhost:8080/alfresco/service/api/cmis"/>
-        <!-- property name="cmisUrl" value="http://cmis.alfresco.com:80/service/cmis"/-->
+        <!-- property name="cmisUrl" value="http://localhost:8080/alfresco/service/api/cmis"/-->
+        <property name="cmisUrl" value="http://cmis.alfresco.com:80/service/cmis"/>
         <!-- property name="cmisUrl" value="http://localhost:8080/nuxeo/site/cmis/repository"/-->
         <!-- property name="cmisUrl" value="http://cmis.demo.nuxeo.org/nuxeo/site/cmis/repository"/-->        
         <!-- property name="cmisUrl" value="http://localhost:9080/emc-cmis-ea/resources/"/-->
@@ -25,8 +25,8 @@
         <property name="useWebServices" value="false"/>
       
         <!--  cmis service soap / webservice url --> 
-        <property name="cmisWebServicesUrl" value="http://localhost:8080/alfresco/cmis"/>
-        <!-- property name="cmisWebServicesUrl" value="http://cmis.alfresco.com:80/cmis"/-->
+        <!--property name="cmisWebServicesUrl" value="http://localhost:8080/alfresco/cmis"/-->
+        <property name="cmisWebServicesUrl" value="http://cmis.alfresco.com:80/cmis"/>
         <!-- property name="cmisWebServicesUrl" value="http://localhost:9080/emc-cmis-ea/services"/-->              
       
    </object>

@@ -86,7 +86,8 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
             //trace("TreeWebServiceDelegate onCompleteGetChildren");   
 
         	var result:XMLList = event.result as XMLList;
-        	var xmlList:XMLList = result.children();
+        	//var xmlList:XMLList = result.children();
+            var xmlList:XMLList = result.children().children();
 
             var name:String = "/";
             var slashIndex:int = displayPath.lastIndexOf("/");
@@ -117,8 +118,8 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
 
             var nodeXMLListCollection:XMLListCollection = new XMLListCollection(xmlList);
 
-            var cmis:Namespace = new Namespace("ns1", CMISConstants.CMIS_CORE); 
-            
+            var ns1:Namespace = new Namespace("ns1", "http://docs.oasis-open.org/ns/cmis/messaging/200908/");
+               
             for each (var nodeXML:XML in nodeXMLListCollection)
             {
             	if (nodeXML.name().localName == "hasMoreItems")
@@ -127,7 +128,8 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
             		break;
             	}
                 
-                var cmisObj:CMISObject = new CMISObject(nodeXML);
+                var objXML:XML = nodeXML.ns1::object[0];
+                var cmisObj:CMISObject = new CMISObject(objXML);
                 
 				var baseType:String = "";
 				
@@ -138,13 +140,15 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
                 childNode.cmisChildren = id;
                 childNode.cmisSelf = id;
                 childNode.cmisType = cmisObj.getObjectTypeId().getValue();
-                baseType = cmisConfig.typeUrlToBaseType[childNode.cmisType];
+                //baseType = cmisConfig.typeUrlToBaseType[childNode.cmisType];
+                baseType = cmisObj.getBaseType().getValue();
+                
                 if (baseType == null)
                 {
                 	baseType = childNode.cmisType;
                 }
                 
-                if (baseType == "folder")
+                if (baseType == "cmis:folder")
                 {
 	                childNode.name = name;                    
 	

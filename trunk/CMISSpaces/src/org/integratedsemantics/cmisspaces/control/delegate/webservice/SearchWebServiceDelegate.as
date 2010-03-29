@@ -52,7 +52,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
          */
         public function search(searchText:String, pageSize:int=0, pageNum:int=0):void
         {
-            queryStr = "select * from document where contains ('" + searchText + "')";
+            queryStr = "SELECT * FROM cmis:document WHERE contains ('" + searchText + "')";
 
             var model:AppModelLocator = AppModelLocator.getInstance();
             cmisConfig = model.ecmServerConfig as CMISConfig; 
@@ -61,9 +61,9 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
             discoveryService.addDiscoveryServiceFaultEventListener(onFaultDiscoveryService);            
             var cmisQueryType:CmisQueryType = new CmisQueryType();
             cmisQueryType.statement = queryStr;
-            cmisQueryType.repositoryId = cmisConfig.repositoryId;
+            //cmisQueryType.repositoryId = cmisConfig.repositoryId;
             //discoveryService.query(cmisQueryType);        
-            discoveryService.query(cmisQueryType,cmisConfig.repositoryId,queryStr,false,false,null,null,100,0,null)
+            discoveryService.query(cmisQueryType,cmisConfig.repositoryId,queryStr,false,false,null,null,100,0,null,null);
         }
         
         /**
@@ -84,9 +84,9 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
             discoveryService.addDiscoveryServiceFaultEventListener(onFaultDiscoveryService);            
             var cmisQueryType:CmisQueryType = new CmisQueryType();
             cmisQueryType.statement = queryStr;
-            cmisQueryType.repositoryId = cmisConfig.repositoryId;
+            //cmisQueryType.repositoryId = cmisConfig.repositoryId;
             //discoveryService.query(cmisQueryType);        
-            discoveryService.query(cmisQueryType,cmisConfig.repositoryId,queryStr,false,false,null,null,100,0,null)
+            discoveryService.query(cmisQueryType,cmisConfig.repositoryId,queryStr,false,false,null,null,100,0,null,null);
         }
         
         /**
@@ -105,7 +105,8 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
             searchResultsCollection.nodeCollection = new ArrayCollection();
             
             var result:XMLList = event.result as XMLList;
-            var xmlList:XMLList = result.children();
+            //sreiner var xmlList:XMLList = result.children();
+            var xmlList:XMLList = result.children().children();
 
             searchResultsCollection.totalSize = xmlList.length();
             searchResultsCollection.pageSize = 0
@@ -114,7 +115,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
             
             var nodeXMLListCollection:XMLListCollection = new XMLListCollection(xmlList);
 
-            var cmis:Namespace = new Namespace("ns1", CMISConstants.CMIS_CORE); 
+            var ns1:Namespace = new Namespace("ns1", "http://docs.oasis-open.org/ns/cmis/messaging/200908/"); 
             
             for each (var nodeXML:XML in nodeXMLListCollection)
             {
@@ -132,7 +133,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
                 
                 node.name = cmisObj.getName().getValue();
                 
-                var baseType:String = "";
+                var baseType:String = null;
                 
                 node.nodeRef = cmisObj.getObjectId().getValue();
                 node.id = node.nodeRef;
@@ -140,13 +141,15 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
                 node.cmisChildren = node.id;
                 node.cmisAllVersions = node.id;
                 node.cmisType = cmisObj.getObjectTypeId().getValue();
-                baseType = cmisConfig.typeUrlToBaseType[node.cmisType];
+                //baseType = cmisConfig.typeUrlToBaseType[node.cmisType];
+                //baseType = cmisObj.getBaseType().getValue();
+
                 if (baseType == null)
                 {
                     baseType = node.cmisType;
                 }
                 
-                if (baseType == "folder")
+                if (baseType == "cmis:folder")
                 {
                     node.isFolder = true;
                     node.icon16 = model.appConfig.srcPath + "images/icons/space-icon-default-16.png";
@@ -176,7 +179,8 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
                     {
                         node.size = cmisObj.getContentStreamLength().getValue();
                     }
-                    node.isLocked = cmisObj.isVersionSeriesCheckedOut().getBooleanValue();                    
+                    //node.isLocked = cmisObj.isVersionSeriesCheckedOut().getBooleanValue();                    
+                    node.isLocked = false;
                     // working copies not returned                
                     node.isWorkingCopy = false;                    
                 }
