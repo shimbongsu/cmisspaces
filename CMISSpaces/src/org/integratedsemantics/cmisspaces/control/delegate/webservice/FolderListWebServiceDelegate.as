@@ -89,7 +89,8 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
             //trace("FolderListWebServiceDelegate onCompleteGetChildren");   
 
         	var result:XMLList = event.result as XMLList;
-        	var xmlList:XMLList = result.children();
+        	//var xmlList:XMLList = result.children();
+            var xmlList:XMLList = result.children().children();
 
             var model:AppModelLocator = AppModelLocator.getInstance();
 
@@ -118,7 +119,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
 
             var nodeXMLListCollection:XMLListCollection = new XMLListCollection(xmlList);
 
-            var cmis:Namespace = new Namespace("ns1", CMISConstants.CMIS_CORE); 
+            var ns1:Namespace = new Namespace("ns1", "http://docs.oasis-open.org/ns/cmis/messaging/200908/"); 
             
             for each (var nodeXML:XML in nodeXMLListCollection)
             {
@@ -128,7 +129,8 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
             		break;
             	}
 
-                var cmisObj:CMISObject = new CMISObject(nodeXML);
+                var objXML:XML = nodeXML.ns1::object[0];
+                var cmisObj:CMISObject = new CMISObject(objXML);
 
                 var node:Node = new Node();
                 
@@ -144,13 +146,15 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
                 node.cmisChildren = node.id;
                 node.cmisAllVersions = node.id;
                 node.cmisType = cmisObj.getObjectTypeId().getValue();
-                baseType = cmisConfig.typeUrlToBaseType[node.cmisType];
+                //baseType = cmisConfig.typeUrlToBaseType[node.cmisType];
+                baseType = cmisObj.getBaseType().getValue();
+                
                 if (baseType == null)
                 {
                 	baseType = node.cmisType;
                 }
                 
-                if (baseType == "folder")
+                if (baseType == "cmis:folder")
                 {
                     node.isFolder = true;
                     node.icon16 = model.appConfig.srcPath + "images/icons/space-icon-default-16.png";
@@ -180,7 +184,9 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
                     {
                     	node.size = cmisObj.getContentStreamLength().getValue();
                     }
-                    node.isLocked = cmisObj.isVersionSeriesCheckedOut().getBooleanValue();                    
+                    
+                    node.isLocked = cmisObj.isVersionSeriesCheckedOut().getBooleanValue();        
+                                
                     // working copies not returned                
                     node.isWorkingCopy = false;                    
                 }
