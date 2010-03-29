@@ -160,9 +160,9 @@ package org.integratedsemantics.cmis.soap.discovery
         /**
          * @see IDiscoveryService#query()
          */
-        public function query(query:CmisQueryType,repositoryId:String,statement:String,searchAllVersions:Boolean,includeAllowableActions:Boolean,includeRelationships:EnumIncludeRelationships,renditionFilter:String,maxItems:Number,skipCount:Number,extension:CmisExtensionType):AsyncToken
+        public function query(query:CmisQueryType,repositoryId:String,statement:String,searchAllVersions:Boolean,includeAllowableActions:Boolean,includeRelationships:EnumIncludeRelationships,renditionFilter:String,maxItems:Number,skipCount:Number,extension:CmisExtensionType,anyAttribute:Array):AsyncToken
         {
-         	var _internal_token:AsyncToken = _baseService.query(query,repositoryId,statement,searchAllVersions,includeAllowableActions,includeRelationships,renditionFilter,maxItems,skipCount,extension);
+         	var _internal_token:AsyncToken = _baseService.query(query,repositoryId,statement,searchAllVersions,includeAllowableActions,includeRelationships,renditionFilter,maxItems,skipCount,extension,anyAttribute);
             _internal_token.addEventListener("result",_query_populate_results);
             _internal_token.addEventListener("fault",throwFault); 
             return _internal_token;
@@ -172,14 +172,13 @@ package org.integratedsemantics.cmis.soap.discovery
 		 */    
         public function query_send():AsyncToken
         {
-        	// sreiner return query(_query_request.query,_query_request.repositoryId,_query_request.statement,_query_request.searchAllVersions,_query_request.includeAllowableActions,_query_request.includeRelationships,_query_request.renditionFilter,_query_request.maxItems,_query_request.skipCount,_query_request.extension);
-        
+        	// sreiner return query(_query_request.query,_query_request.repositoryId,_query_request.statement,_query_request.searchAllVersions,_query_request.includeAllowableActions,_query_request.includeRelationships,_query_request.renditionFilter,_query_request.maxItems,_query_request.skipCount,_query_request.extension,_query_request.anyAttribute);
+
             var cmisQueryType:CmisQueryType = new CmisQueryType();        
-            cmisQueryType.repositoryId = _query_request.repositoryId;
+            //cmisQueryType.repositoryId = _query_request.repositoryId;
             cmisQueryType.statement = _query_request.statement;
             
-            return query(cmisQueryType,_query_request.repositoryId,_query_request.statement,_query_request.searchAllVersions,_query_request.includeAllowableActions,_query_request.includeRelationships,_query_request.renditionFilter,_query_request.maxItems,_query_request.skipCount,_query_request.extension);
-
+            return query(cmisQueryType,_query_request.repositoryId,_query_request.statement,_query_request.searchAllVersions,_query_request.includeAllowableActions,_query_request.includeRelationships,_query_request.renditionFilter,_query_request.maxItems,_query_request.skipCount,_query_request.extension,_query_request.anyAttribute);
         }
               
 		/**
@@ -239,10 +238,11 @@ package org.integratedsemantics.cmis.soap.discovery
         private function _query_populate_results(event:ResultEvent):void
 		{
 			var e:QueryResultEvent = new QueryResultEvent();
-            
+		            
             //sreiner e.result = event.result as Object;
-            e.result = event.result as CmisQueryType;
-
+            //sreiner e.result = event.result as CmisQueryType;
+            e.result = event.result;
+            
             e.headers = event.headers;
             query_lastResult = e.result;
             dispatchEvent(e);

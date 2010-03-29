@@ -236,12 +236,12 @@ package org.integratedsemantics.cmis.soap.object{
     	/**
     	 * Call the operation on the server passing in the arguments defined in the WSDL file
     	 * @param repositoryId
-    	 * @param documentId
+    	 * @param objectId
     	 * @param changeToken
     	 * @param extension
     	 * @return An AsyncToken
     	 */
-    	function deleteContentStream(repositoryId:String,documentId:String,changeToken:String,extension:CmisExtensionType):AsyncToken;
+    	function deleteContentStream(repositoryId:String,objectId:String,changeToken:String,extension:CmisExtensionType):AsyncToken;
         /**
          * Method to call the operation on the server without passing the arguments inline.
          * You must however set the _request property for the operation before calling this method
@@ -555,12 +555,12 @@ package org.integratedsemantics.cmis.soap.object{
     	 * @param repositoryId
     	 * @param folderId
     	 * @param allVersions
-    	 * @param unfileObject
+    	 * @param unfileObjects
     	 * @param continueOnFailure
     	 * @param extension
     	 * @return An AsyncToken
     	 */
-    	function deleteTree(repositoryId:String,folderId:String,allVersions:Boolean,unfileObject:EnumUnfileObject,continueOnFailure:Boolean,extension:CmisExtensionType):AsyncToken;
+    	function deleteTree(repositoryId:String,folderId:String,allVersions:Boolean,unfileObjects:EnumUnfileObject,continueOnFailure:Boolean,extension:CmisExtensionType):AsyncToken;
         /**
          * Method to call the operation on the server without passing the arguments inline.
          * You must however set the _request property for the operation before calling this method
@@ -738,14 +738,14 @@ package org.integratedsemantics.cmis.soap.object{
     	/**
     	 * Call the operation on the server passing in the arguments defined in the WSDL file
     	 * @param repositoryId
-    	 * @param documentId
+    	 * @param objectId
     	 * @param overwriteFlag
     	 * @param changeToken
     	 * @param contentStream
     	 * @param extension
     	 * @return An AsyncToken
     	 */
-    	function setContentStream(repositoryId:String,documentId:String,overwriteFlag:Boolean,changeToken:String,contentStream:CmisContentStreamType,extension:CmisExtensionType):AsyncToken;
+    	function setContentStream(repositoryId:String,objectId:String,overwriteFlag:Boolean,changeToken:String,contentStream:CmisContentStreamType,extension:CmisExtensionType):AsyncToken;
         /**
          * Method to call the operation on the server without passing the arguments inline.
          * You must however set the _request property for the operation before calling this method

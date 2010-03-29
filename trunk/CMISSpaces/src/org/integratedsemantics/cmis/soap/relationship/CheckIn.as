@@ -21,7 +21,7 @@ package org.integratedsemantics.cmis.soap.relationship
 		public function CheckIn() {}
             
 		public var repositoryId:String;
-		public var documentId:String;
+		public var objectId:String;
 		public var major:Boolean;
 		public var properties:org.integratedsemantics.cmis.soap.relationship.CmisPropertiesType;
 		public var contentStream:org.integratedsemantics.cmis.soap.relationship.CmisContentStreamType;

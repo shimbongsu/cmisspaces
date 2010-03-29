@@ -20,6 +20,6 @@ package org.integratedsemantics.cmis.soap.object
 		 */
 		public function CmisTypeFolderDefinitionType() {}
             
-		public var anyAttribute:Array;
+		public var _anyAttribute:Array;
 	}
 }

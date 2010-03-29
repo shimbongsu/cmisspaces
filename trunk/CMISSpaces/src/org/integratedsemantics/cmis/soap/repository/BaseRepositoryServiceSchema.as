@@ -13,7 +13,6 @@ package org.integratedsemantics.cmis.soap.repository
     <xsd:element name="query" nillable="true" type="tns:cmisQueryType"/>
     <xsd:complexType name="cmisQueryType">
         <xsd:sequence>
-            <xsd:element form="qualified" minOccurs="0" name="repositoryId" type="xs:string"/>
             <xsd:element form="qualified" name="statement" type="xs:string"/>
             <xsd:element form="qualified" minOccurs="0" name="searchAllVersions" type="xs:boolean"/>
             <xsd:element form="qualified" minOccurs="0" name="includeAllowableActions" type="xs:boolean"/>
@@ -44,26 +43,74 @@ package org.integratedsemantics.cmis.soap.repository
             <xsd:any maxOccurs="unbounded" namespace="##other" processContents="lax"/>
         </xsd:sequence>
     </xsd:complexType>
-    <xsd:complexType name="cmisPropertiesType">
+    <xsd:complexType name="cmisTypeDefinitionType">
         <xsd:sequence>
+            <xsd:element form="qualified" name="id" type="xs:string"/>
+            <xsd:element form="qualified" name="localName" type="xs:string"/>
+            <xsd:element form="qualified" name="localNamespace" nillable="true" type="xs:anyURI"/>
+            <xsd:element form="qualified" minOccurs="0" name="displayName" type="xs:string"/>
+            <xsd:element form="qualified" minOccurs="0" name="queryName" type="xs:string"/>
+            <xsd:element form="qualified" minOccurs="0" name="description" type="xs:string"/>
+            <xsd:element form="qualified" name="baseId" type="tns:enumBaseObjectTypeIds"/>
+            <xsd:element form="qualified" minOccurs="0" name="parentId" type="xs:string"/>
+            <xsd:element form="qualified" name="creatable" type="xs:boolean"/>
+            <xsd:element form="qualified" name="fileable" type="xs:boolean"/>
+            <xsd:element form="qualified" name="queryable" type="xs:boolean"/>
+            <xsd:element form="qualified" name="fulltextIndexed" type="xs:boolean"/>
+            <xsd:element default="true" form="qualified" name="includedInSupertypeQuery" type="xs:boolean"/>
+            <xsd:element form="qualified" name="controllablePolicy" type="xs:boolean"/>
+            <xsd:element form="qualified" name="controllableACL" type="xs:boolean"/>
             <xsd:choice maxOccurs="unbounded" minOccurs="0">
-                <xsd:element form="qualified" name="propertyId" nillable="true" type="tns:cmisPropertyId"/>
-                <xsd:element form="qualified" name="propertyUri" nillable="true" type="tns:cmisPropertyUri"/>
-                <xsd:element form="qualified" name="propertyInteger" nillable="true" type="tns:cmisPropertyInteger"/>
-                <xsd:element form="qualified" name="propertyDecimal" nillable="true" type="tns:cmisPropertyDecimal"/>
-                <xsd:element form="qualified" name="propertyBoolean" nillable="true" type="tns:cmisPropertyBoolean"/>
-                <xsd:element form="qualified" name="propertyHtml" nillable="true" type="tns:cmisPropertyHtml"/>
-                <xsd:element form="qualified" name="propertyDateTime" nillable="true" type="tns:cmisPropertyDateTime"/>
-                <xsd:element form="qualified" name="propertyString" nillable="true" type="tns:cmisPropertyString"/>
+                <xsd:element form="qualified" name="propertyIntegerDefinition" type="tns:cmisPropertyIntegerDefinitionType"/>
+                <xsd:element form="qualified" name="propertyStringDefinition" type="tns:cmisPropertyStringDefinitionType"/>
+                <xsd:element form="qualified" name="propertyDecimalDefinition" type="tns:cmisPropertyDecimalDefinitionType"/>
+                <xsd:element form="qualified" name="propertyDateTimeDefinition" type="tns:cmisPropertyDateTimeDefinitionType"/>
+                <xsd:element form="qualified" name="propertyHtmlDefinition" type="tns:cmisPropertyHtmlDefinitionType"/>
+                <xsd:element form="qualified" name="propertyIdDefinition" type="tns:cmisPropertyIdDefinitionType"/>
+                <xsd:element form="qualified" name="propertyBooleanDefinition" type="tns:cmisPropertyBooleanDefinitionType"/>
+                <xsd:element form="qualified" name="propertyUriDefinition" type="tns:cmisPropertyUriDefinitionType"/>
             </xsd:choice>
             <xsd:any maxOccurs="unbounded" namespace="##other" processContents="lax"/>
         </xsd:sequence>
     </xsd:complexType>
-    <xsd:complexType name="cmisPropertyId">
+    <xsd:complexType name="cmisPropertyIntegerDefinitionType">
+        <xsd:complexContent>
+            <xsd:extension base="tns:cmisPropertyDefinitionType">
+                <xsd:sequence>
+                    <xsd:element form="qualified" minOccurs="0" name="defaultValue" type="tns:cmisPropertyInteger"/>
+                    <xsd:element form="qualified" minOccurs="0" name="maxValue" type="xs:integer"/>
+                    <xsd:element form="qualified" minOccurs="0" name="minValue" type="xs:integer"/>
+                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceInteger"/>
+                </xsd:sequence>
+                <xsd:anyAttribute namespace="##other" processContents="skip"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="cmisPropertyDefinitionType">
+        <xsd:sequence>
+            <xsd:element form="qualified" name="id" type="xs:string"/>
+            <xsd:element form="qualified" name="localName" type="xs:string"/>
+            <xsd:element form="qualified" minOccurs="0" name="localNamespace" type="xs:anyURI"/>
+            <xsd:element form="qualified" minOccurs="0" name="displayName" type="xs:string"/>
+            <xsd:element form="qualified" minOccurs="0" name="queryName" type="xs:string"/>
+            <xsd:element form="qualified" minOccurs="0" name="description" type="xs:string"/>
+            <xsd:element form="qualified" name="propertyType" type="tns:enumPropertyType"/>
+            <xsd:element form="qualified" name="cardinality" type="tns:enumCardinality"/>
+            <xsd:element form="qualified" name="updatability" type="tns:enumUpdatability"/>
+            <xsd:element form="qualified" minOccurs="0" name="inherited" type="xs:boolean"/>
+            <xsd:element form="qualified" name="required" type="xs:boolean"/>
+            <xsd:element form="qualified" name="queryable" type="xs:boolean"/>
+            <xsd:element form="qualified" name="orderable" type="xs:boolean"/>
+            <xsd:element form="qualified" minOccurs="0" name="openChoice" type="xs:boolean"/>
+            <xsd:any maxOccurs="unbounded" namespace="##other" processContents="lax"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="cmisPropertyInteger">
         <xsd:complexContent>
             <xsd:extension base="tns:cmisProperty">
                 <xsd:sequence>
-                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" nillable="true" type="xs:string"/>
+                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" nillable="true" type="xs:integer"/>
+                    <xsd:any maxOccurs="unbounded" namespace="##other" processContents="lax"/>
                 </xsd:sequence>
                 <xsd:anyAttribute namespace="##other" processContents="skip"/>
             </xsd:extension>
@@ -76,21 +123,23 @@ package org.integratedsemantics.cmis.soap.repository
         <xsd:attribute name="displayName" type="xs:anySimpleType"/>
         <xsd:attribute name="queryName" type="xs:anySimpleType"/>
     </xsd:complexType>
-    <xsd:complexType name="cmisPropertyDecimal">
+    <xsd:complexType name="cmisPropertyHtml">
         <xsd:complexContent>
             <xsd:extension base="tns:cmisProperty">
                 <xsd:sequence>
-                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" nillable="true" type="xs:decimal"/>
+                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" nillable="true" type="xs:string"/>
+                    <xsd:any maxOccurs="unbounded" namespace="##other" processContents="lax"/>
                 </xsd:sequence>
                 <xsd:anyAttribute namespace="##other" processContents="skip"/>
             </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>
-    <xsd:complexType name="cmisPropertyInteger">
+    <xsd:complexType name="cmisPropertyDecimal">
         <xsd:complexContent>
             <xsd:extension base="tns:cmisProperty">
                 <xsd:sequence>
-                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" nillable="true" type="xs:integer"/>
+                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" nillable="true" type="xs:decimal"/>
+                    <xsd:any maxOccurs="unbounded" namespace="##other" processContents="lax"/>
                 </xsd:sequence>
                 <xsd:anyAttribute namespace="##other" processContents="skip"/>
             </xsd:extension>
@@ -101,36 +150,18 @@ package org.integratedsemantics.cmis.soap.repository
             <xsd:extension base="tns:cmisProperty">
                 <xsd:sequence>
                     <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" nillable="true" type="xs:dateTime"/>
+                    <xsd:any maxOccurs="unbounded" namespace="##other" processContents="lax"/>
                 </xsd:sequence>
                 <xsd:anyAttribute namespace="##other" processContents="skip"/>
             </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>
-    <xsd:complexType name="cmisPropertyUri">
-        <xsd:complexContent>
-            <xsd:extension base="tns:cmisProperty">
-                <xsd:sequence>
-                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" nillable="true" type="xs:anyURI"/>
-                </xsd:sequence>
-                <xsd:anyAttribute namespace="##other" processContents="skip"/>
-            </xsd:extension>
-        </xsd:complexContent>
-    </xsd:complexType>
-    <xsd:complexType name="cmisPropertyHtml">
+    <xsd:complexType name="cmisPropertyId">
         <xsd:complexContent>
             <xsd:extension base="tns:cmisProperty">
                 <xsd:sequence>
                     <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" nillable="true" type="xs:string"/>
-                </xsd:sequence>
-                <xsd:anyAttribute namespace="##other" processContents="skip"/>
-            </xsd:extension>
-        </xsd:complexContent>
-    </xsd:complexType>
-    <xsd:complexType name="cmisPropertyBoolean">
-        <xsd:complexContent>
-            <xsd:extension base="tns:cmisProperty">
-                <xsd:sequence>
-                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" type="xs:boolean"/>
+                    <xsd:any maxOccurs="unbounded" namespace="##other" processContents="lax"/>
                 </xsd:sequence>
                 <xsd:anyAttribute namespace="##other" processContents="skip"/>
             </xsd:extension>
@@ -141,28 +172,251 @@ package org.integratedsemantics.cmis.soap.repository
             <xsd:extension base="tns:cmisProperty">
                 <xsd:sequence>
                     <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" nillable="true" type="xs:string"/>
+                    <xsd:any maxOccurs="unbounded" namespace="##other" processContents="lax"/>
                 </xsd:sequence>
                 <xsd:anyAttribute namespace="##other" processContents="skip"/>
             </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>
-    <xsd:complexType name="cmisObjectType">
-        <xsd:sequence>
-            <xsd:element form="qualified" minOccurs="0" name="properties" type="tns:cmisPropertiesType"/>
-            <xsd:element form="qualified" minOccurs="0" name="allowableActions" type="tns:cmisAllowableActionsType"/>
-            <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="relationship" nillable="true" type="tns:cmisObjectType"/>
-            <xsd:element form="qualified" minOccurs="0" name="changeEventInfo" type="tns:cmisChangeEventType"/>
-            <xsd:element form="qualified" minOccurs="0" name="acl" type="tns:cmisAccessControlListType"/>
-            <xsd:element form="qualified" minOccurs="0" name="exactACL" type="xs:boolean"/>
-            <xsd:element form="qualified" minOccurs="0" name="policyIds" type="tns:cmisListOfIdsType"/>
-            <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="rendition" nillable="true" type="tns:cmisRenditionType"/>
-            <xsd:any maxOccurs="unbounded" namespace="##other" processContents="lax"/>
-        </xsd:sequence>
+    <xsd:complexType name="cmisPropertyUri">
+        <xsd:complexContent>
+            <xsd:extension base="tns:cmisProperty">
+                <xsd:sequence>
+                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" nillable="true" type="xs:anyURI"/>
+                    <xsd:any maxOccurs="unbounded" namespace="##other" processContents="lax"/>
+                </xsd:sequence>
+                <xsd:anyAttribute namespace="##other" processContents="skip"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="cmisPropertyBoolean">
+        <xsd:complexContent>
+            <xsd:extension base="tns:cmisProperty">
+                <xsd:sequence>
+                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" type="xs:boolean"/>
+                    <xsd:any maxOccurs="unbounded" namespace="##other" processContents="lax"/>
+                </xsd:sequence>
+                <xsd:anyAttribute namespace="##other" processContents="skip"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="cmisChoiceInteger">
+        <xsd:complexContent>
+            <xsd:extension base="tns:cmisChoice">
+                <xsd:sequence>
+                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" nillable="true" type="xs:integer"/>
+                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceInteger"/>
+                </xsd:sequence>
+                <xsd:anyAttribute namespace="##other" processContents="skip"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="cmisChoice">
+        <xsd:sequence/>
+        <xsd:attribute name="displayName" type="xs:anySimpleType" use="required"/>
+    </xsd:complexType>
+    <xsd:complexType name="cmisChoiceHtml">
+        <xsd:complexContent>
+            <xsd:extension base="tns:cmisChoice">
+                <xsd:sequence>
+                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" nillable="true" type="xs:string"/>
+                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceHtml"/>
+                </xsd:sequence>
+                <xsd:anyAttribute namespace="##other" processContents="skip"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="cmisChoiceDecimal">
+        <xsd:complexContent>
+            <xsd:extension base="tns:cmisChoice">
+                <xsd:sequence>
+                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" nillable="true" type="xs:decimal"/>
+                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceDecimal"/>
+                </xsd:sequence>
+                <xsd:anyAttribute namespace="##other" processContents="skip"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="cmisChoiceString">
+        <xsd:complexContent>
+            <xsd:extension base="tns:cmisChoice">
+                <xsd:sequence>
+                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" nillable="true" type="xs:string"/>
+                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceString"/>
+                </xsd:sequence>
+                <xsd:anyAttribute namespace="##other" processContents="skip"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="cmisChoiceDateTime">
+        <xsd:complexContent>
+            <xsd:extension base="tns:cmisChoice">
+                <xsd:sequence>
+                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" nillable="true" type="xs:dateTime"/>
+                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceDateTime"/>
+                </xsd:sequence>
+                <xsd:anyAttribute namespace="##other" processContents="skip"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="cmisChoiceId">
+        <xsd:complexContent>
+            <xsd:extension base="tns:cmisChoice">
+                <xsd:sequence>
+                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" nillable="true" type="xs:string"/>
+                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceId"/>
+                </xsd:sequence>
+                <xsd:anyAttribute namespace="##other" processContents="skip"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="cmisChoiceBoolean">
+        <xsd:complexContent>
+            <xsd:extension base="tns:cmisChoice">
+                <xsd:sequence>
+                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" type="xs:boolean"/>
+                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceBoolean"/>
+                </xsd:sequence>
+                <xsd:anyAttribute namespace="##other" processContents="skip"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="cmisChoiceUri">
+        <xsd:complexContent>
+            <xsd:extension base="tns:cmisChoice">
+                <xsd:sequence>
+                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" nillable="true" type="xs:anyURI"/>
+                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceUri"/>
+                </xsd:sequence>
+                <xsd:anyAttribute namespace="##other" processContents="skip"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="cmisPropertyDateTimeDefinitionType">
+        <xsd:complexContent>
+            <xsd:extension base="tns:cmisPropertyDefinitionType">
+                <xsd:sequence>
+                    <xsd:element form="qualified" minOccurs="0" name="defaultValue" type="tns:cmisPropertyDateTime"/>
+                    <xsd:element form="qualified" minOccurs="0" name="resolution" type="tns:enumDateTimeResolution"/>
+                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceDateTime"/>
+                </xsd:sequence>
+                <xsd:anyAttribute namespace="##other" processContents="skip"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="cmisPropertyUriDefinitionType">
+        <xsd:complexContent>
+            <xsd:extension base="tns:cmisPropertyDefinitionType">
+                <xsd:sequence>
+                    <xsd:element form="qualified" minOccurs="0" name="defaultValue" type="tns:cmisPropertyUri"/>
+                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceUri"/>
+                </xsd:sequence>
+                <xsd:anyAttribute namespace="##other" processContents="skip"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="cmisPropertyDecimalDefinitionType">
+        <xsd:complexContent>
+            <xsd:extension base="tns:cmisPropertyDefinitionType">
+                <xsd:sequence>
+                    <xsd:element form="qualified" minOccurs="0" name="defaultValue" type="tns:cmisPropertyDecimal"/>
+                    <xsd:element form="qualified" minOccurs="0" name="maxValue" type="xs:decimal"/>
+                    <xsd:element form="qualified" minOccurs="0" name="minValue" type="xs:decimal"/>
+                    <xsd:element form="qualified" minOccurs="0" name="precision" type="xs:integer"/>
+                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceDecimal"/>
+                </xsd:sequence>
+                <xsd:anyAttribute namespace="##other" processContents="skip"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="cmisPropertyBooleanDefinitionType">
+        <xsd:complexContent>
+            <xsd:extension base="tns:cmisPropertyDefinitionType">
+                <xsd:sequence>
+                    <xsd:element form="qualified" minOccurs="0" name="defaultValue" type="tns:cmisPropertyBoolean"/>
+                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceBoolean"/>
+                </xsd:sequence>
+                <xsd:anyAttribute namespace="##other" processContents="skip"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="cmisPropertyHtmlDefinitionType">
+        <xsd:complexContent>
+            <xsd:extension base="tns:cmisPropertyDefinitionType">
+                <xsd:sequence>
+                    <xsd:element form="qualified" minOccurs="0" name="defaultValue" type="tns:cmisPropertyHtml"/>
+                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceHtml"/>
+                </xsd:sequence>
+                <xsd:anyAttribute namespace="##other" processContents="skip"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="cmisPropertyIdDefinitionType">
+        <xsd:complexContent>
+            <xsd:extension base="tns:cmisPropertyDefinitionType">
+                <xsd:sequence>
+                    <xsd:element form="qualified" minOccurs="0" name="defaultValue" type="tns:cmisPropertyId"/>
+                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceId"/>
+                </xsd:sequence>
+                <xsd:anyAttribute namespace="##other" processContents="skip"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="cmisPropertyStringDefinitionType">
+        <xsd:complexContent>
+            <xsd:extension base="tns:cmisPropertyDefinitionType">
+                <xsd:sequence>
+                    <xsd:element form="qualified" minOccurs="0" name="defaultValue" type="tns:cmisPropertyString"/>
+                    <xsd:element form="qualified" minOccurs="0" name="maxLength" type="xs:integer"/>
+                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceString"/>
+                </xsd:sequence>
+                <xsd:anyAttribute namespace="##other" processContents="skip"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="cmisTypeFolderDefinitionType">
+        <xsd:complexContent>
+            <xsd:extension base="tns:cmisTypeDefinitionType">
+                <xsd:sequence/>
+                <xsd:anyAttribute namespace="##other" processContents="skip"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="cmisTypeDocumentDefinitionType">
+        <xsd:complexContent>
+            <xsd:extension base="tns:cmisTypeDefinitionType">
+                <xsd:sequence>
+                    <xsd:element form="qualified" name="versionable" type="xs:boolean"/>
+                    <xsd:element form="qualified" name="contentStreamAllowed" type="tns:enumContentStreamAllowed"/>
+                </xsd:sequence>
+                <xsd:anyAttribute namespace="##other" processContents="skip"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="cmisTypeRelationshipDefinitionType">
+        <xsd:complexContent>
+            <xsd:extension base="tns:cmisTypeDefinitionType">
+                <xsd:sequence>
+                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="allowedSourceTypes" nillable="true" type="xs:string"/>
+                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="allowedTargetTypes" nillable="true" type="xs:string"/>
+                </xsd:sequence>
+                <xsd:anyAttribute namespace="##other" processContents="skip"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="cmisTypePolicyDefinitionType">
+        <xsd:complexContent>
+            <xsd:extension base="tns:cmisTypeDefinitionType">
+                <xsd:sequence/>
+                <xsd:anyAttribute namespace="##other" processContents="skip"/>
+            </xsd:extension>
+        </xsd:complexContent>
     </xsd:complexType>
     <xsd:complexType name="cmisAllowableActionsType">
         <xsd:sequence>
             <xsd:element form="qualified" minOccurs="0" name="canDeleteObject" type="xs:boolean"/>
             <xsd:element form="qualified" minOccurs="0" name="canUpdateProperties" type="xs:boolean"/>
+            <xsd:element form="qualified" minOccurs="0" name="canGetFolderTree" type="xs:boolean"/>
             <xsd:element form="qualified" minOccurs="0" name="canGetProperties" type="xs:boolean"/>
             <xsd:element form="qualified" minOccurs="0" name="canGetObjectRelationships" type="xs:boolean"/>
             <xsd:element form="qualified" minOccurs="0" name="canGetObjectParents" type="xs:boolean"/>
@@ -185,11 +439,38 @@ package org.integratedsemantics.cmis.soap.repository
             <xsd:element form="qualified" minOccurs="0" name="canCreateDocument" type="xs:boolean"/>
             <xsd:element form="qualified" minOccurs="0" name="canCreateFolder" type="xs:boolean"/>
             <xsd:element form="qualified" minOccurs="0" name="canCreateRelationship" type="xs:boolean"/>
-            <xsd:element form="qualified" minOccurs="0" name="canCreatePolicy" type="xs:boolean"/>
             <xsd:element form="qualified" minOccurs="0" name="canDeleteTree" type="xs:boolean"/>
             <xsd:element form="qualified" minOccurs="0" name="canGetRenditions" type="xs:boolean"/>
             <xsd:element form="qualified" minOccurs="0" name="canGetACL" type="xs:boolean"/>
             <xsd:element form="qualified" minOccurs="0" name="canApplyACL" type="xs:boolean"/>
+            <xsd:any maxOccurs="unbounded" namespace="##other" processContents="lax"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="cmisObjectType">
+        <xsd:sequence>
+            <xsd:element form="qualified" minOccurs="0" name="properties" type="tns:cmisPropertiesType"/>
+            <xsd:element form="qualified" minOccurs="0" name="allowableActions" type="tns:cmisAllowableActionsType"/>
+            <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="relationship" nillable="true" type="tns:cmisObjectType"/>
+            <xsd:element form="qualified" minOccurs="0" name="changeEventInfo" type="tns:cmisChangeEventType"/>
+            <xsd:element form="qualified" minOccurs="0" name="acl" type="tns:cmisAccessControlListType"/>
+            <xsd:element form="qualified" minOccurs="0" name="exactACL" type="xs:boolean"/>
+            <xsd:element form="qualified" minOccurs="0" name="policyIds" type="tns:cmisListOfIdsType"/>
+            <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="rendition" nillable="true" type="tns:cmisRenditionType"/>
+            <xsd:any maxOccurs="unbounded" namespace="##other" processContents="lax"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="cmisPropertiesType">
+        <xsd:sequence>
+            <xsd:choice maxOccurs="unbounded" minOccurs="0">
+                <xsd:element form="qualified" name="propertyHtml" nillable="true" type="tns:cmisPropertyHtml"/>
+                <xsd:element form="qualified" name="propertyDateTime" nillable="true" type="tns:cmisPropertyDateTime"/>
+                <xsd:element form="qualified" name="propertyUri" nillable="true" type="tns:cmisPropertyUri"/>
+                <xsd:element form="qualified" name="propertyBoolean" nillable="true" type="tns:cmisPropertyBoolean"/>
+                <xsd:element form="qualified" name="propertyString" nillable="true" type="tns:cmisPropertyString"/>
+                <xsd:element form="qualified" name="propertyId" nillable="true" type="tns:cmisPropertyId"/>
+                <xsd:element form="qualified" name="propertyDecimal" nillable="true" type="tns:cmisPropertyDecimal"/>
+                <xsd:element form="qualified" name="propertyInteger" nillable="true" type="tns:cmisPropertyInteger"/>
+            </xsd:choice>
             <xsd:any maxOccurs="unbounded" namespace="##other" processContents="lax"/>
         </xsd:sequence>
     </xsd:complexType>
@@ -219,300 +500,6 @@ package org.integratedsemantics.cmis.soap.repository
             <xsd:any maxOccurs="unbounded" namespace="##other" processContents="lax"/>
         </xsd:sequence>
     </xsd:complexType>
-    <xsd:complexType name="cmisTypeDefinitionType">
-        <xsd:sequence>
-            <xsd:element form="qualified" name="id" type="xs:string"/>
-            <xsd:element form="qualified" name="localName" type="xs:string"/>
-            <xsd:element form="qualified" name="localNamespace" nillable="true" type="xs:anyURI"/>
-            <xsd:element form="qualified" minOccurs="0" name="displayName" type="xs:string"/>
-            <xsd:element form="qualified" minOccurs="0" name="queryName" type="xs:string"/>
-            <xsd:element form="qualified" minOccurs="0" name="description" type="xs:string"/>
-            <xsd:element form="qualified" name="baseId" type="tns:enumBaseObjectTypeIds"/>
-            <xsd:element form="qualified" minOccurs="0" name="parentId" type="xs:string"/>
-            <xsd:element form="qualified" name="creatable" type="xs:boolean"/>
-            <xsd:element form="qualified" name="fileable" type="xs:boolean"/>
-            <xsd:element form="qualified" name="queryable" type="xs:boolean"/>
-            <xsd:element form="qualified" name="fulltextIndexed" type="xs:boolean"/>
-            <xsd:element default="true" form="qualified" name="includedInSupertypeQuery" type="xs:boolean"/>
-            <xsd:element form="qualified" name="controllablePolicy" type="xs:boolean"/>
-            <xsd:element form="qualified" name="controllableACL" type="xs:boolean"/>
-            <xsd:choice maxOccurs="unbounded" minOccurs="0">
-                <xsd:element form="qualified" name="propertyBooleanDefinition" type="tns:cmisPropertyBooleanDefinitionType"/>
-                <xsd:element form="qualified" name="propertyDateTimeDefinition" type="tns:cmisPropertyDateTimeDefinitionType"/>
-                <xsd:element form="qualified" name="propertyUriDefinition" type="tns:cmisPropertyUriDefinitionType"/>
-                <xsd:element form="qualified" name="propertyStringDefinition" type="tns:cmisPropertyStringDefinitionType"/>
-                <xsd:element form="qualified" name="propertyIntegerDefinition" type="tns:cmisPropertyIntegerDefinitionType"/>
-                <xsd:element form="qualified" name="propertyHtmlDefinition" type="tns:cmisPropertyHtmlDefinitionType"/>
-                <xsd:element form="qualified" name="propertyDecimalDefinition" type="tns:cmisPropertyDecimalDefinitionType"/>
-                <xsd:element form="qualified" name="propertyIdDefinition" type="tns:cmisPropertyIdDefinitionType"/>
-            </xsd:choice>
-            <xsd:any maxOccurs="unbounded" namespace="##other" processContents="lax"/>
-        </xsd:sequence>
-    </xsd:complexType>
-    <xsd:complexType name="cmisPropertyBooleanDefinitionType">
-        <xsd:complexContent>
-            <xsd:extension base="tns:cmisPropertyDefinitionType">
-                <xsd:sequence>
-                    <xsd:element form="qualified" minOccurs="0" name="defaultValue" type="tns:cmisPropertyBoolean"/>
-                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceBoolean"/>
-                </xsd:sequence>
-                <xsd:anyAttribute namespace="##other" processContents="skip"/>
-            </xsd:extension>
-        </xsd:complexContent>
-    </xsd:complexType>
-    <xsd:complexType name="cmisPropertyDefinitionType">
-        <xsd:sequence>
-            <xsd:element form="qualified" name="id" type="xs:string"/>
-            <xsd:element form="qualified" name="localName" type="xs:string"/>
-            <xsd:element form="qualified" minOccurs="0" name="localNamespace" type="xs:anyURI"/>
-            <xsd:element form="qualified" minOccurs="0" name="displayName" type="xs:string"/>
-            <xsd:element form="qualified" minOccurs="0" name="queryName" type="xs:string"/>
-            <xsd:element form="qualified" minOccurs="0" name="description" type="xs:string"/>
-            <xsd:element form="qualified" name="propertyType" type="tns:enumPropertyType"/>
-            <xsd:element form="qualified" name="cardinality" type="tns:enumCardinality"/>
-            <xsd:element form="qualified" name="updatability" type="tns:enumUpdatability"/>
-            <xsd:element form="qualified" minOccurs="0" name="inherited" type="xs:boolean"/>
-            <xsd:element form="qualified" name="required" type="xs:boolean"/>
-            <xsd:element form="qualified" name="queryable" type="xs:boolean"/>
-            <xsd:element form="qualified" name="orderable" type="xs:boolean"/>
-            <xsd:element form="qualified" minOccurs="0" name="openChoice" type="xs:boolean"/>
-            <xsd:any maxOccurs="unbounded" namespace="##other" processContents="lax"/>
-        </xsd:sequence>
-    </xsd:complexType>
-    <xsd:complexType name="cmisChoiceBoolean">
-        <xsd:complexContent>
-            <xsd:extension base="tns:cmisChoice">
-                <xsd:sequence>
-                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" type="xs:boolean"/>
-                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceBoolean"/>
-                </xsd:sequence>
-                <xsd:anyAttribute namespace="##other" processContents="skip"/>
-            </xsd:extension>
-        </xsd:complexContent>
-    </xsd:complexType>
-    <xsd:complexType name="cmisChoice">
-        <xsd:sequence/>
-        <xsd:attribute name="displayName" type="xs:anySimpleType" use="required"/>
-    </xsd:complexType>
-    <xsd:complexType name="cmisChoiceId">
-        <xsd:complexContent>
-            <xsd:extension base="tns:cmisChoice">
-                <xsd:sequence>
-                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" nillable="true" type="xs:string"/>
-                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceId"/>
-                </xsd:sequence>
-                <xsd:anyAttribute namespace="##other" processContents="skip"/>
-            </xsd:extension>
-        </xsd:complexContent>
-    </xsd:complexType>
-    <xsd:complexType name="cmisChoiceDateTime">
-        <xsd:complexContent>
-            <xsd:extension base="tns:cmisChoice">
-                <xsd:sequence>
-                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" nillable="true" type="xs:dateTime"/>
-                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceDateTime"/>
-                </xsd:sequence>
-                <xsd:anyAttribute namespace="##other" processContents="skip"/>
-            </xsd:extension>
-        </xsd:complexContent>
-    </xsd:complexType>
-    <xsd:complexType name="cmisChoiceDecimal">
-        <xsd:complexContent>
-            <xsd:extension base="tns:cmisChoice">
-                <xsd:sequence>
-                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" nillable="true" type="xs:decimal"/>
-                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceDecimal"/>
-                </xsd:sequence>
-                <xsd:anyAttribute namespace="##other" processContents="skip"/>
-            </xsd:extension>
-        </xsd:complexContent>
-    </xsd:complexType>
-    <xsd:complexType name="cmisChoiceHtml">
-        <xsd:complexContent>
-            <xsd:extension base="tns:cmisChoice">
-                <xsd:sequence>
-                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" nillable="true" type="xs:string"/>
-                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceHtml"/>
-                </xsd:sequence>
-                <xsd:anyAttribute namespace="##other" processContents="skip"/>
-            </xsd:extension>
-        </xsd:complexContent>
-    </xsd:complexType>
-    <xsd:complexType name="cmisChoiceUri">
-        <xsd:complexContent>
-            <xsd:extension base="tns:cmisChoice">
-                <xsd:sequence>
-                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" nillable="true" type="xs:anyURI"/>
-                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceUri"/>
-                </xsd:sequence>
-                <xsd:anyAttribute namespace="##other" processContents="skip"/>
-            </xsd:extension>
-        </xsd:complexContent>
-    </xsd:complexType>
-    <xsd:complexType name="cmisChoiceInteger">
-        <xsd:complexContent>
-            <xsd:extension base="tns:cmisChoice">
-                <xsd:sequence>
-                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" nillable="true" type="xs:integer"/>
-                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceInteger"/>
-                </xsd:sequence>
-                <xsd:anyAttribute namespace="##other" processContents="skip"/>
-            </xsd:extension>
-        </xsd:complexContent>
-    </xsd:complexType>
-    <xsd:complexType name="cmisChoiceString">
-        <xsd:complexContent>
-            <xsd:extension base="tns:cmisChoice">
-                <xsd:sequence>
-                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="value" nillable="true" type="xs:string"/>
-                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceString"/>
-                </xsd:sequence>
-                <xsd:anyAttribute namespace="##other" processContents="skip"/>
-            </xsd:extension>
-        </xsd:complexContent>
-    </xsd:complexType>
-    <xsd:complexType name="cmisPropertyHtmlDefinitionType">
-        <xsd:complexContent>
-            <xsd:extension base="tns:cmisPropertyDefinitionType">
-                <xsd:sequence>
-                    <xsd:element form="qualified" minOccurs="0" name="defaultValue" type="tns:cmisPropertyHtml"/>
-                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceHtml"/>
-                </xsd:sequence>
-                <xsd:anyAttribute namespace="##other" processContents="skip"/>
-            </xsd:extension>
-        </xsd:complexContent>
-    </xsd:complexType>
-    <xsd:complexType name="cmisPropertyUriDefinitionType">
-        <xsd:complexContent>
-            <xsd:extension base="tns:cmisPropertyDefinitionType">
-                <xsd:sequence>
-                    <xsd:element form="qualified" minOccurs="0" name="defaultValue" type="tns:cmisPropertyUri"/>
-                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceUri"/>
-                </xsd:sequence>
-                <xsd:anyAttribute namespace="##other" processContents="skip"/>
-            </xsd:extension>
-        </xsd:complexContent>
-    </xsd:complexType>
-    <xsd:complexType name="cmisPropertyIdDefinitionType">
-        <xsd:complexContent>
-            <xsd:extension base="tns:cmisPropertyDefinitionType">
-                <xsd:sequence>
-                    <xsd:element form="qualified" minOccurs="0" name="defaultValue" type="tns:cmisPropertyId"/>
-                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceId"/>
-                </xsd:sequence>
-                <xsd:anyAttribute namespace="##other" processContents="skip"/>
-            </xsd:extension>
-        </xsd:complexContent>
-    </xsd:complexType>
-    <xsd:complexType name="cmisPropertyIntegerDefinitionType">
-        <xsd:complexContent>
-            <xsd:extension base="tns:cmisPropertyDefinitionType">
-                <xsd:sequence>
-                    <xsd:element form="qualified" minOccurs="0" name="defaultValue" type="tns:cmisPropertyInteger"/>
-                    <xsd:element form="qualified" minOccurs="0" name="maxValue" type="xs:integer"/>
-                    <xsd:element form="qualified" minOccurs="0" name="minValue" type="xs:integer"/>
-                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceInteger"/>
-                </xsd:sequence>
-                <xsd:anyAttribute namespace="##other" processContents="skip"/>
-            </xsd:extension>
-        </xsd:complexContent>
-    </xsd:complexType>
-    <xsd:complexType name="cmisPropertyDateTimeDefinitionType">
-        <xsd:complexContent>
-            <xsd:extension base="tns:cmisPropertyDefinitionType">
-                <xsd:sequence>
-                    <xsd:element form="qualified" minOccurs="0" name="defaultValue" type="tns:cmisPropertyDateTime"/>
-                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceDateTime"/>
-                </xsd:sequence>
-                <xsd:anyAttribute namespace="##other" processContents="skip"/>
-            </xsd:extension>
-        </xsd:complexContent>
-    </xsd:complexType>
-    <xsd:complexType name="cmisPropertyDecimalDefinitionType">
-        <xsd:complexContent>
-            <xsd:extension base="tns:cmisPropertyDefinitionType">
-                <xsd:sequence>
-                    <xsd:element form="qualified" minOccurs="0" name="defaultValue" type="tns:cmisPropertyDecimal"/>
-                    <xsd:element form="qualified" minOccurs="0" name="maxValue" type="xs:decimal"/>
-                    <xsd:element form="qualified" minOccurs="0" name="minValue" type="xs:decimal"/>
-                    <xsd:element form="qualified" minOccurs="0" name="precision" type="xs:integer"/>
-                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceDecimal"/>
-                </xsd:sequence>
-                <xsd:anyAttribute namespace="##other" processContents="skip"/>
-            </xsd:extension>
-        </xsd:complexContent>
-    </xsd:complexType>
-    <xsd:complexType name="cmisPropertyStringDefinitionType">
-        <xsd:complexContent>
-            <xsd:extension base="tns:cmisPropertyDefinitionType">
-                <xsd:sequence>
-                    <xsd:element form="qualified" minOccurs="0" name="defaultValue" type="tns:cmisPropertyString"/>
-                    <xsd:element form="qualified" minOccurs="0" name="maxLength" type="xs:integer"/>
-                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="choice" nillable="true" type="tns:cmisChoiceString"/>
-                </xsd:sequence>
-                <xsd:anyAttribute namespace="##other" processContents="skip"/>
-            </xsd:extension>
-        </xsd:complexContent>
-    </xsd:complexType>
-    <xsd:complexType name="cmisTypeDocumentDefinitionType">
-        <xsd:complexContent>
-            <xsd:extension base="tns:cmisTypeDefinitionType">
-                <xsd:sequence>
-                    <xsd:element form="qualified" name="versionable" type="xs:boolean"/>
-                    <xsd:element form="qualified" name="contentStreamAllowed" type="tns:enumContentStreamAllowed"/>
-                </xsd:sequence>
-                <xsd:anyAttribute namespace="##other" processContents="skip"/>
-            </xsd:extension>
-        </xsd:complexContent>
-    </xsd:complexType>
-    <xsd:complexType name="cmisTypePolicyDefinitionType">
-        <xsd:complexContent>
-            <xsd:extension base="tns:cmisTypeDefinitionType">
-                <xsd:sequence/>
-                <xsd:anyAttribute namespace="##other" processContents="skip"/>
-            </xsd:extension>
-        </xsd:complexContent>
-    </xsd:complexType>
-    <xsd:complexType name="cmisTypeFolderDefinitionType">
-        <xsd:complexContent>
-            <xsd:extension base="tns:cmisTypeDefinitionType">
-                <xsd:sequence/>
-                <xsd:anyAttribute namespace="##other" processContents="skip"/>
-            </xsd:extension>
-        </xsd:complexContent>
-    </xsd:complexType>
-    <xsd:complexType name="cmisTypeRelationshipDefinitionType">
-        <xsd:complexContent>
-            <xsd:extension base="tns:cmisTypeDefinitionType">
-                <xsd:sequence>
-                    <xsd:element form="qualified" maxOccurs="unbounded" name="allowedSourceTypes" type="xs:string"/>
-                    <xsd:element form="qualified" maxOccurs="unbounded" name="allowedTargetTypes" type="xs:string"/>
-                </xsd:sequence>
-                <xsd:anyAttribute namespace="##other" processContents="skip"/>
-            </xsd:extension>
-        </xsd:complexContent>
-    </xsd:complexType>
-    <xsd:complexType name="cmisACLCapabilityType">
-        <xsd:sequence>
-            <xsd:element form="qualified" name="propagation" type="tns:enumACLPropagation"/>
-            <xsd:element form="qualified" maxOccurs="unbounded" name="permissions" type="tns:cmisPermissionDefinition"/>
-            <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="mapping" nillable="true" type="tns:cmisPermissionMapping"/>
-        </xsd:sequence>
-    </xsd:complexType>
-    <xsd:complexType name="cmisPermissionDefinition">
-        <xsd:sequence>
-            <xsd:element form="qualified" name="permission" type="xs:string"/>
-            <xsd:element form="qualified" minOccurs="0" name="description" type="xs:string"/>
-            <xsd:any maxOccurs="unbounded" namespace="##other" processContents="lax"/>
-        </xsd:sequence>
-    </xsd:complexType>
-    <xsd:complexType name="cmisPermissionMapping">
-        <xsd:sequence>
-            <xsd:element form="qualified" name="key" type="tns:enumAllowableActionsKey"/>
-            <xsd:element form="qualified" maxOccurs="unbounded" name="permission" type="xs:string"/>
-            <xsd:any maxOccurs="unbounded" namespace="##other" processContents="lax"/>
-        </xsd:sequence>
-    </xsd:complexType>
     <xsd:complexType name="cmisRepositoryInfoType">
         <xsd:sequence>
             <xsd:element form="qualified" name="repositoryId" type="xs:string"/>
@@ -525,7 +512,7 @@ package org.integratedsemantics.cmis.soap.repository
             <xsd:element form="qualified" minOccurs="0" name="latestChangeLogToken" type="xs:string"/>
             <xsd:element form="qualified" name="capabilities" type="tns:cmisRepositoryCapabilitiesType"/>
             <xsd:element form="qualified" minOccurs="0" name="aclCapability" type="tns:cmisACLCapabilityType"/>
-            <xsd:element form="qualified" name="cmisVersionSupported" type="xs:decimal"/>
+            <xsd:element form="qualified" name="cmisVersionSupported" type="xs:string"/>
             <xsd:element form="qualified" minOccurs="0" name="thinClientURI" type="xs:anyURI"/>
             <xsd:element form="qualified" minOccurs="0" name="changesIncomplete" type="xs:boolean"/>
             <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="changesOnType" nillable="true" type="tns:enumBaseObjectTypeIds"/>
@@ -553,20 +540,34 @@ package org.integratedsemantics.cmis.soap.repository
             <xsd:any maxOccurs="unbounded" namespace="##other" processContents="skip"/>
         </xsd:sequence>
     </xsd:complexType>
+    <xsd:complexType name="cmisACLCapabilityType">
+        <xsd:sequence>
+            <xsd:element form="qualified" name="supportedPermissions" type="tns:enumSupportedPermissions"/>
+            <xsd:element form="qualified" name="propagation" type="tns:enumACLPropagation"/>
+            <xsd:element form="qualified" maxOccurs="unbounded" name="permissions" type="tns:cmisPermissionDefinition"/>
+            <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="mapping" nillable="true" type="tns:cmisPermissionMapping"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="cmisPermissionDefinition">
+        <xsd:sequence>
+            <xsd:element form="qualified" name="permission" type="xs:string"/>
+            <xsd:element form="qualified" minOccurs="0" name="description" type="xs:string"/>
+            <xsd:any maxOccurs="unbounded" namespace="##other" processContents="lax"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="cmisPermissionMapping">
+        <xsd:sequence>
+            <xsd:element form="qualified" name="key" type="tns:enumAllowableActionsKey"/>
+            <xsd:element form="qualified" maxOccurs="unbounded" name="permission" type="xs:string"/>
+            <xsd:any maxOccurs="unbounded" namespace="##other" processContents="lax"/>
+        </xsd:sequence>
+    </xsd:complexType>
     <xsd:simpleType name="enumIncludeRelationships">
         <xsd:restriction base="xs:string">
             <xsd:enumeration value="none"/>
             <xsd:enumeration value="source"/>
             <xsd:enumeration value="target"/>
             <xsd:enumeration value="both"/>
-        </xsd:restriction>
-    </xsd:simpleType>
-    <xsd:simpleType name="enumTypeOfChanges">
-        <xsd:restriction base="xs:string">
-            <xsd:enumeration value="created"/>
-            <xsd:enumeration value="updated"/>
-            <xsd:enumeration value="deleted"/>
-            <xsd:enumeration value="security"/>
         </xsd:restriction>
     </xsd:simpleType>
     <xsd:simpleType name="enumBaseObjectTypeIds">
@@ -603,6 +604,13 @@ package org.integratedsemantics.cmis.soap.repository
             <xsd:enumeration value="oncreate"/>
         </xsd:restriction>
     </xsd:simpleType>
+    <xsd:simpleType name="enumDateTimeResolution">
+        <xsd:restriction base="xs:string">
+            <xsd:enumeration value="year"/>
+            <xsd:enumeration value="date"/>
+            <xsd:enumeration value="time"/>
+        </xsd:restriction>
+    </xsd:simpleType>
     <xsd:simpleType name="enumContentStreamAllowed">
         <xsd:restriction base="xs:string">
             <xsd:enumeration value="notallowed"/>
@@ -610,53 +618,12 @@ package org.integratedsemantics.cmis.soap.repository
             <xsd:enumeration value="required"/>
         </xsd:restriction>
     </xsd:simpleType>
-    <xsd:simpleType name="enumACLPropagation">
+    <xsd:simpleType name="enumTypeOfChanges">
         <xsd:restriction base="xs:string">
-            <xsd:enumeration value="repositorydetermined"/>
-            <xsd:enumeration value="objectonly"/>
-            <xsd:enumeration value="propagate"/>
-        </xsd:restriction>
-    </xsd:simpleType>
-    <xsd:simpleType name="enumAllowableActionsKey">
-        <xsd:restriction base="xs:string">
-            <xsd:enumeration value="canGetDescendents.Folder"/>
-            <xsd:enumeration value="canGetChildren.Folder"/>
-            <xsd:enumeration value="canGetParents.Folder"/>
-            <xsd:enumeration value="canGetFolderParent.Object"/>
-            <xsd:enumeration value="canCreateDocument.Type"/>
-            <xsd:enumeration value="canCreateDocument.Folder"/>
-            <xsd:enumeration value="canCreateFolder.Type"/>
-            <xsd:enumeration value="canCreateFolder.Folder"/>
-            <xsd:enumeration value="canCreateRelationship.Type"/>
-            <xsd:enumeration value="canCreateRelationship.Source"/>
-            <xsd:enumeration value="canCreateRelationship.Target"/>
-            <xsd:enumeration value="canCreatePolicy.Type"/>
-            <xsd:enumeration value="canGetProperties.Object"/>
-            <xsd:enumeration value="canViewContent.Object"/>
-            <xsd:enumeration value="canUpdateProperties.Object"/>
-            <xsd:enumeration value="canMove.Object"/>
-            <xsd:enumeration value="canMove.Target"/>
-            <xsd:enumeration value="canMove.Source"/>
-            <xsd:enumeration value="canDelete.Object"/>
-            <xsd:enumeration value="canDeleteTree.Folder"/>
-            <xsd:enumeration value="canSetContent.Document"/>
-            <xsd:enumeration value="canDeleteContent.Document"/>
-            <xsd:enumeration value="canAddToFolder.Object"/>
-            <xsd:enumeration value="canAddToFolder.Folder"/>
-            <xsd:enumeration value="canRemoveFromFolder.Object"/>
-            <xsd:enumeration value="canRemoveFromFolder.Folder"/>
-            <xsd:enumeration value="canCheckout.Document"/>
-            <xsd:enumeration value="canCancelCheckout.Document"/>
-            <xsd:enumeration value="canCheckin.Document"/>
-            <xsd:enumeration value="canGetAllVersions.VersionSeries"/>
-            <xsd:enumeration value="canGetObjectRelationships.Object"/>
-            <xsd:enumeration value="canAddPolicy.Object"/>
-            <xsd:enumeration value="canAddPolicy.Policy"/>
-            <xsd:enumeration value="canRemovePolicy.Object"/>
-            <xsd:enumeration value="canRemovePolicy.Policy"/>
-            <xsd:enumeration value="canGetAppliedPolicies.Object"/>
-            <xsd:enumeration value="canGetACL.Object"/>
-            <xsd:enumeration value="canApplyACL.Object"/>
+            <xsd:enumeration value="created"/>
+            <xsd:enumeration value="updated"/>
+            <xsd:enumeration value="deleted"/>
+            <xsd:enumeration value="security"/>
         </xsd:restriction>
     </xsd:simpleType>
     <xsd:simpleType name="enumCapabilityACL">
@@ -703,19 +670,64 @@ package org.integratedsemantics.cmis.soap.repository
             <xsd:enumeration value="innerandouter"/>
         </xsd:restriction>
     </xsd:simpleType>
+    <xsd:simpleType name="enumSupportedPermissions">
+        <xsd:restriction base="xs:string">
+            <xsd:enumeration value="basic"/>
+            <xsd:enumeration value="repository"/>
+            <xsd:enumeration value="both"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="enumACLPropagation">
+        <xsd:restriction base="xs:string">
+            <xsd:enumeration value="repositorydetermined"/>
+            <xsd:enumeration value="objectonly"/>
+            <xsd:enumeration value="propagate"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="enumAllowableActionsKey">
+        <xsd:restriction base="xs:string">
+            <xsd:enumeration value="canGetDescendents.Folder"/>
+            <xsd:enumeration value="canGetChildren.Folder"/>
+            <xsd:enumeration value="canGetParents.Folder"/>
+            <xsd:enumeration value="canGetFolderParent.Object"/>
+            <xsd:enumeration value="canCreateDocument.Folder"/>
+            <xsd:enumeration value="canCreateFolder.Folder"/>
+            <xsd:enumeration value="canCreateRelationship.Source"/>
+            <xsd:enumeration value="canCreateRelationship.Target"/>
+            <xsd:enumeration value="canGetProperties.Object"/>
+            <xsd:enumeration value="canViewContent.Object"/>
+            <xsd:enumeration value="canUpdateProperties.Object"/>
+            <xsd:enumeration value="canMove.Object"/>
+            <xsd:enumeration value="canMove.Target"/>
+            <xsd:enumeration value="canMove.Source"/>
+            <xsd:enumeration value="canDelete.Object"/>
+            <xsd:enumeration value="canDeleteTree.Folder"/>
+            <xsd:enumeration value="canSetContent.Document"/>
+            <xsd:enumeration value="canDeleteContent.Document"/>
+            <xsd:enumeration value="canAddToFolder.Object"/>
+            <xsd:enumeration value="canAddToFolder.Folder"/>
+            <xsd:enumeration value="canRemoveFromFolder.Object"/>
+            <xsd:enumeration value="canRemoveFromFolder.Folder"/>
+            <xsd:enumeration value="canCheckout.Document"/>
+            <xsd:enumeration value="canCancelCheckout.Document"/>
+            <xsd:enumeration value="canCheckin.Document"/>
+            <xsd:enumeration value="canGetAllVersions.VersionSeries"/>
+            <xsd:enumeration value="canGetObjectRelationships.Object"/>
+            <xsd:enumeration value="canAddPolicy.Object"/>
+            <xsd:enumeration value="canAddPolicy.Policy"/>
+            <xsd:enumeration value="canRemovePolicy.Object"/>
+            <xsd:enumeration value="canRemovePolicy.Policy"/>
+            <xsd:enumeration value="canGetAppliedPolicies.Object"/>
+            <xsd:enumeration value="canGetACL.Object"/>
+            <xsd:enumeration value="canApplyACL.Object"/>
+        </xsd:restriction>
+    </xsd:simpleType>
     <xsd:simpleType name="enumVersioningState">
         <xsd:restriction base="xs:string">
             <xsd:enumeration value="none"/>
             <xsd:enumeration value="checkedout"/>
             <xsd:enumeration value="minor"/>
             <xsd:enumeration value="major"/>
-        </xsd:restriction>
-    </xsd:simpleType>
-    <xsd:simpleType name="enumUnfileObject">
-        <xsd:restriction base="xs:string">
-            <xsd:enumeration value="unfile"/>
-            <xsd:enumeration value="deletesinglefiled"/>
-            <xsd:enumeration value="delete"/>
         </xsd:restriction>
     </xsd:simpleType>
     <xsd:simpleType name="enumRelationshipDirection">
@@ -725,12 +737,43 @@ package org.integratedsemantics.cmis.soap.repository
             <xsd:enumeration value="either"/>
         </xsd:restriction>
     </xsd:simpleType>
+    <xsd:simpleType name="enumUnfileObject">
+        <xsd:restriction base="xs:string">
+            <xsd:enumeration value="unfile"/>
+            <xsd:enumeration value="deletesinglefiled"/>
+            <xsd:enumeration value="delete"/>
+        </xsd:restriction>
+    </xsd:simpleType>
 </xsd:schema>
 ;
 			 var xsdSchema1:Schema = new Schema(xsdXML1);
 			schemas.push(xsdSchema1);
 			targetNamespaces.push(new Namespace('','http://docs.oasis-open.org/ns/cmis/core/200908/'));
-			 var xsdXML0:XML = <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://docs.oasis-open.org/ns/cmis/core/200908/" xmlns:ns2="http://cxf.apache.org/bindings/xformat" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://docs.oasis-open.org/ns/cmis/messaging/200908/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://docs.oasis-open.org/ns/cmis/messaging/200908/">
+			 var xsdXML0:XML = <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.alfresco.org" xmlns:ns1="http://docs.oasis-open.org/ns/cmis/core/200908/" xmlns:ns2="http://cxf.apache.org/bindings/xformat" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://docs.oasis-open.org/ns/cmis/ws/200908/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://www.alfresco.org">
+    <xsd:import namespace="http://docs.oasis-open.org/ns/cmis/core/200908/"/>
+    <xsd:element name="aspects">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="appliedAspects" type="xs:string"/>
+                <xsd:element form="qualified" minOccurs="0" name="properties" type="ns1:cmisPropertiesType"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="setAspects">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="aspectsToAdd" type="xs:string"/>
+                <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="aspectsToRemove" type="xs:string"/>
+                <xsd:element form="qualified" minOccurs="0" name="properties" type="ns1:cmisPropertiesType"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>
+;
+			 var xsdSchema0:Schema = new Schema(xsdXML0);
+			schemas.push(xsdSchema0);
+			targetNamespaces.push(new Namespace('','http://www.alfresco.org'));
+			 var xsdXML2:XML = <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://docs.oasis-open.org/ns/cmis/core/200908/" xmlns:ns2="http://cxf.apache.org/bindings/xformat" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://docs.oasis-open.org/ns/cmis/messaging/200908/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://docs.oasis-open.org/ns/cmis/messaging/200908/">
     <xsd:import namespace="http://docs.oasis-open.org/ns/cmis/core/200908/"/>
     <xsd:element name="addObjectToFolder">
         <xsd:complexType>
@@ -790,7 +833,7 @@ package org.integratedsemantics.cmis.soap.repository
         <xsd:complexType>
             <xsd:sequence>
                 <xsd:element name="repositoryId" type="xs:string"/>
-                <xsd:element name="documentId" type="xs:string"/>
+                <xsd:element name="objectId" type="xs:string"/>
                 <xsd:element name="extension" type="tns:cmisExtensionType"/>
             </xsd:sequence>
         </xsd:complexType>
@@ -806,7 +849,7 @@ package org.integratedsemantics.cmis.soap.repository
         <xsd:complexType>
             <xsd:sequence>
                 <xsd:element name="repositoryId" type="xs:string"/>
-                <xsd:element name="documentId" type="xs:string"/>
+                <xsd:element name="objectId" type="xs:string"/>
                 <xsd:element name="major" type="xs:boolean"/>
                 <xsd:element name="properties" type="ns1:cmisPropertiesType"/>
                 <xsd:element name="contentStream" type="tns:cmisContentStreamType"/>
@@ -821,7 +864,7 @@ package org.integratedsemantics.cmis.soap.repository
     <xsd:element name="checkInResponse">
         <xsd:complexType>
             <xsd:sequence>
-                <xsd:element name="documentId" type="xs:string"/>
+                <xsd:element name="objectId" type="xs:string"/>
                 <xsd:element name="extension" type="tns:cmisExtensionType"/>
             </xsd:sequence>
         </xsd:complexType>
@@ -830,7 +873,7 @@ package org.integratedsemantics.cmis.soap.repository
         <xsd:complexType>
             <xsd:sequence>
                 <xsd:element name="repositoryId" type="xs:string"/>
-                <xsd:element name="documentId" type="xs:string"/>
+                <xsd:element name="objectId" type="xs:string"/>
                 <xsd:element name="extension" type="tns:cmisExtensionType"/>
             </xsd:sequence>
         </xsd:complexType>
@@ -838,7 +881,7 @@ package org.integratedsemantics.cmis.soap.repository
     <xsd:element name="checkOutResponse">
         <xsd:complexType>
             <xsd:sequence>
-                <xsd:element name="documentId" type="xs:string"/>
+                <xsd:element name="objectId" type="xs:string"/>
                 <xsd:element name="contentCopied" type="xs:boolean"/>
                 <xsd:element name="extension" type="tns:cmisExtensionType"/>
             </xsd:sequence>
@@ -957,7 +1000,7 @@ package org.integratedsemantics.cmis.soap.repository
         <xsd:complexType>
             <xsd:sequence>
                 <xsd:element name="repositoryId" type="xs:string"/>
-                <xsd:element name="documentId" type="xs:string"/>
+                <xsd:element name="objectId" type="xs:string"/>
                 <xsd:element minOccurs="0" name="changeToken" type="xs:string"/>
                 <xsd:element name="extension" type="tns:cmisExtensionType"/>
             </xsd:sequence>
@@ -966,7 +1009,7 @@ package org.integratedsemantics.cmis.soap.repository
     <xsd:element name="deleteContentStreamResponse">
         <xsd:complexType>
             <xsd:sequence>
-                <xsd:element name="documentId" type="xs:string"/>
+                <xsd:element name="objectId" type="xs:string"/>
                 <xsd:element minOccurs="0" name="changeToken" type="xs:string"/>
                 <xsd:element name="extension" type="tns:cmisExtensionType"/>
             </xsd:sequence>
@@ -995,7 +1038,7 @@ package org.integratedsemantics.cmis.soap.repository
                 <xsd:element name="repositoryId" type="xs:string"/>
                 <xsd:element name="folderId" type="xs:string"/>
                 <xsd:element name="allVersions" type="xs:boolean"/>
-                <xsd:element name="unfileObject" type="ns1:enumUnfileObject"/>
+                <xsd:element name="unfileObjects" type="ns1:enumUnfileObject"/>
                 <xsd:element name="continueOnFailure" type="xs:boolean"/>
                 <xsd:element name="extension" type="tns:cmisExtensionType"/>
             </xsd:sequence>
@@ -1116,7 +1159,7 @@ package org.integratedsemantics.cmis.soap.repository
                 <xsd:element name="includeAllowableActions" type="xs:boolean"/>
                 <xsd:element name="includeRelationships" type="ns1:enumIncludeRelationships"/>
                 <xsd:element name="renditionFilter" type="xs:string"/>
-                <xsd:element name="includePathSegments" type="xs:boolean"/>
+                <xsd:element name="includePathSegment" type="xs:boolean"/>
                 <xsd:element name="maxItems" type="xs:integer"/>
                 <xsd:element name="skipCount" type="xs:integer"/>
                 <xsd:element name="extension" type="tns:cmisExtensionType"/>
@@ -1181,7 +1224,7 @@ package org.integratedsemantics.cmis.soap.repository
                 <xsd:element name="includeAllowableActions" type="xs:boolean"/>
                 <xsd:element name="includeRelationships" type="ns1:enumIncludeRelationships"/>
                 <xsd:element name="renditionFilter" type="xs:string"/>
-                <xsd:element name="includePathSegments" type="xs:boolean"/>
+                <xsd:element name="includePathSegment" type="xs:boolean"/>
                 <xsd:element name="extension" type="tns:cmisExtensionType"/>
             </xsd:sequence>
         </xsd:complexType>
@@ -1220,7 +1263,7 @@ package org.integratedsemantics.cmis.soap.repository
                 <xsd:element name="includeAllowableActions" type="xs:boolean"/>
                 <xsd:element name="includeRelationships" type="ns1:enumIncludeRelationships"/>
                 <xsd:element name="renditionFilter" type="xs:string"/>
-                <xsd:element name="includePathSegments" type="xs:boolean"/>
+                <xsd:element name="includePathSegment" type="xs:boolean"/>
                 <xsd:element name="extension" type="tns:cmisExtensionType"/>
             </xsd:sequence>
         </xsd:complexType>
@@ -1558,7 +1601,7 @@ package org.integratedsemantics.cmis.soap.repository
         <xsd:complexType>
             <xsd:sequence>
                 <xsd:element name="repositoryId" type="xs:string"/>
-                <xsd:element name="documentId" type="xs:string"/>
+                <xsd:element name="objectId" type="xs:string"/>
                 <xsd:element name="overwriteFlag" type="xs:boolean"/>
                 <xsd:element name="changeToken" type="xs:string"/>
                 <xsd:element name="contentStream" type="tns:cmisContentStreamType"/>
@@ -1569,7 +1612,7 @@ package org.integratedsemantics.cmis.soap.repository
     <xsd:element name="setContentStreamResponse">
         <xsd:complexType>
             <xsd:sequence>
-                <xsd:element name="documentId" type="xs:string"/>
+                <xsd:element name="objectId" type="xs:string"/>
                 <xsd:element minOccurs="0" name="changeToken" type="xs:string"/>
                 <xsd:element name="extension" type="tns:cmisExtensionType"/>
             </xsd:sequence>
@@ -1595,6 +1638,35 @@ package org.integratedsemantics.cmis.soap.repository
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
+    <xsd:complexType name="cmisACLType">
+        <xsd:sequence>
+            <xsd:element name="ACL" type="ns1:cmisAccessControlListType"/>
+            <xsd:element minOccurs="0" name="exact" type="xs:boolean"/>
+            <xsd:any maxOccurs="unbounded" namespace="##other" processContents="lax"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="cmisTypeDefinitionListType">
+        <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="types" nillable="true" type="ns1:cmisTypeDefinitionType"/>
+            <xsd:element name="hasMoreItems" type="xs:boolean"/>
+            <xsd:element minOccurs="0" name="numItems" type="xs:integer"/>
+            <xsd:any maxOccurs="unbounded" namespace="##other" processContents="lax"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="cmisObjectParentsType">
+        <xsd:sequence>
+            <xsd:element name="object" type="ns1:cmisObjectType"/>
+            <xsd:element minOccurs="0" name="relativePathSegment" type="xs:string"/>
+            <xsd:any maxOccurs="unbounded" namespace="##other" processContents="lax"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="cmisTypeContainer">
+        <xsd:sequence>
+            <xsd:element name="type" type="ns1:cmisTypeDefinitionType"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="children" nillable="true" type="tns:cmisTypeContainer"/>
+            <xsd:any maxOccurs="unbounded" namespace="##other" processContents="lax"/>
+        </xsd:sequence>
+    </xsd:complexType>
     <xsd:complexType name="cmisObjectInFolderContainerType">
         <xsd:sequence>
             <xsd:element name="objectInFolder" type="tns:cmisObjectInFolderType"/>
@@ -1609,30 +1681,12 @@ package org.integratedsemantics.cmis.soap.repository
             <xsd:any maxOccurs="unbounded" namespace="##other" processContents="lax"/>
         </xsd:sequence>
     </xsd:complexType>
-    <xsd:complexType name="cmisTypeDefinitionListType">
+    <xsd:complexType name="cmisContentStreamType">
         <xsd:sequence>
-            <xsd:element maxOccurs="unbounded" minOccurs="0" name="types" nillable="true" type="ns1:cmisTypeDefinitionType"/>
-            <xsd:element name="hasMoreItems" type="xs:boolean"/>
-            <xsd:element minOccurs="0" name="numItems" type="xs:integer"/>
-            <xsd:any maxOccurs="unbounded" namespace="##other" processContents="lax"/>
-        </xsd:sequence>
-    </xsd:complexType>
-    <xsd:complexType name="cmisExtensionType">
-        <xsd:sequence>
-            <xsd:any maxOccurs="unbounded" namespace="##other" processContents="lax"/>
-        </xsd:sequence>
-    </xsd:complexType>
-    <xsd:complexType name="cmisTypeContainer">
-        <xsd:sequence>
-            <xsd:element name="type" type="ns1:cmisTypeDefinitionType"/>
-            <xsd:element maxOccurs="unbounded" minOccurs="0" name="children" nillable="true" type="tns:cmisTypeContainer"/>
-            <xsd:any maxOccurs="unbounded" namespace="##other" processContents="lax"/>
-        </xsd:sequence>
-    </xsd:complexType>
-    <xsd:complexType name="cmisObjectParentsType">
-        <xsd:sequence>
-            <xsd:element name="object" type="ns1:cmisObjectType"/>
-            <xsd:element minOccurs="0" name="relativePathSegment" type="xs:string"/>
+            <xsd:element minOccurs="0" name="length" type="xs:integer"/>
+            <xsd:element minOccurs="0" name="mimeType" type="xs:string"/>
+            <xsd:element minOccurs="0" name="filename" type="xs:string"/>
+            <xsd:element xmlns:ns2="http://www.w3.org/2005/05/xmlmime" name="stream" type="xs:base64Binary"/>
             <xsd:any maxOccurs="unbounded" namespace="##other" processContents="lax"/>
         </xsd:sequence>
     </xsd:complexType>
@@ -1640,6 +1694,14 @@ package org.integratedsemantics.cmis.soap.repository
         <xsd:sequence>
             <xsd:element name="repositoryId" type="xs:string"/>
             <xsd:element name="repositoryName" type="xs:string"/>
+            <xsd:any maxOccurs="unbounded" namespace="##other" processContents="lax"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="cmisFaultType">
+        <xsd:sequence>
+            <xsd:element name="type" type="tns:enumServiceException"/>
+            <xsd:element name="code" type="xs:integer"/>
+            <xsd:element name="message" type="xs:string"/>
             <xsd:any maxOccurs="unbounded" namespace="##other" processContents="lax"/>
         </xsd:sequence>
     </xsd:complexType>
@@ -1651,27 +1713,8 @@ package org.integratedsemantics.cmis.soap.repository
             <xsd:any maxOccurs="unbounded" namespace="##other" processContents="lax"/>
         </xsd:sequence>
     </xsd:complexType>
-    <xsd:complexType name="cmisContentStreamType">
+    <xsd:complexType name="cmisExtensionType">
         <xsd:sequence>
-            <xsd:element minOccurs="0" name="length" type="xs:integer"/>
-            <xsd:element minOccurs="0" name="mimeType" type="xs:string"/>
-            <xsd:element minOccurs="0" name="filename" type="xs:string"/>
-            <xsd:element xmlns:ns2="http://www.w3.org/2005/05/xmlmime" name="stream" type="xs:base64Binary"/>
-            <xsd:any maxOccurs="unbounded" namespace="##other" processContents="lax"/>
-        </xsd:sequence>
-    </xsd:complexType>
-    <xsd:complexType name="cmisACLType">
-        <xsd:sequence>
-            <xsd:element name="ACL" type="ns1:cmisAccessControlListType"/>
-            <xsd:element minOccurs="0" name="exact" type="xs:boolean"/>
-            <xsd:any maxOccurs="unbounded" namespace="##other" processContents="lax"/>
-        </xsd:sequence>
-    </xsd:complexType>
-    <xsd:complexType name="cmisFaultType">
-        <xsd:sequence>
-            <xsd:element name="type" type="tns:enumServiceException"/>
-            <xsd:element name="code" type="xs:integer"/>
-            <xsd:element name="message" type="xs:string"/>
             <xsd:any maxOccurs="unbounded" namespace="##other" processContents="lax"/>
         </xsd:sequence>
     </xsd:complexType>
@@ -1702,10 +1745,11 @@ package org.integratedsemantics.cmis.soap.repository
     </xsd:simpleType>
 </xsd:schema>
 ;
-			 var xsdSchema0:Schema = new Schema(xsdXML0);
-			schemas.push(xsdSchema0);
+			 var xsdSchema2:Schema = new Schema(xsdXML2);
+			schemas.push(xsdSchema2);
 			targetNamespaces.push(new Namespace('','http://docs.oasis-open.org/ns/cmis/messaging/200908/'));
 			xsdSchema0.addImport(new Namespace("http://docs.oasis-open.org/ns/cmis/core/200908/"), xsdSchema1)
+			xsdSchema2.addImport(new Namespace("http://docs.oasis-open.org/ns/cmis/core/200908/"), xsdSchema1)
 		}
 	}
 }

@@ -18,7 +18,10 @@ package org.integratedsemantics.cmis.soap.policy
 		/**
 		 * Constructor, initializes the type class
 		 */
-		public function CmisProperty() {}
-            
+		public function CmisProperty(value:*)
+		{
+            anyAttribute = new Array(value);
+		}
+		public var anyAttribute:Array;
+		}
 	}
-}

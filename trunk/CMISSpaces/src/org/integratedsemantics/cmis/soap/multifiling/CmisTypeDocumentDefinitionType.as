@@ -22,6 +22,6 @@ package org.integratedsemantics.cmis.soap.multifiling
             
 		public var versionable:Boolean;
 		public var contentStreamAllowed:org.integratedsemantics.cmis.soap.multifiling.EnumContentStreamAllowed;
-		public var anyAttribute:Array;
+		public var _anyAttribute:Array;
 	}
 }

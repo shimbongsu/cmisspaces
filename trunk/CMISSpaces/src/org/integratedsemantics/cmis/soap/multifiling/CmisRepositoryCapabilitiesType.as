@@ -35,5 +35,6 @@ package org.integratedsemantics.cmis.soap.multifiling
 		public var capabilityVersionSpecificFiling:Boolean;
 		public var capabilityJoin:org.integratedsemantics.cmis.soap.multifiling.EnumCapabilityJoin;
 		public var anyElement:Array;
+		public var anyAttribute:Array;
 	}
 }

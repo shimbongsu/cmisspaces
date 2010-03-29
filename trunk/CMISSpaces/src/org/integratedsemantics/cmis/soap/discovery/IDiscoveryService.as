@@ -71,9 +71,10 @@ package org.integratedsemantics.cmis.soap.discovery{
     	 * @param maxItems
     	 * @param skipCount
     	 * @param extension
+    	 * @param anyAttribute
     	 * @return An AsyncToken
     	 */
-    	function query(query:CmisQueryType,repositoryId:String,statement:String,searchAllVersions:Boolean,includeAllowableActions:Boolean,includeRelationships:EnumIncludeRelationships,renditionFilter:String,maxItems:Number,skipCount:Number,extension:CmisExtensionType):AsyncToken;
+    	function query(query:CmisQueryType,repositoryId:String,statement:String,searchAllVersions:Boolean,includeAllowableActions:Boolean,includeRelationships:EnumIncludeRelationships,renditionFilter:String,maxItems:Number,skipCount:Number,extension:CmisExtensionType,anyAttribute:Array):AsyncToken;
         /**
          * Method to call the operation on the server without passing the arguments inline.
          * You must however set the _request property for the operation before calling this method

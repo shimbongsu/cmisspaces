@@ -20,6 +20,7 @@ package org.integratedsemantics.cmis.soap.repository
 		 */
 		public function CmisACLCapabilityType() {}
             
+		public var supportedPermissions:org.integratedsemantics.cmis.soap.repository.EnumSupportedPermissions;
 		public var propagation:org.integratedsemantics.cmis.soap.repository.EnumACLPropagation;
 		[ArrayElementType("CmisPermissionDefinition")]
 		public var permissions:Array;

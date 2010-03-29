@@ -160,7 +160,7 @@ BaseVersioningServiceService = new WSDLService("BaseVersioningServiceService");
 				//input message for the operation
     	        requestMessage = new WSDLMessage("checkOut");
             				requestMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","repositoryId"),null,new QName("http://www.w3.org/2001/XMLSchema","string")));
-            				requestMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","documentId"),null,new QName("http://www.w3.org/2001/XMLSchema","string")));
+            				requestMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","objectId"),null,new QName("http://www.w3.org/2001/XMLSchema","string")));
             				requestMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","extension"),null,new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","cmisExtensionType")));
                 requestMessage.encoding = new WSDLEncoding();
                 requestMessage.encoding.namespaceURI="http://docs.oasis-open.org/ns/cmis/messaging/200908/";
@@ -169,7 +169,7 @@ BaseVersioningServiceService = new WSDLService("BaseVersioningServiceService");
 	            requestMessage.wrappedQName = new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","checkOut");
                 
                 responseMessage = new WSDLMessage("checkOutResponse");
-            				responseMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","documentId"),null,new QName("http://www.w3.org/2001/XMLSchema","string")));
+            				responseMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","objectId"),null,new QName("http://www.w3.org/2001/XMLSchema","string")));
             				responseMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","contentCopied"),null,new QName("http://www.w3.org/2001/XMLSchema","boolean")));
             				responseMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","extension"),null,new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","cmisExtensionType")));
                 responseMessage.encoding = new WSDLEncoding();
@@ -189,7 +189,7 @@ BaseVersioningServiceService = new WSDLService("BaseVersioningServiceService");
 				//input message for the operation
     	        requestMessage = new WSDLMessage("cancelCheckOut");
             				requestMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","repositoryId"),null,new QName("http://www.w3.org/2001/XMLSchema","string")));
-            				requestMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","documentId"),null,new QName("http://www.w3.org/2001/XMLSchema","string")));
+            				requestMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","objectId"),null,new QName("http://www.w3.org/2001/XMLSchema","string")));
             				requestMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","extension"),null,new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","cmisExtensionType")));
                 requestMessage.encoding = new WSDLEncoding();
                 requestMessage.encoding.namespaceURI="http://docs.oasis-open.org/ns/cmis/messaging/200908/";
@@ -245,7 +245,7 @@ BaseVersioningServiceService = new WSDLService("BaseVersioningServiceService");
 				//input message for the operation
     	        requestMessage = new WSDLMessage("checkIn");
             				requestMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","repositoryId"),null,new QName("http://www.w3.org/2001/XMLSchema","string")));
-            				requestMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","documentId"),null,new QName("http://www.w3.org/2001/XMLSchema","string")));
+            				requestMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","objectId"),null,new QName("http://www.w3.org/2001/XMLSchema","string")));
             				requestMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","major"),null,new QName("http://www.w3.org/2001/XMLSchema","boolean")));
             				requestMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","properties"),null,new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisPropertiesType")));
             				requestMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","contentStream"),null,new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","cmisContentStreamType")));
@@ -261,7 +261,7 @@ BaseVersioningServiceService = new WSDLService("BaseVersioningServiceService");
 	            requestMessage.wrappedQName = new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","checkIn");
                 
                 responseMessage = new WSDLMessage("checkInResponse");
-            				responseMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","documentId"),null,new QName("http://www.w3.org/2001/XMLSchema","string")));
+            				responseMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","objectId"),null,new QName("http://www.w3.org/2001/XMLSchema","string")));
             				responseMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","extension"),null,new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","cmisExtensionType")));
                 responseMessage.encoding = new WSDLEncoding();
                 responseMessage.encoding.namespaceURI="http://docs.oasis-open.org/ns/cmis/messaging/200908/";
@@ -278,9 +278,10 @@ BaseVersioningServiceService = new WSDLService("BaseVersioningServiceService");
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisListOfIdsType"),org.integratedsemantics.cmis.soap.versioning.CmisListOfIdsType);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisChoiceDecimal"),org.integratedsemantics.cmis.soap.versioning.CmisChoiceDecimal);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","cmisObjectInFolderListType"),org.integratedsemantics.cmis.soap.versioning.CmisObjectInFolderListType);
-							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","enumCapabilityContentStreamUpdates"),org.integratedsemantics.cmis.soap.versioning.EnumCapabilityContentStreamUpdates);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","enumACLPropagation"),org.integratedsemantics.cmis.soap.versioning.EnumACLPropagation);
+							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","enumCapabilityContentStreamUpdates"),org.integratedsemantics.cmis.soap.versioning.EnumCapabilityContentStreamUpdates);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisPermissionMapping"),org.integratedsemantics.cmis.soap.versioning.CmisPermissionMapping);
+							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","enumDateTimeResolution"),org.integratedsemantics.cmis.soap.versioning.EnumDateTimeResolution);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","cmisACLType"),org.integratedsemantics.cmis.soap.versioning.CmisACLType);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisPropertyString"),org.integratedsemantics.cmis.soap.versioning.CmisPropertyString);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisAccessControlEntryType"),org.integratedsemantics.cmis.soap.versioning.CmisAccessControlEntryType);
@@ -330,11 +331,12 @@ BaseVersioningServiceService = new WSDLService("BaseVersioningServiceService");
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","enumCapabilityChanges"),org.integratedsemantics.cmis.soap.versioning.EnumCapabilityChanges);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisTypeRelationshipDefinitionType"),org.integratedsemantics.cmis.soap.versioning.CmisTypeRelationshipDefinitionType);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","cmisObjectListType"),org.integratedsemantics.cmis.soap.versioning.CmisObjectListType);
+							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","enumSupportedPermissions"),org.integratedsemantics.cmis.soap.versioning.EnumSupportedPermissions);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","enumServiceException"),org.integratedsemantics.cmis.soap.versioning.EnumServiceException);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisPropertyStringDefinitionType"),org.integratedsemantics.cmis.soap.versioning.CmisPropertyStringDefinitionType);
 							SchemaTypeRegistry.getInstance().registerCollectionClass(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","cmisExtensionType"),org.integratedsemantics.cmis.soap.versioning.CmisExtensionType);
-							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisPropertyUri"),org.integratedsemantics.cmis.soap.versioning.CmisPropertyUri);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisPropertyIdDefinitionType"),org.integratedsemantics.cmis.soap.versioning.CmisPropertyIdDefinitionType);
+							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisPropertyUri"),org.integratedsemantics.cmis.soap.versioning.CmisPropertyUri);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","enumBaseObjectTypeIds"),org.integratedsemantics.cmis.soap.versioning.EnumBaseObjectTypeIds);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisAccessControlPrincipalType"),org.integratedsemantics.cmis.soap.versioning.CmisAccessControlPrincipalType);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisPropertyHtmlDefinitionType"),org.integratedsemantics.cmis.soap.versioning.CmisPropertyHtmlDefinitionType);
@@ -403,15 +405,15 @@ BaseVersioningServiceService = new WSDLService("BaseVersioningServiceService");
 		/**
 		 * Performs the low level call to the server for the operation
 		 * It passes along the headers and the operation arguments
-		 * @param repositoryId* @param documentId* @param extension
+		 * @param repositoryId* @param objectId* @param extension
 		 * @return Asynchronous token
 		 */
-		public function checkOut(repositoryId:String,documentId:String,extension:CmisExtensionType):AsyncToken
+		public function checkOut(repositoryId:String,objectId:String,extension:CmisExtensionType):AsyncToken
 		{
 			var headerArray:Array = new Array();
             var out:Object = new Object();
             out["repositoryId"] = repositoryId;
-	            out["documentId"] = documentId;
+	            out["objectId"] = objectId;
 	            out["extension"] = extension;
 	            currentOperation = BaseVersioningServiceService.getPort("BaseVersioningServicePort").binding.portType.getOperation("checkOut");
             var pc:PendingCall = new PendingCall(out,headerArray);
@@ -421,15 +423,15 @@ BaseVersioningServiceService = new WSDLService("BaseVersioningServiceService");
 		/**
 		 * Performs the low level call to the server for the operation
 		 * It passes along the headers and the operation arguments
-		 * @param repositoryId* @param documentId* @param extension
+		 * @param repositoryId* @param objectId* @param extension
 		 * @return Asynchronous token
 		 */
-		public function cancelCheckOut(repositoryId:String,documentId:String,extension:CmisExtensionType):AsyncToken
+		public function cancelCheckOut(repositoryId:String,objectId:String,extension:CmisExtensionType):AsyncToken
 		{
 			var headerArray:Array = new Array();
             var out:Object = new Object();
             out["repositoryId"] = repositoryId;
-	            out["documentId"] = documentId;
+	            out["objectId"] = objectId;
 	            out["extension"] = extension;
 	            currentOperation = BaseVersioningServiceService.getPort("BaseVersioningServicePort").binding.portType.getOperation("cancelCheckOut");
             var pc:PendingCall = new PendingCall(out,headerArray);
@@ -459,15 +461,15 @@ BaseVersioningServiceService = new WSDLService("BaseVersioningServiceService");
 		/**
 		 * Performs the low level call to the server for the operation
 		 * It passes along the headers and the operation arguments
-		 * @param repositoryId* @param documentId* @param major* @param properties* @param contentStream* @param checkinComment* @param policies* @param addACEs* @param removeACEs* @param extension
+		 * @param repositoryId* @param objectId* @param major* @param properties* @param contentStream* @param checkinComment* @param policies* @param addACEs* @param removeACEs* @param extension
 		 * @return Asynchronous token
 		 */
-		public function checkIn(repositoryId:String,documentId:String,major:Boolean,properties:CmisPropertiesType,contentStream:CmisContentStreamType,checkinComment:String,policies:Array,addACEs:CmisAccessControlListType,removeACEs:CmisAccessControlListType,extension:CmisExtensionType):AsyncToken
+		public function checkIn(repositoryId:String,objectId:String,major:Boolean,properties:CmisPropertiesType,contentStream:CmisContentStreamType,checkinComment:String,policies:Array,addACEs:CmisAccessControlListType,removeACEs:CmisAccessControlListType,extension:CmisExtensionType):AsyncToken
 		{
 			var headerArray:Array = new Array();
             var out:Object = new Object();
             out["repositoryId"] = repositoryId;
-	            out["documentId"] = documentId;
+	            out["objectId"] = objectId;
 	            out["major"] = major;
 	            out["properties"] = properties;
 	            out["contentStream"] = contentStream;

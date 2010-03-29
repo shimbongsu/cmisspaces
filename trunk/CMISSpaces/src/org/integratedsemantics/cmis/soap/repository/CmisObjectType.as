@@ -31,5 +31,6 @@ package org.integratedsemantics.cmis.soap.repository
 		[ArrayElementType("CmisRenditionType")]
 		public var rendition:Array;
 		public var anyElement:Array;
+		public var anyAttribute:Array;
 	}
 }

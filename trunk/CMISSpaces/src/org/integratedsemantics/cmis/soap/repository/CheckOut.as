@@ -21,7 +21,7 @@ package org.integratedsemantics.cmis.soap.repository
 		public function CheckOut() {}
             
 		public var repositoryId:String;
-		public var documentId:String;
+		public var objectId:String;
 		public var extension:org.integratedsemantics.cmis.soap.repository.CmisExtensionType;
 	}
 }

@@ -29,5 +29,6 @@ package org.integratedsemantics.cmis.soap.navigation
 		public var maxItems:Number;
 		public var skipCount:Number;
 		public var extension:org.integratedsemantics.cmis.soap.navigation.CmisExtensionType;
+		public var anyAttribute:Array;
 	}
 }

@@ -24,5 +24,6 @@ package org.integratedsemantics.cmis.soap.multifiling
 		[ArrayElementType("CmisObjectInFolderContainerType")]
 		public var children:Array;
 		public var anyElement:Array;
+		public var anyAttribute:Array;
 	}
 }

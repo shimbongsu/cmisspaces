@@ -23,6 +23,6 @@ package org.integratedsemantics.cmis.soap.repository
 		public var defaultValue:org.integratedsemantics.cmis.soap.repository.CmisPropertyUri;
 		[ArrayElementType("CmisChoiceUri")]
 		public var choice:Array;
-		public var anyAttribute:Array;
+		public var _anyAttribute:Array;
 	}
 }

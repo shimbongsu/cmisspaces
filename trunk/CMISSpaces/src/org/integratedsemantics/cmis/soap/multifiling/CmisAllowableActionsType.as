@@ -22,6 +22,7 @@ package org.integratedsemantics.cmis.soap.multifiling
             
 		public var canDeleteObject:Boolean;
 		public var canUpdateProperties:Boolean;
+		public var canGetFolderTree:Boolean;
 		public var canGetProperties:Boolean;
 		public var canGetObjectRelationships:Boolean;
 		public var canGetObjectParents:Boolean;
@@ -44,11 +45,11 @@ package org.integratedsemantics.cmis.soap.multifiling
 		public var canCreateDocument:Boolean;
 		public var canCreateFolder:Boolean;
 		public var canCreateRelationship:Boolean;
-		public var canCreatePolicy:Boolean;
 		public var canDeleteTree:Boolean;
 		public var canGetRenditions:Boolean;
 		public var canGetACL:Boolean;
 		public var canApplyACL:Boolean;
 		public var anyElement:Array;
+		public var anyAttribute:Array;
 	}
 }

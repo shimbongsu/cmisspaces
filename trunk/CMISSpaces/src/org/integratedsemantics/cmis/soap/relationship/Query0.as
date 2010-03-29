@@ -29,5 +29,6 @@ package org.integratedsemantics.cmis.soap.relationship
 		public var maxItems:Number;
 		public var skipCount:Number;
 		public var extension:org.integratedsemantics.cmis.soap.relationship.CmisExtensionType;
+		public var anyAttribute:Array;
 	}
 }

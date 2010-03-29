@@ -24,6 +24,6 @@ package org.integratedsemantics.cmis.soap.policy
 		public var maxLength:Number;
 		[ArrayElementType("CmisChoiceString")]
 		public var choice:Array;
-		public var anyAttribute:Array;
+		public var _anyAttribute:Array;
 	}
 }

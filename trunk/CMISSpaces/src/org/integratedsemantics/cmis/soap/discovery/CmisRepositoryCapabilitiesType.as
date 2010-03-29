@@ -35,5 +35,6 @@ package org.integratedsemantics.cmis.soap.discovery
 		public var capabilityVersionSpecificFiling:Boolean;
 		public var capabilityJoin:org.integratedsemantics.cmis.soap.discovery.EnumCapabilityJoin;
 		public var anyElement:Array;
+		public var anyAttribute:Array;
 	}
 }

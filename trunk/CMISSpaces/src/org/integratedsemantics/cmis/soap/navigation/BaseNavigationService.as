@@ -76,7 +76,8 @@ package org.integratedsemantics.cmis.soap.navigation
        		BaseNavigationServiceBinding.portType = BaseNavigationServicePortType;
        		BaseNavigationServicePort.binding = BaseNavigationServiceBinding;
        		BaseNavigationServiceService.addPort(BaseNavigationServicePort);
-       		// sreiner BaseNavigationServicePort.endpointURI = "http://cmis.alfresco.com/cmis/NavigationService";
+       		
+            // sreiner BaseNavigationServicePort.endpointURI = "http://cmis.alfresco.com/cmis/NavigationService";
             // sreiner add url from config
             var model:AppModelLocator = AppModelLocator.getInstance();                              
             var cmisConfig:CMISConfig = model.ecmServerConfig as CMISConfig;
@@ -84,7 +85,8 @@ package org.integratedsemantics.cmis.soap.navigation
             {
                 var cmisWebServicesUrl:String = cmisConfig.cmisWebServicesUrl;              
                 BaseNavigationServicePort.endpointURI = cmisWebServicesUrl + "/NavigationService";
-            }         		
+            }               
+       		
        		
        		if(this.endpointURI == null)
        		{
@@ -170,7 +172,7 @@ package org.integratedsemantics.cmis.soap.navigation
             				requestMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","includeAllowableActions"),null,new QName("http://www.w3.org/2001/XMLSchema","boolean")));
             				requestMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","includeRelationships"),null,new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","enumIncludeRelationships")));
             				requestMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","renditionFilter"),null,new QName("http://www.w3.org/2001/XMLSchema","string")));
-            				requestMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","includePathSegments"),null,new QName("http://www.w3.org/2001/XMLSchema","boolean")));
+            				requestMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","includePathSegment"),null,new QName("http://www.w3.org/2001/XMLSchema","boolean")));
             				requestMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","extension"),null,new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","cmisExtensionType")));
                 requestMessage.encoding = new WSDLEncoding();
                 requestMessage.encoding.namespaceURI="http://docs.oasis-open.org/ns/cmis/messaging/200908/";
@@ -203,7 +205,7 @@ package org.integratedsemantics.cmis.soap.navigation
             				requestMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","includeAllowableActions"),null,new QName("http://www.w3.org/2001/XMLSchema","boolean")));
             				requestMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","includeRelationships"),null,new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","enumIncludeRelationships")));
             				requestMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","renditionFilter"),null,new QName("http://www.w3.org/2001/XMLSchema","string")));
-            				requestMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","includePathSegments"),null,new QName("http://www.w3.org/2001/XMLSchema","boolean")));
+            				requestMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","includePathSegment"),null,new QName("http://www.w3.org/2001/XMLSchema","boolean")));
             				requestMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","extension"),null,new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","cmisExtensionType")));
                 requestMessage.encoding = new WSDLEncoding();
                 requestMessage.encoding.namespaceURI="http://docs.oasis-open.org/ns/cmis/messaging/200908/";
@@ -236,7 +238,7 @@ package org.integratedsemantics.cmis.soap.navigation
             				requestMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","includeAllowableActions"),null,new QName("http://www.w3.org/2001/XMLSchema","boolean")));
             				requestMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","includeRelationships"),null,new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","enumIncludeRelationships")));
             				requestMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","renditionFilter"),null,new QName("http://www.w3.org/2001/XMLSchema","string")));
-            				requestMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","includePathSegments"),null,new QName("http://www.w3.org/2001/XMLSchema","boolean")));
+            				requestMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","includePathSegment"),null,new QName("http://www.w3.org/2001/XMLSchema","boolean")));
             				requestMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","maxItems"),null,new QName("http://www.w3.org/2001/XMLSchema","integer")));
             				requestMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","skipCount"),null,new QName("http://www.w3.org/2001/XMLSchema","integer")));
             				requestMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","extension"),null,new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","cmisExtensionType")));
@@ -291,9 +293,10 @@ package org.integratedsemantics.cmis.soap.navigation
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisListOfIdsType"),org.integratedsemantics.cmis.soap.navigation.CmisListOfIdsType);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisChoiceDecimal"),org.integratedsemantics.cmis.soap.navigation.CmisChoiceDecimal);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","cmisObjectInFolderListType"),org.integratedsemantics.cmis.soap.navigation.CmisObjectInFolderListType);
-							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","enumCapabilityContentStreamUpdates"),org.integratedsemantics.cmis.soap.navigation.EnumCapabilityContentStreamUpdates);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","enumACLPropagation"),org.integratedsemantics.cmis.soap.navigation.EnumACLPropagation);
+							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","enumCapabilityContentStreamUpdates"),org.integratedsemantics.cmis.soap.navigation.EnumCapabilityContentStreamUpdates);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisPermissionMapping"),org.integratedsemantics.cmis.soap.navigation.CmisPermissionMapping);
+							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","enumDateTimeResolution"),org.integratedsemantics.cmis.soap.navigation.EnumDateTimeResolution);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","cmisACLType"),org.integratedsemantics.cmis.soap.navigation.CmisACLType);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisPropertyString"),org.integratedsemantics.cmis.soap.navigation.CmisPropertyString);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisAccessControlEntryType"),org.integratedsemantics.cmis.soap.navigation.CmisAccessControlEntryType);
@@ -305,8 +308,8 @@ package org.integratedsemantics.cmis.soap.navigation
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisQueryType"),org.integratedsemantics.cmis.soap.navigation.CmisQueryType);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","cmisTypeDefinitionListType"),org.integratedsemantics.cmis.soap.navigation.CmisTypeDefinitionListType);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisTypeDefinitionType"),org.integratedsemantics.cmis.soap.navigation.CmisTypeDefinitionType);
-							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","enumAllowableActionsKey"),org.integratedsemantics.cmis.soap.navigation.EnumAllowableActionsKey);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisPropertyUriDefinitionType"),org.integratedsemantics.cmis.soap.navigation.CmisPropertyUriDefinitionType);
+							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","enumAllowableActionsKey"),org.integratedsemantics.cmis.soap.navigation.EnumAllowableActionsKey);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisPropertyDecimalDefinitionType"),org.integratedsemantics.cmis.soap.navigation.CmisPropertyDecimalDefinitionType);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","cmisTypeContainer"),org.integratedsemantics.cmis.soap.navigation.CmisTypeContainer);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","enumCardinality"),org.integratedsemantics.cmis.soap.navigation.EnumCardinality);
@@ -343,11 +346,12 @@ package org.integratedsemantics.cmis.soap.navigation
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","enumCapabilityChanges"),org.integratedsemantics.cmis.soap.navigation.EnumCapabilityChanges);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisTypeRelationshipDefinitionType"),org.integratedsemantics.cmis.soap.navigation.CmisTypeRelationshipDefinitionType);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","cmisObjectListType"),org.integratedsemantics.cmis.soap.navigation.CmisObjectListType);
+							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","enumSupportedPermissions"),org.integratedsemantics.cmis.soap.navigation.EnumSupportedPermissions);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","enumServiceException"),org.integratedsemantics.cmis.soap.navigation.EnumServiceException);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisPropertyStringDefinitionType"),org.integratedsemantics.cmis.soap.navigation.CmisPropertyStringDefinitionType);
 							SchemaTypeRegistry.getInstance().registerCollectionClass(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","cmisExtensionType"),org.integratedsemantics.cmis.soap.navigation.CmisExtensionType);
-							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisPropertyUri"),org.integratedsemantics.cmis.soap.navigation.CmisPropertyUri);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisPropertyIdDefinitionType"),org.integratedsemantics.cmis.soap.navigation.CmisPropertyIdDefinitionType);
+							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisPropertyUri"),org.integratedsemantics.cmis.soap.navigation.CmisPropertyUri);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","enumBaseObjectTypeIds"),org.integratedsemantics.cmis.soap.navigation.EnumBaseObjectTypeIds);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisAccessControlPrincipalType"),org.integratedsemantics.cmis.soap.navigation.CmisAccessControlPrincipalType);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisPropertyHtmlDefinitionType"),org.integratedsemantics.cmis.soap.navigation.CmisPropertyHtmlDefinitionType);
@@ -419,10 +423,10 @@ package org.integratedsemantics.cmis.soap.navigation
 		/**
 		 * Performs the low level call to the server for the operation
 		 * It passes along the headers and the operation arguments
-		 * @param repositoryId* @param folderId* @param depth* @param filter* @param includeAllowableActions* @param includeRelationships* @param renditionFilter* @param includePathSegments* @param extension
+		 * @param repositoryId* @param folderId* @param depth* @param filter* @param includeAllowableActions* @param includeRelationships* @param renditionFilter* @param includePathSegment* @param extension
 		 * @return Asynchronous token
 		 */
-		public function getDescendants(repositoryId:String,folderId:String,depth:Number,filter:String,includeAllowableActions:Boolean,includeRelationships:EnumIncludeRelationships,renditionFilter:String,includePathSegments:Boolean,extension:CmisExtensionType):AsyncToken
+		public function getDescendants(repositoryId:String,folderId:String,depth:Number,filter:String,includeAllowableActions:Boolean,includeRelationships:EnumIncludeRelationships,renditionFilter:String,includePathSegment:Boolean,extension:CmisExtensionType):AsyncToken
 		{
 			var headerArray:Array = new Array();
             var out:Object = new Object();
@@ -433,7 +437,7 @@ package org.integratedsemantics.cmis.soap.navigation
 	            out["includeAllowableActions"] = includeAllowableActions;
 	            out["includeRelationships"] = includeRelationships;
 	            out["renditionFilter"] = renditionFilter;
-	            out["includePathSegments"] = includePathSegments;
+	            out["includePathSegment"] = includePathSegment;
 	            out["extension"] = extension;
 	            currentOperation = BaseNavigationServiceService.getPort("BaseNavigationServicePort").binding.portType.getOperation("getDescendants");
             var pc:PendingCall = new PendingCall(out,headerArray);
@@ -443,10 +447,10 @@ package org.integratedsemantics.cmis.soap.navigation
 		/**
 		 * Performs the low level call to the server for the operation
 		 * It passes along the headers and the operation arguments
-		 * @param repositoryId* @param folderId* @param depth* @param filter* @param includeAllowableActions* @param includeRelationships* @param renditionFilter* @param includePathSegments* @param extension
+		 * @param repositoryId* @param folderId* @param depth* @param filter* @param includeAllowableActions* @param includeRelationships* @param renditionFilter* @param includePathSegment* @param extension
 		 * @return Asynchronous token
 		 */
-		public function getFolderTree(repositoryId:String,folderId:String,depth:Number,filter:String,includeAllowableActions:Boolean,includeRelationships:EnumIncludeRelationships,renditionFilter:String,includePathSegments:Boolean,extension:CmisExtensionType):AsyncToken
+		public function getFolderTree(repositoryId:String,folderId:String,depth:Number,filter:String,includeAllowableActions:Boolean,includeRelationships:EnumIncludeRelationships,renditionFilter:String,includePathSegment:Boolean,extension:CmisExtensionType):AsyncToken
 		{
 			var headerArray:Array = new Array();
             var out:Object = new Object();
@@ -457,7 +461,7 @@ package org.integratedsemantics.cmis.soap.navigation
 	            out["includeAllowableActions"] = includeAllowableActions;
 	            out["includeRelationships"] = includeRelationships;
 	            out["renditionFilter"] = renditionFilter;
-	            out["includePathSegments"] = includePathSegments;
+	            out["includePathSegment"] = includePathSegment;
 	            out["extension"] = extension;
 	            currentOperation = BaseNavigationServiceService.getPort("BaseNavigationServicePort").binding.portType.getOperation("getFolderTree");
             var pc:PendingCall = new PendingCall(out,headerArray);
@@ -467,11 +471,11 @@ package org.integratedsemantics.cmis.soap.navigation
 		/**
 		 * Performs the low level call to the server for the operation
 		 * It passes along the headers and the operation arguments
-		 * @param repositoryId* @param folderId* @param filter* @param orderBy* @param includeAllowableActions* @param includeRelationships* @param renditionFilter* @param includePathSegments* @param maxItems* @param skipCount* @param extension
+		 * @param repositoryId* @param folderId* @param filter* @param orderBy* @param includeAllowableActions* @param includeRelationships* @param renditionFilter* @param includePathSegment* @param maxItems* @param skipCount* @param extension
 		 * @return Asynchronous token
 		 */
-		/* sreiner 
-		public function getChildren(repositoryId:String,folderId:String,filter:String,orderBy:String,includeAllowableActions:Boolean,includeRelationships:EnumIncludeRelationships,renditionFilter:String,includePathSegments:Boolean,maxItems:Number,skipCount:Number,extension:CmisExtensionType):AsyncToken
+        /* sreiner 		 
+		public function getChildren(repositoryId:String,folderId:String,filter:String,orderBy:String,includeAllowableActions:Boolean,includeRelationships:EnumIncludeRelationships,renditionFilter:String,includePathSegment:Boolean,maxItems:Number,skipCount:Number,extension:CmisExtensionType):AsyncToken
 		{
 			var headerArray:Array = new Array();
             var out:Object = new Object();
@@ -482,7 +486,7 @@ package org.integratedsemantics.cmis.soap.navigation
 	            out["includeAllowableActions"] = includeAllowableActions;
 	            out["includeRelationships"] = includeRelationships;
 	            out["renditionFilter"] = renditionFilter;
-	            out["includePathSegments"] = includePathSegments;
+	            out["includePathSegment"] = includePathSegment;
 	            out["maxItems"] = maxItems;
 	            out["skipCount"] = skipCount;
 	            out["extension"] = extension;
@@ -492,7 +496,7 @@ package org.integratedsemantics.cmis.soap.navigation
             return pc.token;
 		}
 		*/
-
+		
         // sreiner added getChildren with just repositoryId and folderId for now
         public function getChildren(repositoryId:String,folderId:String,filter:String,orderBy:String,includeAllowableActions:Boolean,includeRelationships:EnumIncludeRelationships,renditionFilter:String,includePathSegments:Boolean,maxItems:Number,skipCount:Number,extension:CmisExtensionType):AsyncToken
         {
@@ -516,7 +520,7 @@ package org.integratedsemantics.cmis.soap.navigation
             
             call(currentOperation,out,pc.token,pc.headers);
             return pc.token;
-        }
+        }		
 		
 		
 		/**
@@ -592,8 +596,8 @@ package org.integratedsemantics.cmis.soap.navigation
                 var decoder:SOAPDecoder = new SOAPDecoder();
                 
                 // sreiner decoder.resultFormat = "object";
-                decoder.resultFormat = "e4x";
-                                
+                decoder.resultFormat = "e4x";                
+                
                 decoder.headerFormat = "object";
                 decoder.multiplePartsFormat = "object";
                 decoder.ignoreWhitespace = true;
@@ -604,7 +608,9 @@ package org.integratedsemantics.cmis.soap.navigation
                 var stringResult:String = String(body);
                 if(stringResult == null  || stringResult == "")
                 	return;
+                
                 var soapResult:SOAPResult = decoder.decodeResponse(result.message.body);
+                
                 if(soapResult.isFault)
                 {
 	                var faults:Array = soapResult.result as Array;
@@ -621,6 +627,7 @@ package org.integratedsemantics.cmis.soap.navigation
 	                token.dispatchEvent(event);
                 }
            }
+                                 
            	/**
            	 * Handles the cases when there are errors calling the operation on the server
            	 * This is not the case for SOAP faults, which is handled by the SOAP decoder in the result handler

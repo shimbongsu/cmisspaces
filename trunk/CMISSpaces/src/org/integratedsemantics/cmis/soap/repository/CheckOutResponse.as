@@ -20,7 +20,7 @@ package org.integratedsemantics.cmis.soap.repository
 		 */
 		public function CheckOutResponse() {}
             
-		public var documentId:String;
+		public var objectId:String;
 		public var contentCopied:Boolean;
 		public var extension:org.integratedsemantics.cmis.soap.repository.CmisExtensionType;
 	}

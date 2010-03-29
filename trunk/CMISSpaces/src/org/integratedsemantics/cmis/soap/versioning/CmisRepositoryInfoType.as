@@ -30,7 +30,7 @@ package org.integratedsemantics.cmis.soap.versioning
 		public var latestChangeLogToken:String;
 		public var capabilities:org.integratedsemantics.cmis.soap.versioning.CmisRepositoryCapabilitiesType;
 		public var aclCapability:org.integratedsemantics.cmis.soap.versioning.CmisACLCapabilityType;
-		public var cmisVersionSupported:Number;
+		public var cmisVersionSupported:String;
 		public var thinClientURI:String;
 		public var changesIncomplete:Boolean;
 		[ArrayElementType("EnumBaseObjectTypeIds")]
@@ -38,5 +38,6 @@ package org.integratedsemantics.cmis.soap.versioning
 		public var principalAnonymous:String;
 		public var principalAnyone:String;
 		public var anyElement:Array;
+		public var anyAttribute:Array;
 	}
 }

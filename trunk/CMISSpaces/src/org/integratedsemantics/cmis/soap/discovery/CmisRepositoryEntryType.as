@@ -23,5 +23,6 @@ package org.integratedsemantics.cmis.soap.discovery
 		public var repositoryId:String;
 		public var repositoryName:String;
 		public var anyElement:Array;
+		public var anyAttribute:Array;
 	}
 }

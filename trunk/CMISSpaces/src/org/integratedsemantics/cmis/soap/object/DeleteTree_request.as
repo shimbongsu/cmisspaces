@@ -23,7 +23,7 @@ package org.integratedsemantics.cmis.soap.object
 		public var repositoryId:String;
 		public var folderId:String;
 		public var allVersions:Boolean;
-		public var unfileObject:org.integratedsemantics.cmis.soap.object.EnumUnfileObject;
+		public var unfileObjects:org.integratedsemantics.cmis.soap.object.EnumUnfileObject;
 		public var continueOnFailure:Boolean;
 		public var extension:org.integratedsemantics.cmis.soap.object.CmisExtensionType;
 	}

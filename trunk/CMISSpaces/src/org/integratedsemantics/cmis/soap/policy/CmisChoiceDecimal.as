@@ -24,6 +24,6 @@ package org.integratedsemantics.cmis.soap.policy
 		public var value:Array;
 		[ArrayElementType("CmisChoiceDecimal")]
 		public var choice:Array;
-		public var anyAttribute:Array;
+		public var _anyAttribute:Array;
 	}
 }

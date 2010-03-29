@@ -26,6 +26,6 @@ package org.integratedsemantics.cmis.soap.navigation
 		public var precision:Number;
 		[ArrayElementType("CmisChoiceDecimal")]
 		public var choice:Array;
-		public var anyAttribute:Array;
+		public var _anyAttribute:Array;
 	}
 }

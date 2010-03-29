@@ -25,5 +25,6 @@ package org.integratedsemantics.cmis.soap.relationship
 		public var filename:String;
 		public var stream:flash.utils.ByteArray;
 		public var anyElement:Array;
+		public var anyAttribute:Array;
 	}
 }

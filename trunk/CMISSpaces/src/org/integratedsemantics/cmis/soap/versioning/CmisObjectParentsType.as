@@ -23,5 +23,6 @@ package org.integratedsemantics.cmis.soap.versioning
 		public var object:org.integratedsemantics.cmis.soap.versioning.CmisObjectType;
 		public var relativePathSegment:String;
 		public var anyElement:Array;
+		public var anyAttribute:Array;
 	}
 }

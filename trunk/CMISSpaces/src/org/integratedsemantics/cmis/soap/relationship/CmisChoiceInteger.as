@@ -24,6 +24,6 @@ package org.integratedsemantics.cmis.soap.relationship
 		public var value:Array;
 		[ArrayElementType("CmisChoiceInteger")]
 		public var choice:Array;
-		public var anyAttribute:Array;
+		public var _anyAttribute:Array;
 	}
 }

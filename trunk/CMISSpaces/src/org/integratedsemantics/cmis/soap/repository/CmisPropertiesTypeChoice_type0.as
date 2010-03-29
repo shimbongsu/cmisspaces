@@ -20,13 +20,13 @@ package org.integratedsemantics.cmis.soap.repository
 		 */
 		public function CmisPropertiesTypeChoice_type0() {}
             
-		public var propertyId:org.integratedsemantics.cmis.soap.repository.CmisPropertyId;
-		public var propertyUri:org.integratedsemantics.cmis.soap.repository.CmisPropertyUri;
-		public var propertyInteger:org.integratedsemantics.cmis.soap.repository.CmisPropertyInteger;
-		public var propertyDecimal:org.integratedsemantics.cmis.soap.repository.CmisPropertyDecimal;
-		public var propertyBoolean:org.integratedsemantics.cmis.soap.repository.CmisPropertyBoolean;
 		public var propertyHtml:org.integratedsemantics.cmis.soap.repository.CmisPropertyHtml;
 		public var propertyDateTime:org.integratedsemantics.cmis.soap.repository.CmisPropertyDateTime;
+		public var propertyUri:org.integratedsemantics.cmis.soap.repository.CmisPropertyUri;
+		public var propertyBoolean:org.integratedsemantics.cmis.soap.repository.CmisPropertyBoolean;
 		public var propertyString:org.integratedsemantics.cmis.soap.repository.CmisPropertyString;
+		public var propertyId:org.integratedsemantics.cmis.soap.repository.CmisPropertyId;
+		public var propertyDecimal:org.integratedsemantics.cmis.soap.repository.CmisPropertyDecimal;
+		public var propertyInteger:org.integratedsemantics.cmis.soap.repository.CmisPropertyInteger;
 	}
 }

@@ -20,7 +20,7 @@ package org.integratedsemantics.cmis.soap.discovery
 		 */
 		public function CheckInResponse() {}
             
-		public var documentId:String;
+		public var objectId:String;
 		public var extension:org.integratedsemantics.cmis.soap.discovery.CmisExtensionType;
 	}
 }

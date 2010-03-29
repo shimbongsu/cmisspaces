@@ -27,7 +27,7 @@ package org.integratedsemantics.cmis.soap.multifiling
 		public var includeAllowableActions:Boolean;
 		public var includeRelationships:org.integratedsemantics.cmis.soap.multifiling.EnumIncludeRelationships;
 		public var renditionFilter:String;
-		public var includePathSegments:Boolean;
+		public var includePathSegment:Boolean;
 		public var extension:org.integratedsemantics.cmis.soap.multifiling.CmisExtensionType;
 	}
 }

@@ -22,6 +22,7 @@ package org.integratedsemantics.cmis.soap.navigation
             
 		[ArrayElementType("Boolean")]
 		public var value:Array;
-		public var anyAttribute:Array;
+		public var anyElement:Array;
+		public var _anyAttribute:Array;
 	}
 }

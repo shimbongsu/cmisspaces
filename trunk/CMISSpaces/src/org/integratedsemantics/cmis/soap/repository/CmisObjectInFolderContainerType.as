@@ -24,5 +24,6 @@ package org.integratedsemantics.cmis.soap.repository
 		[ArrayElementType("CmisObjectInFolderContainerType")]
 		public var children:Array;
 		public var anyElement:Array;
+		public var anyAttribute:Array;
 	}
 }

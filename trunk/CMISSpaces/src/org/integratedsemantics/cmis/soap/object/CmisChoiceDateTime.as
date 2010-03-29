@@ -24,6 +24,6 @@ package org.integratedsemantics.cmis.soap.object
 		public var value:Array;
 		[ArrayElementType("CmisChoiceDateTime")]
 		public var choice:Array;
-		public var anyAttribute:Array;
+		public var _anyAttribute:Array;
 	}
 }

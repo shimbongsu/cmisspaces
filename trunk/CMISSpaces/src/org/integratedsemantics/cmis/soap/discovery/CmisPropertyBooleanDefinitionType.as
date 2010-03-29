@@ -23,6 +23,6 @@ package org.integratedsemantics.cmis.soap.discovery
 		public var defaultValue:org.integratedsemantics.cmis.soap.discovery.CmisPropertyBoolean;
 		[ArrayElementType("CmisChoiceBoolean")]
 		public var choice:Array;
-		public var anyAttribute:Array;
+		public var _anyAttribute:Array;
 	}
 }

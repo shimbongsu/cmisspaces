@@ -24,6 +24,6 @@ package org.integratedsemantics.cmis.soap.object
 		public var allowedSourceTypes:Array;
 		[ArrayElementType("String")]
 		public var allowedTargetTypes:Array;
-		public var anyAttribute:Array;
+		public var _anyAttribute:Array;
 	}
 }

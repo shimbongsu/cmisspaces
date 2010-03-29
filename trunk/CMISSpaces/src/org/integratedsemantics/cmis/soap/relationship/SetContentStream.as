@@ -21,7 +21,7 @@ package org.integratedsemantics.cmis.soap.relationship
 		public function SetContentStream() {}
             
 		public var repositoryId:String;
-		public var documentId:String;
+		public var objectId:String;
 		public var overwriteFlag:Boolean;
 		public var changeToken:String;
 		public var contentStream:org.integratedsemantics.cmis.soap.relationship.CmisContentStreamType;

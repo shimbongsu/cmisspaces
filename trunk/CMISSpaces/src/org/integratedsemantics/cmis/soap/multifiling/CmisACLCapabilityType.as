@@ -20,6 +20,7 @@ package org.integratedsemantics.cmis.soap.multifiling
 		 */
 		public function CmisACLCapabilityType() {}
             
+		public var supportedPermissions:org.integratedsemantics.cmis.soap.multifiling.EnumSupportedPermissions;
 		public var propagation:org.integratedsemantics.cmis.soap.multifiling.EnumACLPropagation;
 		[ArrayElementType("CmisPermissionDefinition")]
 		public var permissions:Array;

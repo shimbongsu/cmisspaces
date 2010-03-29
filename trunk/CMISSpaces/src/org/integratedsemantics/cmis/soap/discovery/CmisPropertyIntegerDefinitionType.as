@@ -25,6 +25,6 @@ package org.integratedsemantics.cmis.soap.discovery
 		public var minValue:Number;
 		[ArrayElementType("CmisChoiceInteger")]
 		public var choice:Array;
-		public var anyAttribute:Array;
+		public var _anyAttribute:Array;
 	}
 }
