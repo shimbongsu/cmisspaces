@@ -21,8 +21,9 @@ package org.integratedsemantics.cmis.soap.repository
 		public function CmisPropertyDateTimeDefinitionType() {}
             
 		public var defaultValue:org.integratedsemantics.cmis.soap.repository.CmisPropertyDateTime;
+		public var resolution:org.integratedsemantics.cmis.soap.repository.EnumDateTimeResolution;
 		[ArrayElementType("CmisChoiceDateTime")]
 		public var choice:Array;
-		public var anyAttribute:Array;
+		public var _anyAttribute:Array;
 	}
 }

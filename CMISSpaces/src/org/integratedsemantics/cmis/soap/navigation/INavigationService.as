@@ -6,7 +6,6 @@
  */
 package org.integratedsemantics.cmis.soap.navigation{
 	import mx.rpc.AsyncToken;
-	import flash.utils.ByteArray;
 	import mx.rpc.soap.types.*;
                
     public interface INavigationService
@@ -117,11 +116,11 @@ package org.integratedsemantics.cmis.soap.navigation{
     	 * @param includeAllowableActions
     	 * @param includeRelationships
     	 * @param renditionFilter
-    	 * @param includePathSegments
+    	 * @param includePathSegment
     	 * @param extension
     	 * @return An AsyncToken
     	 */
-    	function getDescendants(repositoryId:String,folderId:String,depth:Number,filter:String,includeAllowableActions:Boolean,includeRelationships:EnumIncludeRelationships,renditionFilter:String,includePathSegments:Boolean,extension:CmisExtensionType):AsyncToken;
+    	function getDescendants(repositoryId:String,folderId:String,depth:Number,filter:String,includeAllowableActions:Boolean,includeRelationships:EnumIncludeRelationships,renditionFilter:String,includePathSegment:Boolean,extension:CmisExtensionType):AsyncToken;
         /**
          * Method to call the operation on the server without passing the arguments inline.
          * You must however set the _request property for the operation before calling this method
@@ -165,11 +164,11 @@ package org.integratedsemantics.cmis.soap.navigation{
     	 * @param includeAllowableActions
     	 * @param includeRelationships
     	 * @param renditionFilter
-    	 * @param includePathSegments
+    	 * @param includePathSegment
     	 * @param extension
     	 * @return An AsyncToken
     	 */
-    	function getFolderTree(repositoryId:String,folderId:String,depth:Number,filter:String,includeAllowableActions:Boolean,includeRelationships:EnumIncludeRelationships,renditionFilter:String,includePathSegments:Boolean,extension:CmisExtensionType):AsyncToken;
+    	function getFolderTree(repositoryId:String,folderId:String,depth:Number,filter:String,includeAllowableActions:Boolean,includeRelationships:EnumIncludeRelationships,renditionFilter:String,includePathSegment:Boolean,extension:CmisExtensionType):AsyncToken;
         /**
          * Method to call the operation on the server without passing the arguments inline.
          * You must however set the _request property for the operation before calling this method
@@ -213,13 +212,13 @@ package org.integratedsemantics.cmis.soap.navigation{
     	 * @param includeAllowableActions
     	 * @param includeRelationships
     	 * @param renditionFilter
-    	 * @param includePathSegments
+    	 * @param includePathSegment
     	 * @param maxItems
     	 * @param skipCount
     	 * @param extension
     	 * @return An AsyncToken
     	 */
-    	function getChildren(repositoryId:String,folderId:String,filter:String,orderBy:String,includeAllowableActions:Boolean,includeRelationships:EnumIncludeRelationships,renditionFilter:String,includePathSegments:Boolean,maxItems:Number,skipCount:Number,extension:CmisExtensionType):AsyncToken;
+    	function getChildren(repositoryId:String,folderId:String,filter:String,orderBy:String,includeAllowableActions:Boolean,includeRelationships:EnumIncludeRelationships,renditionFilter:String,includePathSegment:Boolean,maxItems:Number,skipCount:Number,extension:CmisExtensionType):AsyncToken;
         /**
          * Method to call the operation on the server without passing the arguments inline.
          * You must however set the _request property for the operation before calling this method
@@ -231,11 +230,13 @@ package org.integratedsemantics.cmis.soap.navigation{
         /**
          * The getChildren operation lastResult property
          */
-        function get getChildren_lastResult():CmisObjectInFolderListType;
+        //sreiner function get getChildren_lastResult():CmisObjectInFolderListType;
+        function get getChildren_lastResult():XMLList;
 		/**
 		 * @private
 		 */
-        function set getChildren_lastResult(lastResult:CmisObjectInFolderListType):void;
+        // sreiner function set getChildren_lastResult(lastResult:CmisObjectInFolderListType):void;
+        function set getChildren_lastResult(lastResult:XMLList):void;
        /**
         * Add a listener for the getChildren operation successful result event
         * @param The listener function

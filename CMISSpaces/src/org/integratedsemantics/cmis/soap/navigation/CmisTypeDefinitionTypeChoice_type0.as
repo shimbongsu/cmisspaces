@@ -20,13 +20,13 @@ package org.integratedsemantics.cmis.soap.navigation
 		 */
 		public function CmisTypeDefinitionTypeChoice_type0() {}
             
-		public var propertyBooleanDefinition:org.integratedsemantics.cmis.soap.navigation.CmisPropertyBooleanDefinitionType;
-		public var propertyDateTimeDefinition:org.integratedsemantics.cmis.soap.navigation.CmisPropertyDateTimeDefinitionType;
-		public var propertyUriDefinition:org.integratedsemantics.cmis.soap.navigation.CmisPropertyUriDefinitionType;
-		public var propertyStringDefinition:org.integratedsemantics.cmis.soap.navigation.CmisPropertyStringDefinitionType;
 		public var propertyIntegerDefinition:org.integratedsemantics.cmis.soap.navigation.CmisPropertyIntegerDefinitionType;
-		public var propertyHtmlDefinition:org.integratedsemantics.cmis.soap.navigation.CmisPropertyHtmlDefinitionType;
+		public var propertyStringDefinition:org.integratedsemantics.cmis.soap.navigation.CmisPropertyStringDefinitionType;
 		public var propertyDecimalDefinition:org.integratedsemantics.cmis.soap.navigation.CmisPropertyDecimalDefinitionType;
+		public var propertyDateTimeDefinition:org.integratedsemantics.cmis.soap.navigation.CmisPropertyDateTimeDefinitionType;
+		public var propertyHtmlDefinition:org.integratedsemantics.cmis.soap.navigation.CmisPropertyHtmlDefinitionType;
 		public var propertyIdDefinition:org.integratedsemantics.cmis.soap.navigation.CmisPropertyIdDefinitionType;
+		public var propertyBooleanDefinition:org.integratedsemantics.cmis.soap.navigation.CmisPropertyBooleanDefinitionType;
+		public var propertyUriDefinition:org.integratedsemantics.cmis.soap.navigation.CmisPropertyUriDefinitionType;
 	}
 }

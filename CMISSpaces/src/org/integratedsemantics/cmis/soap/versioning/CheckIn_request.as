@@ -21,7 +21,7 @@ package org.integratedsemantics.cmis.soap.versioning
 		public function CheckIn_request() {}
             
 		public var repositoryId:String;
-		public var documentId:String;
+		public var objectId:String;
 		public var major:Boolean;
 		public var properties:org.integratedsemantics.cmis.soap.versioning.CmisPropertiesType;
 		public var contentStream:org.integratedsemantics.cmis.soap.versioning.CmisContentStreamType;

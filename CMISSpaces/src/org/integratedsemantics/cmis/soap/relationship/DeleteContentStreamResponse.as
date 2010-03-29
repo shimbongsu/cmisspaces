@@ -20,7 +20,7 @@ package org.integratedsemantics.cmis.soap.relationship
 		 */
 		public function DeleteContentStreamResponse() {}
             
-		public var documentId:String;
+		public var objectId:String;
 		public var changeToken:String;
 		public var extension:org.integratedsemantics.cmis.soap.relationship.CmisExtensionType;
 	}

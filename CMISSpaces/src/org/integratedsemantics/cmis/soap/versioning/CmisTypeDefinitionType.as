@@ -38,5 +38,6 @@ package org.integratedsemantics.cmis.soap.versioning
 		[ArrayElementType("CmisTypeDefinitionTypeChoice_type0")]
 		public var cmisTypeDefinitionTypeChoice_type0:Array;
 		public var anyElement:Array;
+		public var anyAttribute:Array;
 	}
 }

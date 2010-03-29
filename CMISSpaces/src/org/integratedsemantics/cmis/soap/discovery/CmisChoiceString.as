@@ -24,6 +24,6 @@ package org.integratedsemantics.cmis.soap.discovery
 		public var value:Array;
 		[ArrayElementType("CmisChoiceString")]
 		public var choice:Array;
-		public var anyAttribute:Array;
+		public var _anyAttribute:Array;
 	}
 }

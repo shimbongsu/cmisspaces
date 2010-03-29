@@ -23,6 +23,6 @@ package org.integratedsemantics.cmis.soap.relationship
 		public var defaultValue:org.integratedsemantics.cmis.soap.relationship.CmisPropertyId;
 		[ArrayElementType("CmisChoiceId")]
 		public var choice:Array;
-		public var anyAttribute:Array;
+		public var _anyAttribute:Array;
 	}
 }

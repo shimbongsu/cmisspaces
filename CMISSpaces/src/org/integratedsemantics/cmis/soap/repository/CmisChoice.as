@@ -15,10 +15,17 @@ package org.integratedsemantics.cmis.soap.repository
     
 	public class CmisChoice
 	{
+        // sreiner
+        public function CmisChoice() {}
+	    
 		/**
 		 * Constructor, initializes the type class
 		 */
-		public function CmisChoice() {}
-            
+        //sreiner todo 
+        //public function CmisChoice(value:*)
+        //{
+        //    anyAttribute = new Array(value);
+        //}		
+		public var anyAttribute:Array;
+		}
 	}
-}

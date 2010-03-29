@@ -20,6 +20,6 @@ package org.integratedsemantics.cmis.soap.navigation
 		 */
 		public function CmisTypePolicyDefinitionType() {}
             
-		public var anyAttribute:Array;
+		public var _anyAttribute:Array;
 	}
 }

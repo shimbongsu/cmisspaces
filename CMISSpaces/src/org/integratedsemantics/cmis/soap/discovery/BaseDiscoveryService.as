@@ -77,7 +77,7 @@ package org.integratedsemantics.cmis.soap.discovery
        		BaseDiscoveryServicePort.binding = BaseDiscoveryServiceBinding;
        		BaseDiscoveryServiceService.addPort(BaseDiscoveryServicePort);
        		
-       		// sreiner BaseDiscoveryServicePort.endpointURI = "http://cmis.alfresco.com/cmis/DiscoveryService";
+            // sreiner BaseDiscoveryServicePort.endpointURI = "http://cmis.alfresco.com/cmis/DiscoveryService";
             // sreiner add url from config
             var model:AppModelLocator = AppModelLocator.getInstance();                              
             var cmisConfig:CMISConfig = model.ecmServerConfig as CMISConfig;
@@ -86,6 +86,7 @@ package org.integratedsemantics.cmis.soap.discovery
                 var cmisWebServicesUrl:String = cmisConfig.cmisWebServicesUrl;              
                 BaseDiscoveryServicePort.endpointURI = cmisWebServicesUrl + "/DiscoveryService";
             }               
+       		
        		
        		if(this.endpointURI == null)
        		{
@@ -141,6 +142,7 @@ package org.integratedsemantics.cmis.soap.discovery
             				requestMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","maxItems"),null,new QName("http://www.w3.org/2001/XMLSchema","integer")));
             				requestMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","skipCount"),null,new QName("http://www.w3.org/2001/XMLSchema","integer")));
             				requestMessage.addPart(new WSDLMessagePart(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","extension"),null,new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","cmisExtensionType")));
+            				requestMessage.addPart(new WSDLMessagePart(new QName("","anyAttribute"),null,new QName("http://www.w3.org/2001/XMLSchema","Array")));
                 requestMessage.encoding = new WSDLEncoding();
                 requestMessage.encoding.namespaceURI="http://docs.oasis-open.org/ns/cmis/messaging/200908/";
 			requestMessage.encoding.useStyle="literal";
@@ -164,9 +166,10 @@ package org.integratedsemantics.cmis.soap.discovery
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisListOfIdsType"),org.integratedsemantics.cmis.soap.discovery.CmisListOfIdsType);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisChoiceDecimal"),org.integratedsemantics.cmis.soap.discovery.CmisChoiceDecimal);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","cmisObjectInFolderListType"),org.integratedsemantics.cmis.soap.discovery.CmisObjectInFolderListType);
-							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","enumCapabilityContentStreamUpdates"),org.integratedsemantics.cmis.soap.discovery.EnumCapabilityContentStreamUpdates);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","enumACLPropagation"),org.integratedsemantics.cmis.soap.discovery.EnumACLPropagation);
+							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","enumCapabilityContentStreamUpdates"),org.integratedsemantics.cmis.soap.discovery.EnumCapabilityContentStreamUpdates);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisPermissionMapping"),org.integratedsemantics.cmis.soap.discovery.CmisPermissionMapping);
+							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","enumDateTimeResolution"),org.integratedsemantics.cmis.soap.discovery.EnumDateTimeResolution);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","cmisACLType"),org.integratedsemantics.cmis.soap.discovery.CmisACLType);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisPropertyString"),org.integratedsemantics.cmis.soap.discovery.CmisPropertyString);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisAccessControlEntryType"),org.integratedsemantics.cmis.soap.discovery.CmisAccessControlEntryType);
@@ -216,11 +219,12 @@ package org.integratedsemantics.cmis.soap.discovery
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","enumCapabilityChanges"),org.integratedsemantics.cmis.soap.discovery.EnumCapabilityChanges);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisTypeRelationshipDefinitionType"),org.integratedsemantics.cmis.soap.discovery.CmisTypeRelationshipDefinitionType);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","cmisObjectListType"),org.integratedsemantics.cmis.soap.discovery.CmisObjectListType);
+							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","enumSupportedPermissions"),org.integratedsemantics.cmis.soap.discovery.EnumSupportedPermissions);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","enumServiceException"),org.integratedsemantics.cmis.soap.discovery.EnumServiceException);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisPropertyStringDefinitionType"),org.integratedsemantics.cmis.soap.discovery.CmisPropertyStringDefinitionType);
 							SchemaTypeRegistry.getInstance().registerCollectionClass(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","cmisExtensionType"),org.integratedsemantics.cmis.soap.discovery.CmisExtensionType);
-							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisPropertyUri"),org.integratedsemantics.cmis.soap.discovery.CmisPropertyUri);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisPropertyIdDefinitionType"),org.integratedsemantics.cmis.soap.discovery.CmisPropertyIdDefinitionType);
+							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisPropertyUri"),org.integratedsemantics.cmis.soap.discovery.CmisPropertyUri);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","enumBaseObjectTypeIds"),org.integratedsemantics.cmis.soap.discovery.EnumBaseObjectTypeIds);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisAccessControlPrincipalType"),org.integratedsemantics.cmis.soap.discovery.CmisAccessControlPrincipalType);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisPropertyHtmlDefinitionType"),org.integratedsemantics.cmis.soap.discovery.CmisPropertyHtmlDefinitionType);
@@ -267,10 +271,10 @@ package org.integratedsemantics.cmis.soap.discovery
 		/**
 		 * Performs the low level call to the server for the operation
 		 * It passes along the headers and the operation arguments
-		 * @param query* @param repositoryId* @param statement* @param searchAllVersions* @param includeAllowableActions* @param includeRelationships* @param renditionFilter* @param maxItems* @param skipCount* @param extension
+		 * @param query* @param repositoryId* @param statement* @param searchAllVersions* @param includeAllowableActions* @param includeRelationships* @param renditionFilter* @param maxItems* @param skipCount* @param extension* @param anyAttribute
 		 * @return Asynchronous token
 		 */
-		public function query(query:CmisQueryType,repositoryId:String,statement:String,searchAllVersions:Boolean,includeAllowableActions:Boolean,includeRelationships:EnumIncludeRelationships,renditionFilter:String,maxItems:Number,skipCount:Number,extension:CmisExtensionType):AsyncToken
+		public function query(query:CmisQueryType,repositoryId:String,statement:String,searchAllVersions:Boolean,includeAllowableActions:Boolean,includeRelationships:EnumIncludeRelationships,renditionFilter:String,maxItems:Number,skipCount:Number,extension:CmisExtensionType,anyAttribute:Array):AsyncToken
 		{
 			var headerArray:Array = new Array();
             var out:Object = new Object();
@@ -284,6 +288,7 @@ package org.integratedsemantics.cmis.soap.discovery
 	            out["maxItems"] = maxItems;
 	            out["skipCount"] = skipCount;
 	            out["extension"] = extension;
+	            out["anyAttribute"] = anyAttribute;
 	            currentOperation = BaseDiscoveryServiceService.getPort("BaseDiscoveryServicePort").binding.portType.getOperation("query");
             var pc:PendingCall = new PendingCall(out,headerArray);
             call(currentOperation,out,pc.token,pc.headers);
@@ -341,7 +346,10 @@ package org.integratedsemantics.cmis.soap.discovery
            		var token:AsyncToken = wrappedData.returnToken;
                 var currentOperation:WSDLOperation = wrappedData.operation;
                 var decoder:SOAPDecoder = new SOAPDecoder();
-                decoder.resultFormat = "object";
+                
+                // sreiner decoder.resultFormat = "object";
+                decoder.resultFormat = "e4x";
+                
                 decoder.headerFormat = "object";
                 decoder.multiplePartsFormat = "object";
                 decoder.ignoreWhitespace = true;

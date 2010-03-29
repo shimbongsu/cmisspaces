@@ -272,9 +272,9 @@ package org.integratedsemantics.cmis.soap.navigation
         /**
          * @see INavigationService#getDescendants()
          */
-        public function getDescendants(repositoryId:String,folderId:String,depth:Number,filter:String,includeAllowableActions:Boolean,includeRelationships:EnumIncludeRelationships,renditionFilter:String,includePathSegments:Boolean,extension:CmisExtensionType):AsyncToken
+        public function getDescendants(repositoryId:String,folderId:String,depth:Number,filter:String,includeAllowableActions:Boolean,includeRelationships:EnumIncludeRelationships,renditionFilter:String,includePathSegment:Boolean,extension:CmisExtensionType):AsyncToken
         {
-         	var _internal_token:AsyncToken = _baseService.getDescendants(repositoryId,folderId,depth,filter,includeAllowableActions,includeRelationships,renditionFilter,includePathSegments,extension);
+         	var _internal_token:AsyncToken = _baseService.getDescendants(repositoryId,folderId,depth,filter,includeAllowableActions,includeRelationships,renditionFilter,includePathSegment,extension);
             _internal_token.addEventListener("result",_getDescendants_populate_results);
             _internal_token.addEventListener("fault",throwFault); 
             return _internal_token;
@@ -284,7 +284,7 @@ package org.integratedsemantics.cmis.soap.navigation
 		 */    
         public function getDescendants_send():AsyncToken
         {
-        	return getDescendants(_getDescendants_request.repositoryId,_getDescendants_request.folderId,_getDescendants_request.depth,_getDescendants_request.filter,_getDescendants_request.includeAllowableActions,_getDescendants_request.includeRelationships,_getDescendants_request.renditionFilter,_getDescendants_request.includePathSegments,_getDescendants_request.extension);
+        	return getDescendants(_getDescendants_request.repositoryId,_getDescendants_request.folderId,_getDescendants_request.depth,_getDescendants_request.filter,_getDescendants_request.includeAllowableActions,_getDescendants_request.includeRelationships,_getDescendants_request.renditionFilter,_getDescendants_request.includePathSegment,_getDescendants_request.extension);
         }
               
 		/**
@@ -356,9 +356,9 @@ package org.integratedsemantics.cmis.soap.navigation
         /**
          * @see INavigationService#getFolderTree()
          */
-        public function getFolderTree(repositoryId:String,folderId:String,depth:Number,filter:String,includeAllowableActions:Boolean,includeRelationships:EnumIncludeRelationships,renditionFilter:String,includePathSegments:Boolean,extension:CmisExtensionType):AsyncToken
+        public function getFolderTree(repositoryId:String,folderId:String,depth:Number,filter:String,includeAllowableActions:Boolean,includeRelationships:EnumIncludeRelationships,renditionFilter:String,includePathSegment:Boolean,extension:CmisExtensionType):AsyncToken
         {
-         	var _internal_token:AsyncToken = _baseService.getFolderTree(repositoryId,folderId,depth,filter,includeAllowableActions,includeRelationships,renditionFilter,includePathSegments,extension);
+         	var _internal_token:AsyncToken = _baseService.getFolderTree(repositoryId,folderId,depth,filter,includeAllowableActions,includeRelationships,renditionFilter,includePathSegment,extension);
             _internal_token.addEventListener("result",_getFolderTree_populate_results);
             _internal_token.addEventListener("fault",throwFault); 
             return _internal_token;
@@ -368,7 +368,7 @@ package org.integratedsemantics.cmis.soap.navigation
 		 */    
         public function getFolderTree_send():AsyncToken
         {
-        	return getFolderTree(_getFolderTree_request.repositoryId,_getFolderTree_request.folderId,_getFolderTree_request.depth,_getFolderTree_request.filter,_getFolderTree_request.includeAllowableActions,_getFolderTree_request.includeRelationships,_getFolderTree_request.renditionFilter,_getFolderTree_request.includePathSegments,_getFolderTree_request.extension);
+        	return getFolderTree(_getFolderTree_request.repositoryId,_getFolderTree_request.folderId,_getFolderTree_request.depth,_getFolderTree_request.filter,_getFolderTree_request.includeAllowableActions,_getFolderTree_request.includeRelationships,_getFolderTree_request.renditionFilter,_getFolderTree_request.includePathSegment,_getFolderTree_request.extension);
         }
               
 		/**
@@ -440,9 +440,9 @@ package org.integratedsemantics.cmis.soap.navigation
         /**
          * @see INavigationService#getChildren()
          */
-        public function getChildren(repositoryId:String,folderId:String,filter:String,orderBy:String,includeAllowableActions:Boolean,includeRelationships:EnumIncludeRelationships,renditionFilter:String,includePathSegments:Boolean,maxItems:Number,skipCount:Number,extension:CmisExtensionType):AsyncToken
+        public function getChildren(repositoryId:String,folderId:String,filter:String,orderBy:String,includeAllowableActions:Boolean,includeRelationships:EnumIncludeRelationships,renditionFilter:String,includePathSegment:Boolean,maxItems:Number,skipCount:Number,extension:CmisExtensionType):AsyncToken
         {
-         	var _internal_token:AsyncToken = _baseService.getChildren(repositoryId,folderId,filter,orderBy,includeAllowableActions,includeRelationships,renditionFilter,includePathSegments,maxItems,skipCount,extension);
+         	var _internal_token:AsyncToken = _baseService.getChildren(repositoryId,folderId,filter,orderBy,includeAllowableActions,includeRelationships,renditionFilter,includePathSegment,maxItems,skipCount,extension);
             _internal_token.addEventListener("result",_getChildren_populate_results);
             _internal_token.addEventListener("fault",throwFault); 
             return _internal_token;
@@ -452,7 +452,7 @@ package org.integratedsemantics.cmis.soap.navigation
 		 */    
         public function getChildren_send():AsyncToken
         {
-        	return getChildren(_getChildren_request.repositoryId,_getChildren_request.folderId,_getChildren_request.filter,_getChildren_request.orderBy,_getChildren_request.includeAllowableActions,_getChildren_request.includeRelationships,_getChildren_request.renditionFilter,_getChildren_request.includePathSegments,_getChildren_request.maxItems,_getChildren_request.skipCount,_getChildren_request.extension);
+        	return getChildren(_getChildren_request.repositoryId,_getChildren_request.folderId,_getChildren_request.filter,_getChildren_request.orderBy,_getChildren_request.includeAllowableActions,_getChildren_request.includeRelationships,_getChildren_request.renditionFilter,_getChildren_request.includePathSegment,_getChildren_request.maxItems,_getChildren_request.skipCount,_getChildren_request.extension);
         }
               
 		/**
@@ -481,19 +481,22 @@ package org.integratedsemantics.cmis.soap.navigation
 		 * Internal variable to store the operation's lastResult
 		 * @private
 		 */
-        private var _getChildren_lastResult:CmisObjectInFolderListType;
+        //sreiner private var _getChildren_lastResult:CmisObjectInFolderListType;
+        private var _getChildren_lastResult:XMLList;
 		[Bindable]
 		/**
 		 * @see INavigationService#getChildren_lastResult
 		 */	  
-		public function get getChildren_lastResult():CmisObjectInFolderListType
+        // sreiner public function get getChildren_lastResult():CmisObjectInFolderListType
+		public function get getChildren_lastResult():XMLList
 		{
 			return _getChildren_lastResult;
 		}
 		/**
 		 * @private
 		 */
-		public function set getChildren_lastResult(lastResult:CmisObjectInFolderListType):void
+		// sreiner public function set getChildren_lastResult(lastResult:CmisObjectInFolderListType):void
+        public function set getChildren_lastResult(lastResult:XMLList):void
 		{
 			_getChildren_lastResult = lastResult;
 		}
@@ -512,11 +515,14 @@ package org.integratedsemantics.cmis.soap.navigation
         private function _getChildren_populate_results(event:ResultEvent):void
 		{
 			var e:GetChildrenResultEvent = new GetChildrenResultEvent();
-		            e.result = event.result as CmisObjectInFolderListType;
-		                       e.headers = event.headers;
-		             getChildren_lastResult = e.result;
-		             dispatchEvent(e);
-	        		}
+		    
+		    // sreiner e.result = event.result as CmisObjectInFolderListType;
+		    e.result = event.result as XMLList;
+		    
+		    e.headers = event.headers;
+		    getChildren_lastResult = e.result;
+		    dispatchEvent(e);
+	    }
 		
 		//stub functions for the getFolderParent operation
           

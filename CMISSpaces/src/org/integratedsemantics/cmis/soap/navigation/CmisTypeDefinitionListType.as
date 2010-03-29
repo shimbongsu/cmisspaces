@@ -25,5 +25,6 @@ package org.integratedsemantics.cmis.soap.navigation
 		public var hasMoreItems:Boolean;
 		public var numItems:Number;
 		public var anyElement:Array;
+		public var anyAttribute:Array;
 	}
 }

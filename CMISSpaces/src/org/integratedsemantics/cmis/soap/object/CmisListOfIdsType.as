@@ -23,5 +23,6 @@ package org.integratedsemantics.cmis.soap.object
 		[ArrayElementType("String")]
 		public var id:Array;
 		public var anyElement:Array;
+		public var anyAttribute:Array;
 	}
 }

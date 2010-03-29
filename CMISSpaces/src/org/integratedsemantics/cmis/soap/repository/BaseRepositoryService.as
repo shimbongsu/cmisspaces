@@ -77,7 +77,7 @@ package org.integratedsemantics.cmis.soap.repository
        		BaseRepositoryServicePort.binding = BaseRepositoryServiceBinding;
        		BaseRepositoryServiceService.addPort(BaseRepositoryServicePort);
        		
-       		//sreiner BaseRepositoryServicePort.endpointURI = "http://cmis.alfresco.com/cmis/RepositoryService";
+            //sreiner BaseRepositoryServicePort.endpointURI = "http://cmis.alfresco.com/cmis/RepositoryService";
             // sreiner add url from config
             var model:AppModelLocator = AppModelLocator.getInstance();                              
             var cmisConfig:CMISConfig = model.ecmServerConfig as CMISConfig;
@@ -234,9 +234,10 @@ package org.integratedsemantics.cmis.soap.repository
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisListOfIdsType"),org.integratedsemantics.cmis.soap.repository.CmisListOfIdsType);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisChoiceDecimal"),org.integratedsemantics.cmis.soap.repository.CmisChoiceDecimal);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","cmisObjectInFolderListType"),org.integratedsemantics.cmis.soap.repository.CmisObjectInFolderListType);
-							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","enumCapabilityContentStreamUpdates"),org.integratedsemantics.cmis.soap.repository.EnumCapabilityContentStreamUpdates);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","enumACLPropagation"),org.integratedsemantics.cmis.soap.repository.EnumACLPropagation);
+							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","enumCapabilityContentStreamUpdates"),org.integratedsemantics.cmis.soap.repository.EnumCapabilityContentStreamUpdates);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisPermissionMapping"),org.integratedsemantics.cmis.soap.repository.CmisPermissionMapping);
+							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","enumDateTimeResolution"),org.integratedsemantics.cmis.soap.repository.EnumDateTimeResolution);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","cmisACLType"),org.integratedsemantics.cmis.soap.repository.CmisACLType);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisPropertyString"),org.integratedsemantics.cmis.soap.repository.CmisPropertyString);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisAccessControlEntryType"),org.integratedsemantics.cmis.soap.repository.CmisAccessControlEntryType);
@@ -286,11 +287,12 @@ package org.integratedsemantics.cmis.soap.repository
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","enumCapabilityChanges"),org.integratedsemantics.cmis.soap.repository.EnumCapabilityChanges);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisTypeRelationshipDefinitionType"),org.integratedsemantics.cmis.soap.repository.CmisTypeRelationshipDefinitionType);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","cmisObjectListType"),org.integratedsemantics.cmis.soap.repository.CmisObjectListType);
+							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","enumSupportedPermissions"),org.integratedsemantics.cmis.soap.repository.EnumSupportedPermissions);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","enumServiceException"),org.integratedsemantics.cmis.soap.repository.EnumServiceException);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisPropertyStringDefinitionType"),org.integratedsemantics.cmis.soap.repository.CmisPropertyStringDefinitionType);
 							SchemaTypeRegistry.getInstance().registerCollectionClass(new QName("http://docs.oasis-open.org/ns/cmis/messaging/200908/","cmisExtensionType"),org.integratedsemantics.cmis.soap.repository.CmisExtensionType);
-							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisPropertyUri"),org.integratedsemantics.cmis.soap.repository.CmisPropertyUri);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisPropertyIdDefinitionType"),org.integratedsemantics.cmis.soap.repository.CmisPropertyIdDefinitionType);
+							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisPropertyUri"),org.integratedsemantics.cmis.soap.repository.CmisPropertyUri);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","enumBaseObjectTypeIds"),org.integratedsemantics.cmis.soap.repository.EnumBaseObjectTypeIds);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisAccessControlPrincipalType"),org.integratedsemantics.cmis.soap.repository.CmisAccessControlPrincipalType);
 							SchemaTypeRegistry.getInstance().registerClass(new QName("http://docs.oasis-open.org/ns/cmis/core/200908/","cmisPropertyHtmlDefinitionType"),org.integratedsemantics.cmis.soap.repository.CmisPropertyHtmlDefinitionType);
@@ -351,7 +353,7 @@ package org.integratedsemantics.cmis.soap.repository
             return pc.token;
 		}
 		*/
-
+		
         // sreiner added getTypeDescendants with just the repositoryId for now
         public function getTypeDescendants(repositoryId:String,typeId:String,depth:Number,includePropertyDefinitions:Boolean,extension:CmisExtensionType):AsyncToken
         {
@@ -409,6 +411,7 @@ package org.integratedsemantics.cmis.soap.repository
             call(currentOperation,out,pc.token,pc.headers);
             return pc.token;
 		}
+		
 		/**
 		 * Performs the low level call to the server for the operation
 		 * It passes along the headers and the operation arguments
@@ -428,10 +431,11 @@ package org.integratedsemantics.cmis.soap.repository
             var pc:PendingCall = new PendingCall(out,headerArray);
             
             //sreiner call(currentOperation,out,pc.token,pc.headers);
-            call(currentOperation,out,pc.token,pc.headers, cmisOperXML);
+            call(currentOperation,out,pc.token,pc.headers, cmisOperXML);            
             
             return pc.token;
 		}
+		
         /**
          * Performs the actual call to the remove server
          * It SOAP-encodes the message using the schema and WSDL operation options set above and then calls the server using 
@@ -463,7 +467,7 @@ package org.integratedsemantics.cmis.soap.repository
                 var soapBodyXML:XML = new XML(soap.soapNS::Body);
                 soapBodyXML.appendChild(cmisOperXML);               
                 soap.soapNS::Body = soapBodyXML;
-            }           	        
+            }                       	        
 	        
 	        message.setSOAPAction(operation.soapAction);
 	        message.body = soap.toString();
@@ -501,7 +505,7 @@ package org.integratedsemantics.cmis.soap.repository
                 if (currentOperation.name == "getTypeDescendants")
                 { 
                     decoder.resultFormat = "e4x";
-                }                                
+                }                                                
                 
                 decoder.headerFormat = "object";
                 decoder.multiplePartsFormat = "object";

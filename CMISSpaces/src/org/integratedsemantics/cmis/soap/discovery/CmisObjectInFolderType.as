@@ -23,5 +23,6 @@ package org.integratedsemantics.cmis.soap.discovery
 		public var object:org.integratedsemantics.cmis.soap.discovery.CmisObjectType;
 		public var pathSegment:String;
 		public var anyElement:Array;
+		public var anyAttribute:Array;
 	}
 }

@@ -504,8 +504,8 @@ package org.integratedsemantics.cmis.soap.repository
 		 */
         private function _getRepositories_populate_results(event:ResultEvent):void
 		{
-			var e:GetRepositoriesResultEvent = new GetRepositoriesResultEvent();
-		            
+            var e:GetRepositoriesResultEvent = new GetRepositoriesResultEvent();
+                    
             //sreiner e.result = event.result as Array;
             
             // sreiner add non array support for single repository

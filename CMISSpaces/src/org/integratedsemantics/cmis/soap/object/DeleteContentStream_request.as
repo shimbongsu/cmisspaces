@@ -21,7 +21,7 @@ package org.integratedsemantics.cmis.soap.object
 		public function DeleteContentStream_request() {}
             
 		public var repositoryId:String;
-		public var documentId:String;
+		public var objectId:String;
 		public var changeToken:String;
 		public var extension:org.integratedsemantics.cmis.soap.object.CmisExtensionType;
 	}

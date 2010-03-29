@@ -28,17 +28,31 @@ package org.integratedsemantics.cmis.soap.discovery
 		}
         
 		private var _headers:Object;
-		private var _result:CmisQueryType;
+		// sreiner private var _result:CmisQueryType;
+        private var _result:Object;
+		
+		/* sreiner
 		public function get result():CmisQueryType
 		{
 			return _result;
 		}
-
+       
 		public function set result(value:CmisQueryType):void
 		{
 			_result = value;
 		}
+        */
 
+        public function get result():Object
+        {
+            return _result;
+        }
+       
+        public function set result(value:Object):void
+        {
+            _result = value;
+        }
+        
 		public function get headers():Object
 		{
 			return _headers;

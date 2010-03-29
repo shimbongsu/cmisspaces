@@ -272,9 +272,9 @@ package org.integratedsemantics.cmis.soap.versioning
         /**
          * @see IVersioningService#checkOut()
          */
-        public function checkOut(repositoryId:String,documentId:String,extension:CmisExtensionType):AsyncToken
+        public function checkOut(repositoryId:String,objectId:String,extension:CmisExtensionType):AsyncToken
         {
-         	var _internal_token:AsyncToken = _baseService.checkOut(repositoryId,documentId,extension);
+         	var _internal_token:AsyncToken = _baseService.checkOut(repositoryId,objectId,extension);
             _internal_token.addEventListener("result",_checkOut_populate_results);
             _internal_token.addEventListener("fault",throwFault); 
             return _internal_token;
@@ -284,7 +284,7 @@ package org.integratedsemantics.cmis.soap.versioning
 		 */    
         public function checkOut_send():AsyncToken
         {
-        	return checkOut(_checkOut_request.repositoryId,_checkOut_request.documentId,_checkOut_request.extension);
+        	return checkOut(_checkOut_request.repositoryId,_checkOut_request.objectId,_checkOut_request.extension);
         }
               
 		/**
@@ -356,9 +356,9 @@ package org.integratedsemantics.cmis.soap.versioning
         /**
          * @see IVersioningService#cancelCheckOut()
          */
-        public function cancelCheckOut(repositoryId:String,documentId:String,extension:CmisExtensionType):AsyncToken
+        public function cancelCheckOut(repositoryId:String,objectId:String,extension:CmisExtensionType):AsyncToken
         {
-         	var _internal_token:AsyncToken = _baseService.cancelCheckOut(repositoryId,documentId,extension);
+         	var _internal_token:AsyncToken = _baseService.cancelCheckOut(repositoryId,objectId,extension);
             _internal_token.addEventListener("result",_cancelCheckOut_populate_results);
             _internal_token.addEventListener("fault",throwFault); 
             return _internal_token;
@@ -368,7 +368,7 @@ package org.integratedsemantics.cmis.soap.versioning
 		 */    
         public function cancelCheckOut_send():AsyncToken
         {
-        	return cancelCheckOut(_cancelCheckOut_request.repositoryId,_cancelCheckOut_request.documentId,_cancelCheckOut_request.extension);
+        	return cancelCheckOut(_cancelCheckOut_request.repositoryId,_cancelCheckOut_request.objectId,_cancelCheckOut_request.extension);
         }
               
 		/**
@@ -524,9 +524,9 @@ package org.integratedsemantics.cmis.soap.versioning
         /**
          * @see IVersioningService#checkIn()
          */
-        public function checkIn(repositoryId:String,documentId:String,major:Boolean,properties:CmisPropertiesType,contentStream:CmisContentStreamType,checkinComment:String,policies:Array,addACEs:CmisAccessControlListType,removeACEs:CmisAccessControlListType,extension:CmisExtensionType):AsyncToken
+        public function checkIn(repositoryId:String,objectId:String,major:Boolean,properties:CmisPropertiesType,contentStream:CmisContentStreamType,checkinComment:String,policies:Array,addACEs:CmisAccessControlListType,removeACEs:CmisAccessControlListType,extension:CmisExtensionType):AsyncToken
         {
-         	var _internal_token:AsyncToken = _baseService.checkIn(repositoryId,documentId,major,properties,contentStream,checkinComment,policies,addACEs,removeACEs,extension);
+         	var _internal_token:AsyncToken = _baseService.checkIn(repositoryId,objectId,major,properties,contentStream,checkinComment,policies,addACEs,removeACEs,extension);
             _internal_token.addEventListener("result",_checkIn_populate_results);
             _internal_token.addEventListener("fault",throwFault); 
             return _internal_token;
@@ -536,7 +536,7 @@ package org.integratedsemantics.cmis.soap.versioning
 		 */    
         public function checkIn_send():AsyncToken
         {
-        	return checkIn(_checkIn_request.repositoryId,_checkIn_request.documentId,_checkIn_request.major,_checkIn_request.properties,_checkIn_request.contentStream,_checkIn_request.checkinComment,_checkIn_request.policies,_checkIn_request.addACEs,_checkIn_request.removeACEs,_checkIn_request.extension);
+        	return checkIn(_checkIn_request.repositoryId,_checkIn_request.objectId,_checkIn_request.major,_checkIn_request.properties,_checkIn_request.contentStream,_checkIn_request.checkinComment,_checkIn_request.policies,_checkIn_request.addACEs,_checkIn_request.removeACEs,_checkIn_request.extension);
         }
               
 		/**

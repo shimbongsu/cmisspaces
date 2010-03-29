@@ -35,5 +35,6 @@ package org.integratedsemantics.cmis.soap.versioning
 		public var orderable:Boolean;
 		public var openChoice:Boolean;
 		public var anyElement:Array;
+		public var anyAttribute:Array;
 	}
 }

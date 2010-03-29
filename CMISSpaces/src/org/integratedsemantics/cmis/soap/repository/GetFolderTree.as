@@ -27,7 +27,7 @@ package org.integratedsemantics.cmis.soap.repository
 		public var includeAllowableActions:Boolean;
 		public var includeRelationships:org.integratedsemantics.cmis.soap.repository.EnumIncludeRelationships;
 		public var renditionFilter:String;
-		public var includePathSegments:Boolean;
+		public var includePathSegment:Boolean;
 		public var extension:org.integratedsemantics.cmis.soap.repository.CmisExtensionType;
 	}
 }

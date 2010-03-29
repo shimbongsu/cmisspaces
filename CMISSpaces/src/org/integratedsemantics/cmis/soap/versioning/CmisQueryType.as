@@ -20,7 +20,6 @@ package org.integratedsemantics.cmis.soap.versioning
 		 */
 		public function CmisQueryType() {}
             
-		public var repositoryId:String;
 		public var statement:String;
 		public var searchAllVersions:Boolean;
 		public var includeAllowableActions:Boolean;
@@ -29,5 +28,6 @@ package org.integratedsemantics.cmis.soap.versioning
 		public var maxItems:Number;
 		public var skipCount:Number;
 		public var anyElement:Array;
+		public var anyAttribute:Array;
 	}
 }

@@ -23,6 +23,6 @@ package org.integratedsemantics.cmis.soap.navigation
 		public var defaultValue:org.integratedsemantics.cmis.soap.navigation.CmisPropertyHtml;
 		[ArrayElementType("CmisChoiceHtml")]
 		public var choice:Array;
-		public var anyAttribute:Array;
+		public var _anyAttribute:Array;
 	}
 }

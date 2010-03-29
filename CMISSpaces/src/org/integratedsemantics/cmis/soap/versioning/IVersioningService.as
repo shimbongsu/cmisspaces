@@ -108,11 +108,11 @@ package org.integratedsemantics.cmis.soap.versioning{
     	/**
     	 * Call the operation on the server passing in the arguments defined in the WSDL file
     	 * @param repositoryId
-    	 * @param documentId
+    	 * @param objectId
     	 * @param extension
     	 * @return An AsyncToken
     	 */
-    	function checkOut(repositoryId:String,documentId:String,extension:CmisExtensionType):AsyncToken;
+    	function checkOut(repositoryId:String,objectId:String,extension:CmisExtensionType):AsyncToken;
         /**
          * Method to call the operation on the server without passing the arguments inline.
          * You must however set the _request property for the operation before calling this method
@@ -150,11 +150,11 @@ package org.integratedsemantics.cmis.soap.versioning{
     	/**
     	 * Call the operation on the server passing in the arguments defined in the WSDL file
     	 * @param repositoryId
-    	 * @param documentId
+    	 * @param objectId
     	 * @param extension
     	 * @return An AsyncToken
     	 */
-    	function cancelCheckOut(repositoryId:String,documentId:String,extension:CmisExtensionType):AsyncToken;
+    	function cancelCheckOut(repositoryId:String,objectId:String,extension:CmisExtensionType):AsyncToken;
         /**
          * Method to call the operation on the server without passing the arguments inline.
          * You must however set the _request property for the operation before calling this method
@@ -236,7 +236,7 @@ package org.integratedsemantics.cmis.soap.versioning{
     	/**
     	 * Call the operation on the server passing in the arguments defined in the WSDL file
     	 * @param repositoryId
-    	 * @param documentId
+    	 * @param objectId
     	 * @param major
     	 * @param properties
     	 * @param contentStream
@@ -247,7 +247,7 @@ package org.integratedsemantics.cmis.soap.versioning{
     	 * @param extension
     	 * @return An AsyncToken
     	 */
-    	function checkIn(repositoryId:String,documentId:String,major:Boolean,properties:CmisPropertiesType,contentStream:CmisContentStreamType,checkinComment:String,policies:Array,addACEs:CmisAccessControlListType,removeACEs:CmisAccessControlListType,extension:CmisExtensionType):AsyncToken;
+    	function checkIn(repositoryId:String,objectId:String,major:Boolean,properties:CmisPropertiesType,contentStream:CmisContentStreamType,checkinComment:String,policies:Array,addACEs:CmisAccessControlListType,removeACEs:CmisAccessControlListType,extension:CmisExtensionType):AsyncToken;
         /**
          * Method to call the operation on the server without passing the arguments inline.
          * You must however set the _request property for the operation before calling this method

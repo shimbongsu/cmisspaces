@@ -601,9 +601,9 @@ package org.integratedsemantics.cmis.soap.object
         /**
          * @see IObjectService#deleteContentStream()
          */
-        public function deleteContentStream(repositoryId:String,documentId:String,changeToken:String,extension:CmisExtensionType):AsyncToken
+        public function deleteContentStream(repositoryId:String,objectId:String,changeToken:String,extension:CmisExtensionType):AsyncToken
         {
-         	var _internal_token:AsyncToken = _baseService.deleteContentStream(repositoryId,documentId,changeToken,extension);
+         	var _internal_token:AsyncToken = _baseService.deleteContentStream(repositoryId,objectId,changeToken,extension);
             _internal_token.addEventListener("result",_deleteContentStream_populate_results);
             _internal_token.addEventListener("fault",throwFault); 
             return _internal_token;
@@ -613,7 +613,7 @@ package org.integratedsemantics.cmis.soap.object
 		 */    
         public function deleteContentStream_send():AsyncToken
         {
-        	return deleteContentStream(_deleteContentStream_request.repositoryId,_deleteContentStream_request.documentId,_deleteContentStream_request.changeToken,_deleteContentStream_request.extension);
+        	return deleteContentStream(_deleteContentStream_request.repositoryId,_deleteContentStream_request.objectId,_deleteContentStream_request.changeToken,_deleteContentStream_request.extension);
         }
               
 		/**
@@ -1189,9 +1189,9 @@ package org.integratedsemantics.cmis.soap.object
         /**
          * @see IObjectService#deleteTree()
          */
-        public function deleteTree(repositoryId:String,folderId:String,allVersions:Boolean,unfileObject:EnumUnfileObject,continueOnFailure:Boolean,extension:CmisExtensionType):AsyncToken
+        public function deleteTree(repositoryId:String,folderId:String,allVersions:Boolean,unfileObjects:EnumUnfileObject,continueOnFailure:Boolean,extension:CmisExtensionType):AsyncToken
         {
-         	var _internal_token:AsyncToken = _baseService.deleteTree(repositoryId,folderId,allVersions,unfileObject,continueOnFailure,extension);
+         	var _internal_token:AsyncToken = _baseService.deleteTree(repositoryId,folderId,allVersions,unfileObjects,continueOnFailure,extension);
             _internal_token.addEventListener("result",_deleteTree_populate_results);
             _internal_token.addEventListener("fault",throwFault); 
             return _internal_token;
@@ -1201,7 +1201,7 @@ package org.integratedsemantics.cmis.soap.object
 		 */    
         public function deleteTree_send():AsyncToken
         {
-        	return deleteTree(_deleteTree_request.repositoryId,_deleteTree_request.folderId,_deleteTree_request.allVersions,_deleteTree_request.unfileObject,_deleteTree_request.continueOnFailure,_deleteTree_request.extension);
+        	return deleteTree(_deleteTree_request.repositoryId,_deleteTree_request.folderId,_deleteTree_request.allVersions,_deleteTree_request.unfileObjects,_deleteTree_request.continueOnFailure,_deleteTree_request.extension);
         }
               
 		/**
@@ -1525,9 +1525,9 @@ package org.integratedsemantics.cmis.soap.object
         /**
          * @see IObjectService#setContentStream()
          */
-        public function setContentStream(repositoryId:String,documentId:String,overwriteFlag:Boolean,changeToken:String,contentStream:CmisContentStreamType,extension:CmisExtensionType):AsyncToken
+        public function setContentStream(repositoryId:String,objectId:String,overwriteFlag:Boolean,changeToken:String,contentStream:CmisContentStreamType,extension:CmisExtensionType):AsyncToken
         {
-         	var _internal_token:AsyncToken = _baseService.setContentStream(repositoryId,documentId,overwriteFlag,changeToken,contentStream,extension);
+         	var _internal_token:AsyncToken = _baseService.setContentStream(repositoryId,objectId,overwriteFlag,changeToken,contentStream,extension);
             _internal_token.addEventListener("result",_setContentStream_populate_results);
             _internal_token.addEventListener("fault",throwFault); 
             return _internal_token;
@@ -1537,7 +1537,7 @@ package org.integratedsemantics.cmis.soap.object
 		 */    
         public function setContentStream_send():AsyncToken
         {
-        	return setContentStream(_setContentStream_request.repositoryId,_setContentStream_request.documentId,_setContentStream_request.overwriteFlag,_setContentStream_request.changeToken,_setContentStream_request.contentStream,_setContentStream_request.extension);
+        	return setContentStream(_setContentStream_request.repositoryId,_setContentStream_request.objectId,_setContentStream_request.overwriteFlag,_setContentStream_request.changeToken,_setContentStream_request.contentStream,_setContentStream_request.extension);
         }
               
 		/**

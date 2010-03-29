@@ -27,7 +27,7 @@ package org.integratedsemantics.cmis.soap.versioning
 		public var includeAllowableActions:Boolean;
 		public var includeRelationships:org.integratedsemantics.cmis.soap.versioning.EnumIncludeRelationships;
 		public var renditionFilter:String;
-		public var includePathSegments:Boolean;
+		public var includePathSegment:Boolean;
 		public var maxItems:Number;
 		public var skipCount:Number;
 		public var extension:org.integratedsemantics.cmis.soap.versioning.CmisExtensionType;

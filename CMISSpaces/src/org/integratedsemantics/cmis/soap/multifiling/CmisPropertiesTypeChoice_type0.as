@@ -20,13 +20,13 @@ package org.integratedsemantics.cmis.soap.multifiling
 		 */
 		public function CmisPropertiesTypeChoice_type0() {}
             
-		public var propertyId:org.integratedsemantics.cmis.soap.multifiling.CmisPropertyId;
-		public var propertyUri:org.integratedsemantics.cmis.soap.multifiling.CmisPropertyUri;
-		public var propertyInteger:org.integratedsemantics.cmis.soap.multifiling.CmisPropertyInteger;
-		public var propertyDecimal:org.integratedsemantics.cmis.soap.multifiling.CmisPropertyDecimal;
-		public var propertyBoolean:org.integratedsemantics.cmis.soap.multifiling.CmisPropertyBoolean;
 		public var propertyHtml:org.integratedsemantics.cmis.soap.multifiling.CmisPropertyHtml;
 		public var propertyDateTime:org.integratedsemantics.cmis.soap.multifiling.CmisPropertyDateTime;
+		public var propertyUri:org.integratedsemantics.cmis.soap.multifiling.CmisPropertyUri;
+		public var propertyBoolean:org.integratedsemantics.cmis.soap.multifiling.CmisPropertyBoolean;
 		public var propertyString:org.integratedsemantics.cmis.soap.multifiling.CmisPropertyString;
+		public var propertyId:org.integratedsemantics.cmis.soap.multifiling.CmisPropertyId;
+		public var propertyDecimal:org.integratedsemantics.cmis.soap.multifiling.CmisPropertyDecimal;
+		public var propertyInteger:org.integratedsemantics.cmis.soap.multifiling.CmisPropertyInteger;
 	}
 }

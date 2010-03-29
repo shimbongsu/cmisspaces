@@ -23,5 +23,6 @@ package org.integratedsemantics.cmis.soap.repository
 		public var ACL:org.integratedsemantics.cmis.soap.repository.CmisAccessControlListType;
 		public var exact:Boolean;
 		public var anyElement:Array;
+		public var anyAttribute:Array;
 	}
 }

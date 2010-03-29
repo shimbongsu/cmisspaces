@@ -5,9 +5,8 @@
 */
 package org.integratedsemantics.cmis.soap.navigation
 {
-	import mx.utils.ObjectProxy;
 	import flash.events.Event;
-	import flash.utils.ByteArray;
+	
 	import mx.rpc.soap.types.*;
 	/**
 	 * Typed event handler for the result of the operation
@@ -28,7 +27,12 @@ package org.integratedsemantics.cmis.soap.navigation
 		}
         
 		private var _headers:Object;
-		private var _result:CmisObjectInFolderListType;
+		
+		// sreiner private var _result:CmisObjectInFolderListType;
+        // sreiner
+        private var _result:XMLList;
+		
+		/* sreiner
 		public function get result():CmisObjectInFolderListType
 		{
 			return _result;
@@ -38,6 +42,18 @@ package org.integratedsemantics.cmis.soap.navigation
 		{
 			_result = value;
 		}
+        */
+
+        // sreiner
+        public function get result():XMLList
+        {
+            return _result;
+        }
+        // sreiner
+        public function set result(value:XMLList):void
+        {
+            _result = value;
+        }
 
 		public function get headers():Object
 		{

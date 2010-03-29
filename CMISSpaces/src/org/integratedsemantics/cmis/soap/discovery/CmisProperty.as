@@ -15,10 +15,17 @@ package org.integratedsemantics.cmis.soap.discovery
     
 	public class CmisProperty
 	{
+	    // sreiner
+	    public function CmisProperty() {}
+	    
 		/**
 		 * Constructor, initializes the type class
 		 */
-		public function CmisProperty() {}
-            
+		//sreiner todo 
+		//public function CmisProperty(value:*)
+		//{
+        //    anyAttribute = new Array(value);
+		//}
+		public var anyAttribute:Array;
+		}
 	}
-}
