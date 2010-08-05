@@ -131,10 +131,22 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
             {
                 propertiesVO.size = cmisObj.getContentStreamLength().getValue();
             }
-            propertiesVO.creator = cmisObj.getCreatedBy().getValue();
-            propertiesVO.created = cmisObj.getCreationDate().getValue();
-            propertiesVO.modifier = cmisObj.getLastModifiedBy().getValue();
-            propertiesVO.modified = cmisObj.getLastModificationDate().getValue();
+            if (cmisObj.getCreatedBy() != null)
+            {
+                propertiesVO.creator = cmisObj.getCreatedBy().getValue();
+            }
+            if (cmisObj.getCreationDate() != null)
+            {
+                propertiesVO.created = cmisObj.getCreationDate().getValue();
+            }
+            if (cmisObj.getLastModifiedBy() != null)
+            {
+                propertiesVO.modifier = cmisObj.getLastModifiedBy().getValue();
+            }
+            if (cmisObj.getLastModificationDate() != null)
+            {
+                propertiesVO.modified = cmisObj.getLastModificationDate().getValue();
+            }
             propertiesVO.emailid = "";
             if (cmisObj.getContentStreamMimeType() != null)
             {

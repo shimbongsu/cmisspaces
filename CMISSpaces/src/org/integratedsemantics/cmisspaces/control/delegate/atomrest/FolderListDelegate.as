@@ -211,7 +211,10 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
                         node.cmisEditMedia = entry.editMediaLink.toString();
                     }
                     
-                    node.isLocked = cmisObj.isVersionSeriesCheckedOut().getBooleanValue();                    
+                    if (cmisObj.isVersionSeriesCheckedOut() != null)
+                    {
+                        node.isLocked = cmisObj.isVersionSeriesCheckedOut().getBooleanValue(); 
+                    }                   
                     // working copies not returned                
                     node.isWorkingCopy = false;                    
                 }
@@ -219,9 +222,15 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
                 node.nodeRef = cmisObj.getObjectId().getValue();
                 node.id = node.nodeRef;
 
-                node.created = cmisObj.getCreationDate().getValue();
-                node.modified = cmisObj.getLastModificationDate().getValue();
-                                
+                if (cmisObj.getCreationDate() != null)
+                {
+                    node.created = cmisObj.getCreationDate().getValue();
+                }
+                
+                if (cmisObj.getLastModificationDate() != null)
+                {
+                    node.modified = cmisObj.getLastModificationDate().getValue();
+                }                
                 node.parentPath = displayPath;
                 node.path = displayPath + "/" + node.name;                
                 node.displayPath = node.path;

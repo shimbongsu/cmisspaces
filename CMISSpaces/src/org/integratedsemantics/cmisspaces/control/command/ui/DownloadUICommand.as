@@ -76,7 +76,9 @@ package org.integratedsemantics.cmisspaces.control.command.ui
                 if (event.airMode == true)
                 {
                     var viewurl:String = selectedItem.viewurl;
-                    viewurl = selectedItem.viewurl + "?name=value";
+                    // day crx didn't like dummy name/value (why was this here?)
+                    //viewurl = selectedItem.viewurl + "?name=value";
+                    viewurl = selectedItem.viewurl;
                     var request:URLRequest = new URLRequest(viewurl);
 		            request.requestHeaders.push(basicAuth);	        
                 }
