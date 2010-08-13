@@ -4,21 +4,13 @@ package org.integratedsemantics.cmisspacesair.view.main
     import flash.desktop.ClipboardFormats;
     import flash.desktop.NativeDragActions;
     import flash.desktop.NativeDragManager;
-    import flash.events.KeyboardEvent;
     import flash.events.MouseEvent;
     import flash.events.NativeDragEvent;
     import flash.filesystem.File;
     import flash.filesystem.FileMode;
     import flash.filesystem.FileStream;
     
-    import flexlib.containers.SuperTabNavigator;
-    import flexlib.controls.tabBarClasses.SuperTab;
-    import flexlib.events.SuperTabEvent;
-    
-    import mx.binding.utils.ChangeWatcher;
     import mx.events.FlexEvent;
-    import mx.events.IndexChangedEvent;
-    import mx.events.MenuEvent;
     import mx.managers.DragManager;
     import mx.managers.PopUpManager;
     import mx.rpc.Responder;
@@ -26,7 +18,7 @@ package org.integratedsemantics.cmisspacesair.view.main
     import org.integratedsemantics.cmisspaces.presmodel.main.CMISSpacesPresModel;
     import org.integratedsemantics.cmisspaces.view.main.CMISSpacesViewBase;
     import org.integratedsemantics.cmisspacesair.control.command.UploadAir;
-
+    import org.integratedsemantics.cmisspacesair.util.DownloadToTempFiles;
     import org.integratedsemantics.flexspaces.control.event.ui.*;
     import org.integratedsemantics.flexspaces.model.folder.Folder;
     import org.integratedsemantics.flexspaces.model.folder.Node;
@@ -34,17 +26,9 @@ package org.integratedsemantics.cmisspacesair.view.main
     import org.integratedsemantics.flexspaces.presmodel.folderview.FolderViewPresModel;
     import org.integratedsemantics.flexspaces.presmodel.main.FlexSpacesPresModel;
     import org.integratedsemantics.flexspaces.presmodel.upload.UploadStatusPresModel;
-
-    import org.integratedsemantics.flexspaces.view.browser.RepoBrowserChangePathEvent;
     import org.integratedsemantics.flexspaces.view.folderview.FolderViewBase;
-    import org.integratedsemantics.flexspaces.view.folderview.event.ClickNodeEvent;
-    import org.integratedsemantics.flexspaces.view.folderview.event.DoubleClickDocEvent;
-    import org.integratedsemantics.flexspaces.view.folderview.event.FolderViewContextMenuEvent;
     import org.integratedsemantics.flexspaces.view.menu.event.MenuConfiguredEvent;
-    import org.integratedsemantics.flexspaces.view.search.advanced.AdvancedSearchEvent;
-    import org.integratedsemantics.flexspaces.view.search.event.SearchResultsEvent;
     import org.integratedsemantics.flexspaces.view.upload.UploadStatusView;
-
     import org.integratedsemantics.flexspacesair.control.event.*;
     import org.integratedsemantics.flexspacesair.presmodel.create.CreateHtmlPresModel;
     import org.integratedsemantics.flexspacesair.presmodel.create.CreateTextPresModel;
@@ -114,13 +98,15 @@ package org.integratedsemantics.cmisspacesair.view.main
                 folderView1.addEventListener(NativeDragEvent.NATIVE_DRAG_ENTER,onDragIn1);
                 folderView1.addEventListener(NativeDragEvent.NATIVE_DRAG_OVER,onDragOver);
                 folderView1.addEventListener(NativeDragEvent.NATIVE_DRAG_DROP,onDrop1);
-    
+                folderView1.addEventListener(NativeDragEvent.NATIVE_DRAG_START, onDragOut1);    
+
                 var folderView2:FolderViewBase = browserView.fileView2;                
                 if (folderView2 != null)
                 {
                     folderView2.addEventListener(NativeDragEvent.NATIVE_DRAG_ENTER,onDragIn2);
                     folderView2.addEventListener(NativeDragEvent.NATIVE_DRAG_OVER,onDragOver);
                     folderView2.addEventListener(NativeDragEvent.NATIVE_DRAG_DROP,onDrop2);
+                    folderView2.addEventListener(NativeDragEvent.NATIVE_DRAG_START, onDragOut2);                    
                 }           
             }            
         }    
@@ -264,6 +250,28 @@ package org.integratedsemantics.cmisspacesair.view.main
         {
             onDragIn(event, browserView.fileView2);    
         }
+
+        /**
+         * Native drag out event handler for folder list 1
+         * 
+         * @param event native drag event
+         * 
+         */
+        protected function onDragOut1(event:NativeDragEvent):void
+        {
+            onDragOut(event, browserView.fileView1);    
+        }
+                
+        /**
+         * Native drag out event handler for folder list 2
+         * 
+         * @param event native drag event
+         * 
+         */
+        protected function onDragOut2(event:NativeDragEvent):void
+        {
+            onDragOut(event, browserView.fileView2);    
+        }
         
        /**
         * On drag-in, check the data formats. If it is a supported format,
@@ -397,6 +405,34 @@ package org.integratedsemantics.cmisspacesair.view.main
                 }            
             }
         }
+        
+       /**
+        * On drag-out, setup formats with NativeDragManager to drag file(s) to desktop
+        * 
+        * @param event native drag event
+        * @param sourceFolderView source folder view
+        * 
+        */  
+        protected function onDragOut(event:NativeDragEvent, sourceFolderView:FolderViewBase):void
+        {
+            trace("Native Drag start event.");
+            
+            var clipboard:Clipboard = event.clipboard;            
+                      
+            clipboard.setDataHandler(ClipboardFormats.FILE_LIST_FORMAT, getDragOutFiles);
+        }
+        
+        private function getDragOutFiles():Array
+        {
+            var downloadUtil:DownloadToTempFiles = new DownloadToTempFiles();
+
+            var selectedItems:Array = flexSpacesPresModel.selectedItems; 
+
+            var fileArray:Array = downloadUtil.download(selectedItems);
+                        
+            return fileArray;              
+        }
+        
 
         // 
         // Menu Handlers
