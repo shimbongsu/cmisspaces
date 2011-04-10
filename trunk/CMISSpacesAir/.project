@@ -9,6 +9,11 @@
 	</projects>
 	<buildSpec>
 		<buildCommand>
+			<name>com.adobe.flexbuilder.project.apollobuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
 			<name>com.adobe.flexbuilder.project.flexbuilder</name>
 			<arguments>
 			</arguments>
@@ -20,20 +25,21 @@
 		</buildCommand>
 	</buildSpec>
 	<natures>
+		<nature>com.adobe.flexbuilder.project.apollonature</nature>
 		<nature>com.adobe.flexbuilder.apollo.apollonature</nature>
 		<nature>com.adobe.flexbuilder.project.flexnature</nature>
 		<nature>com.adobe.flexbuilder.project.actionscriptnature</nature>
 	</natures>
 	<linkedResources>
 		<link>
-			<name>[source path] FlexSpaces-src</name>
-			<type>2</type>
-			<locationURI>DOCUMENTS/FlexSpaces/src</locationURI>
-		</link>
-		<link>
 			<name>[source path] CMISSpaces-src</name>
 			<type>2</type>
 			<locationURI>DOCUMENTS/CMISSpaces/src</locationURI>
+		</link>
+		<link>
+			<name>[source path] FlexSpaces-src</name>
+			<type>2</type>
+			<locationURI>DOCUMENTS/FlexSpaces/src</locationURI>
 		</link>
 		<link>
 			<name>[source path] FlexSpacesAir-src</name>
