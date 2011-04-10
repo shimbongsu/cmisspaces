@@ -4,7 +4,6 @@ package org.integratedsemantics.cmisspaces.view.properties.basic
     
     import mx.containers.FormItem;
     import mx.controls.Text;
-    import mx.controls.TextInput;
     import mx.events.FlexEvent;
     import mx.managers.PopUpManager;
     import mx.rpc.Responder;
@@ -12,6 +11,9 @@ package org.integratedsemantics.cmisspaces.view.properties.basic
     import org.integratedsemantics.flexspaces.control.event.properties.SetPropertiesEvent;
     import org.integratedsemantics.flexspaces.framework.presmodel.DialogViewBase;
     import org.integratedsemantics.flexspaces.presmodel.properties.basic.PropertiesPresModel;
+    
+    import spark.components.TextArea;
+    import spark.components.TextInput;
 
 
     /**
@@ -27,7 +29,7 @@ package org.integratedsemantics.cmisspaces.view.properties.basic
         public var titleItem:FormItem;
         public var nodetitle:TextInput;        
         public var descriptionItem:FormItem;
-        public var description:TextInput;
+        public var description:TextArea;
         public var authorItem:FormItem;
         public var author:TextInput;
 

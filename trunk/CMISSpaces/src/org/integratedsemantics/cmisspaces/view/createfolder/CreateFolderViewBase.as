@@ -2,7 +2,6 @@ package org.integratedsemantics.cmisspaces.view.createfolder
 {
     import flash.events.MouseEvent;
     
-    import mx.controls.TextInput;
     import mx.events.FlexEvent;
     import mx.managers.PopUpManager;
     import mx.rpc.Responder;
@@ -10,6 +9,8 @@ package org.integratedsemantics.cmisspaces.view.createfolder
     import org.integratedsemantics.cmisspaces.presmodel.createfolder.CreateFolderPresModel;
     import org.integratedsemantics.flexspaces.framework.presmodel.DialogViewBase;
     import org.integratedsemantics.flexspaces.view.createspace.AddedFolderEvent;
+    
+    import spark.components.TextInput;
 
 
     /**
