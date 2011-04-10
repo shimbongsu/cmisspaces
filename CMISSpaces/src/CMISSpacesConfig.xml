@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
-<objects xmlns="http://www.pranaframework.org/objects" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://www.pranaframework.org/objects
-                             http://www.pranaframework.org/schema/objects/prana-objects-0.6.xsd">
+<objects
+    xmlns="http://www.springactionscript.org/schema/objects"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springactionscript.org/schema/objects http://www.springactionscript.org/schema/objects/spring-actionscript-objects-1.0.xsd">
 
    <object id="cmisConfig" class="org.integratedsemantics.cmisspaces.model.config.CMISConfig">
 
@@ -26,8 +27,8 @@
         <property name="useWebServices" value="false"/>
       
         <!--  cmis service soap / webservice url --> 
-        <!--property name="cmisWebServicesUrl" value="http://localhost:8080/alfresco/cmis"/-->
-        <property name="cmisWebServicesUrl" value="http://cmis.alfresco.com:80/cmis"/>
+        <property name="cmisWebServicesUrl" value="http://localhost:8080/alfresco/cmis"/>
+        <!-- property name="cmisWebServicesUrl" value="http://cmis.alfresco.com:80/cmis"/-->
         <!-- property name="cmisWebServicesUrl" value="http://localhost:9080/emc-cmis-ea/services"/-->              
       
    </object>
