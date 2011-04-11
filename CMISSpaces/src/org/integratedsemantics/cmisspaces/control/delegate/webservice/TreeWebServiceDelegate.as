@@ -10,10 +10,8 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
     import mx.rpc.events.FaultEvent;
     import mx.rpc.events.ResultEvent;
     
-    import org.integratedsemantics.cmis.atom.CMISConstants;
     import org.integratedsemantics.cmis.atom.CMISObject;
-    import org.integratedsemantics.cmis.soap.navigation.GetChildrenResultEvent;
-    import org.integratedsemantics.cmis.soap.navigation.NavigationService;
+    import org.integratedsemantics.cmis.soap.service.NavigationService;
     import org.integratedsemantics.cmisspaces.model.config.CMISConfig;
     import org.integratedsemantics.flexspaces.model.AppModelLocator;
     import org.integratedsemantics.flexspaces.model.tree.TreeNode;
@@ -71,9 +69,10 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
             	parentFolderId = folderId;
             }
             
-			navigationService.addgetChildrenEventListener(onCompleteGetChildren);
-			navigationService.addNavigationServiceFaultEventListener(onFaultNavigationService);            
-            navigationService.getChildren(cmisConfig.repositoryId, parentFolderId, null, null,   false, null,   null, false,   100, 0, null);            
+            navigationService.addEventListener("result", onCompleteGetChildren);
+            navigationService.addEventListener("fault", onFaultNavigationService);
+            
+            navigationService.getChildren(cmisConfig.repositoryId, parentFolderId, null, null,   false, null,   null, false,   100, 0, null);   
         }
         
         /**
@@ -81,12 +80,16 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
          * 
          * @param event success event
          */
-        protected function onCompleteGetChildren(event:GetChildrenResultEvent):void
+        protected function onCompleteGetChildren(event:ResultEvent):void
         {
             //trace("TreeWebServiceDelegate onCompleteGetChildren");   
 
+            navigationService.removeEventListener("result", onCompleteGetChildren);
+            navigationService.removeEventListener("fault", onFaultNavigationService);            
+            
         	var result:XMLList = event.result as XMLList;
-        	//var xmlList:XMLList = result.children();
+            
+            //var xmlList:XMLList = result.children();
             var xmlList:XMLList = result.children().children();
 
             var name:String = "/";

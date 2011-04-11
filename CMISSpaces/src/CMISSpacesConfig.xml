@@ -30,7 +30,8 @@
         <property name="cmisWebServicesUrl" value="http://localhost:8080/alfresco/cmis"/>
         <!-- property name="cmisWebServicesUrl" value="http://cmis.alfresco.com:80/cmis"/-->
         <!-- property name="cmisWebServicesUrl" value="http://localhost:9080/emc-cmis-ea/services"/-->              
-      
+        <property name="cmisWSDLUrl" value="http://localhost:8080/alfresco/wsdl/CMISWS-Service.wsdl"/>
+        
    </object>
 
     <object id="appConfig" class="org.integratedsemantics.flexspaces.model.global.AppConfig">

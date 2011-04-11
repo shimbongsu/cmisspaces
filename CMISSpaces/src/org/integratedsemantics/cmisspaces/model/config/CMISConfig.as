@@ -23,6 +23,9 @@ package org.integratedsemantics.cmisspaces.model.config
         // whether to use web services or rest atom apis
         public var useWebServices:Boolean;
 
+        // url to wsdl for webservices
+        public var cmisWSDLUrl:String;
+        
         //  Info back from CMIS REST Atom               
         // cmis collection urls returned by main cmis service url
         public var cmisRootChildren:String;
