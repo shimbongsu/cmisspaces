@@ -12,8 +12,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
     
     import org.integratedsemantics.cmis.atom.CMISConstants;
     import org.integratedsemantics.cmis.atom.CMISObject;
-    import org.integratedsemantics.cmis.soap.navigation.GetChildrenResultEvent;
-    import org.integratedsemantics.cmis.soap.navigation.NavigationService;
+    import org.integratedsemantics.cmis.soap.service.NavigationService;
     import org.integratedsemantics.cmisspaces.model.config.CMISConfig;
     import org.integratedsemantics.flexspaces.model.AppModelLocator;
     import org.integratedsemantics.flexspaces.model.folder.Folder;
@@ -68,8 +67,9 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
             	parentFolderId = folderId;
             }
             
-			navigationService.addgetChildrenEventListener(onCompleteGetChildren);
-			navigationService.addNavigationServiceFaultEventListener(onFaultNavigationService);            
+            navigationService.addEventListener("result", onCompleteGetChildren);
+            navigationService.addEventListener("fault", onFaultNavigationService);           
+            
             navigationService.getChildren(cmisConfig.repositoryId, parentFolderId, null, null,   false, null,   null, false,   100, 0, null);
             
             //if (pageSize != 0)
@@ -84,12 +84,16 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
          * 
          * @param event success event
          */
-        protected function onCompleteGetChildren(event:GetChildrenResultEvent):void
+        protected function onCompleteGetChildren(event:ResultEvent):void
         {
             //trace("FolderListWebServiceDelegate onCompleteGetChildren");   
 
+            navigationService.removeEventListener("result", onCompleteGetChildren);
+            navigationService.removeEventListener("fault", onFaultNavigationService);
+            
         	var result:XMLList = event.result as XMLList;
-        	//var xmlList:XMLList = result.children();
+            
+            //var xmlList:XMLList = result.children();
             var xmlList:XMLList = result.children().children();
 
             var model:AppModelLocator = AppModelLocator.getInstance();
@@ -207,7 +211,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
                 folder.nodeCollection.addItem(node);                    
             } 
                             
-            notifyCaller(folder, new ResultEvent("folderList"));
+            notifyCaller(folder, new ResultEvent("folderList"));            
         }
         
         /**

@@ -10,11 +10,8 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
     import mx.rpc.events.FaultEvent;
     import mx.rpc.events.ResultEvent;
     
-    import org.integratedsemantics.cmis.atom.CMISConstants;
     import org.integratedsemantics.cmis.atom.CMISObject;
-    import org.integratedsemantics.cmis.soap.discovery.CmisQueryType;
-    import org.integratedsemantics.cmis.soap.discovery.DiscoveryService;
-    import org.integratedsemantics.cmis.soap.discovery.QueryResultEvent;
+    import org.integratedsemantics.cmis.soap.service.DiscoveryService;
     import org.integratedsemantics.cmisspaces.model.config.CMISConfig;
     import org.integratedsemantics.flexspaces.model.AppModelLocator;
     import org.integratedsemantics.flexspaces.model.folder.Node;
@@ -57,13 +54,10 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
             var model:AppModelLocator = AppModelLocator.getInstance();
             cmisConfig = model.ecmServerConfig as CMISConfig; 
 
-            discoveryService.addqueryEventListener(onSearchSuccess);
-            discoveryService.addDiscoveryServiceFaultEventListener(onFaultDiscoveryService);            
-            var cmisQueryType:CmisQueryType = new CmisQueryType();
-            cmisQueryType.statement = queryStr;
-            //cmisQueryType.repositoryId = cmisConfig.repositoryId;
-            //discoveryService.query(cmisQueryType);        
-            discoveryService.query(cmisQueryType,cmisConfig.repositoryId,queryStr,false,false,null,null,100,0,null,null);
+            discoveryService.addEventListener("result", onSearchSuccess);
+            discoveryService.addEventListener("fault", onFaultDiscoveryService);            
+            
+            discoveryService.query(cmisConfig.repositoryId,queryStr,false,false,null,null,100,0,null);
         }
         
         /**
@@ -80,13 +74,10 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
             var model:AppModelLocator = AppModelLocator.getInstance();
             cmisConfig = model.ecmServerConfig as CMISConfig; 
             
-            discoveryService.addqueryEventListener(onSearchSuccess);
-            discoveryService.addDiscoveryServiceFaultEventListener(onFaultDiscoveryService);            
-            var cmisQueryType:CmisQueryType = new CmisQueryType();
-            cmisQueryType.statement = queryStr;
-            //cmisQueryType.repositoryId = cmisConfig.repositoryId;
-            //discoveryService.query(cmisQueryType);        
-            discoveryService.query(cmisQueryType,cmisConfig.repositoryId,queryStr,false,false,null,null,100,0,null,null);
+            discoveryService.addEventListener("result", onSearchSuccess);
+            discoveryService.addEventListener("fault", onFaultDiscoveryService);            
+            
+            discoveryService.query(cmisConfig.repositoryId,queryStr,false,false,null,null,100,0,null);            
         }
         
         /**
@@ -94,9 +85,12 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
          * 
          * @param event success event
          */
-        protected function onSearchSuccess(event:QueryResultEvent):void
+        protected function onSearchSuccess(event:ResultEvent):void
         {
             trace("FolderListDelegate onFolderListDataSuccess");   
+            
+            discoveryService.removeEventListener("result", onSearchSuccess);
+            discoveryService.removeEventListener("fault", onFaultDiscoveryService);            
             
             var model:AppModelLocator = AppModelLocator.getInstance();            
             
@@ -105,6 +99,7 @@ package org.integratedsemantics.cmisspaces.control.delegate.webservice
             searchResultsCollection.nodeCollection = new ArrayCollection();
             
             var result:XMLList = event.result as XMLList;
+            
             //sreiner var xmlList:XMLList = result.children();
             var xmlList:XMLList = result.children().children();
 
