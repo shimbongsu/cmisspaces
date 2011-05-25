@@ -52,8 +52,8 @@ package org.integratedsemantics.cmisspaces.control
 			         
 			addCommand(CheckinEvent.CHECKIN, CheckinCommand);            
 
-			//addCommand(CopyMoveEvent.COPY, CopyMoveCommand);            
-			//addCommand(CopyMoveEvent.MOVE, CopyMoveCommand);            
+			addCommand(CopyMoveEvent.COPY, CopyMoveCommand);            
+			addCommand(CopyMoveEvent.MOVE, CopyMoveCommand);            
                     
             addCommand(DeleteEvent.DELETE, DeleteCommand);            
 
@@ -96,9 +96,9 @@ package org.integratedsemantics.cmisspaces.control
 
 			//addCommand(AdvancedSearchUIEvent.ADVANCED_SEARCH_UI, AdvancedSearchUICommand);
 			
-			//addCommand(ClipboardUIEvent.CLIPBOARD_CUT, ClipboardUICommand);
-			//addCommand(ClipboardUIEvent.CLIPBOARD_COPY, ClipboardUICommand);
-			//addCommand(ClipboardUIEvent.CLIPBOARD_PASTE, ClipboardUICommand);
+			addCommand(ClipboardUIEvent.CLIPBOARD_CUT, ClipboardUICommand);
+			addCommand(ClipboardUIEvent.CLIPBOARD_COPY, ClipboardUICommand);
+			addCommand(ClipboardUIEvent.CLIPBOARD_PASTE, ClipboardUICommand);
 
             addCommand(CreateSpaceUIEvent.CREATE_SPACE_UI, CreateSpaceUICommand);
 

@@ -77,8 +77,11 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
 
             var service:AtomService = e.result.service;
             var workspace:AtomWorkspace = service.workspace;
-            
+
+            var cmis:Namespace = new Namespace("cmis", CMISConstants.CMIS_CORE);             
             var cmisra:Namespace = new Namespace("cmisra", CMISConstants.CMIS_RESTATOM);            
+
+            //cmisConfig.repositoryId = workspace._src.cmisra::repositoryInfo.cmis::repositoryId;
             
             for (var c:int = 0; c < workspace.collections.length; c++)
             {
