@@ -21,7 +21,9 @@ package org.coderepos.atompub {
   import flash.events.EventDispatcher;
   import flash.events.IOErrorEvent;
   import flash.events.SecurityErrorEvent;
+  import flash.events.TimerEvent;
   import flash.utils.ByteArray;
+  import flash.utils.Timer;
   
   import org.coderepos.atompub.cache.*;
   import org.coderepos.atompub.credentials.*;
@@ -1108,12 +1110,23 @@ package org.coderepos.atompub {
         var cmisConfig:CMISConfig = CMISConfig(model.ecmServerConfig);
         if (cmisConfig.useProxy == true)
         {
-            requestHttpService(uri, req);    
+            requestHttpService(uri, req);  
+            // todo: remove this workaround
+            // send delayed complete event since blazeds proxy gives fault even though delete worked
+            var delay:Timer = new Timer(3000);
+            delay.addEventListener(TimerEvent.TIMER, deleteCompleteWorkaround);
+            delay.start();
         }            
         else
         {                          
             requestURLLoader(uri, req); 
         }                   
+    }
+   
+    private function deleteCompleteWorkaround(event:TimerEvent):void
+    {
+        var result:AtompubEventResult = new AtompubEventResult();
+        dispatchEvent(new AtompubEvent(AtompubEvent.DELETE_ENTRY_COMPLETED, result));            
     }
 
     protected function onCompleteToDeleteEntry(event:HttpResponseEvent):void
