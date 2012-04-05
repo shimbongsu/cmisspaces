@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<actionScriptProperties analytics="false" mainApplicationPath="CMISSpacesAir.mxml" version="6">
-  <compiler additionalCompilerArguments="-source-path+=locale/{locale} -locale=en_US -allow-source-path-overlap=true" autoRSLOrdering="true" copyDependentFiles="true" fteInMXComponents="false" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="false" htmlHistoryManagement="false" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="bin-debug" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="true" useDebugRSLSwfs="true" verifyDigests="true" warn="true">
+<actionScriptProperties analytics="false" mainApplicationPath="CMISSpacesAir.mxml" projectUUID="d78ffa2e-d700-4df9-86d0-f4cbdc929d45" version="10">
+  <compiler additionalCompilerArguments="-locale=en_US -allow-source-path-overlap=true" autoRSLOrdering="true" copyDependentFiles="true" fteInMXComponents="false" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="false" htmlHistoryManagement="false" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="bin-debug" removeUnusedRSL="true" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="true" useDebugRSLSwfs="true" verifyDigests="true" warn="true">
     <compilerSourcePath>
-      <compilerSourcePathEntry kind="1" linkType="1" path="${DOCUMENTS}/FlexSpaces/src"/>
-      <compilerSourcePathEntry kind="1" linkType="1" path="${DOCUMENTS}/FlexSpacesAir/src"/>
+      <compilerSourcePathEntry kind="1" linkType="1" path="${FLEXSPACES}/flexspaces-assets-runtime/src"/>
+      <compilerSourcePathEntry kind="1" linkType="1" path="${FLEXSPACES}/flexspaces-css/src"/>
       <compilerSourcePathEntry kind="1" linkType="1" path="${DOCUMENTS}/CMISSpaces/src"/>
     </compilerSourcePath>
     <libraryPath defaultLinkType="1">
       <libraryPathEntry kind="4" path=""/>
       <libraryPathEntry kind="1" linkType="1" path="libs"/>
-      <libraryPathEntry kind="1" linkType="1" path="${DOCUMENTS}/FlexSpaces/lib"/>
+      <libraryPathEntry kind="1" linkType="1" path="${FLEXSPACES}/flexspaces-lib/lib"/>
       <libraryPathEntry kind="1" linkType="1" path="${DOCUMENTS}/CMISSpaces/lib"/>
       <libraryPathEntry kind="1" linkType="1" path="${DCD_LIB_LOCATION}"/>
       <libraryPathEntry kind="1" linkType="1" path="${DCD_LOCALE_LOCATION}"/>
       <libraryPathEntry kind="3" linkType="1" path="${DCD_FIBER_LOCATION}/fiber.swc" useDefaultLinkType="false"/>
       <libraryPathEntry kind="3" linkType="1" path="${DCD_FIBER_LOCALE_LOCATION}/fiber_rb.swc" useDefaultLinkType="false"/>
       <libraryPathEntry kind="3" linkType="1" path="${DCD_FIBER_LOCATION}/playerfds.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="1" path="${FLEXSPACES}/flexspaces-assets-embed/bin/flexspaces-assets-embed.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="1" path="${FLEXSPACES}/flexspaces-lib/bin/flexspaces-lib.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="1" path="${FLEXSPACES}/flexspacesair-lib/bin/flexspacesair-lib.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="1" path="${FLEXSPACES}/flexspaces-locales/bin/flexspaces-locales.swc" useDefaultLinkType="false"/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>
@@ -26,4 +30,14 @@
   </applications>
   <modules/>
   <buildCSSFiles/>
+  <flashCatalyst validateFlashCatalystCompatibility="false"/>
+  <buildTargets>
+    <buildTarget buildTargetName="default">
+      <airSettings airCertificatePath="" airTimestamp="true" anePathSet="false" version="1">
+        <airExcludes/>
+        <anePaths/>
+      </airSettings>
+      <actionScriptSettings version="1"/>
+    </buildTarget>
+  </buildTargets>
 </actionScriptProperties>

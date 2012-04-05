@@ -15,8 +15,12 @@
             paddingLeft="4" paddingRight="4" paddingBottom="4" paddingTop="4"/>
     </app:layout> 
     
-    <fx:Style source="flexspaces.css"/>    
-    <fx:Style source="flexspacesair.css"/>    
+    <fx:Style source="css/flexspaces.css"/>    
+    <fx:Style source="css/dialog.css"/>
+    <fx:Style source="css/login.css"/>
+    <fx:Style source="css/logout.css"/>
+    <fx:Style source="css/search.css"/>    
+    <fx:Style source="css/flexspacesair.css"/>    
     <fx:Style source="cmisspacesair.css"/>
          
     <fx:Declarations>
