@@ -4,8 +4,6 @@
 	<comment></comment>
 	<projects>
 		<project>CMISSpaces</project>
-		<project>FlexSpaces</project>
-		<project>FlexSpacesAir</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -37,14 +35,14 @@
 			<locationURI>DOCUMENTS/CMISSpaces/src</locationURI>
 		</link>
 		<link>
-			<name>[source path] FlexSpaces-src</name>
+			<name>[source path] flexspaces-assets-runtime-src</name>
 			<type>2</type>
-			<locationURI>DOCUMENTS/FlexSpaces/src</locationURI>
+			<locationURI>FLEXSPACES/flexspaces-assets-runtime/src</locationURI>
 		</link>
 		<link>
-			<name>[source path] FlexSpacesAir-src</name>
+			<name>[source path] flexspaces-css-src</name>
 			<type>2</type>
-			<locationURI>DOCUMENTS/FlexSpacesAir/src</locationURI>
+			<locationURI>FLEXSPACES/flexspaces-css/src</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
