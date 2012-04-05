@@ -12,7 +12,7 @@
     // -->
     <head>
         <title>CMIS Spaces</title>
-        <meta name="google" value="notranslate">
+        <meta name="google" value="notranslate"/>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<!-- Include CSS to eliminate any default margins/padding and set the height of the html element and
 		     the body element to 100%, because Firefox, or any Gecko based browser, interprets percentage as
@@ -116,11 +116,11 @@
 
 // end cmisspaces
 
-            <!-- For version detection, set to min. required Flash Player version, or 0 (or 0.0.0), for no version detection. -->
+            // For version detection, set to min. required Flash Player version, or 0 (or 0.0.0), for no version detection.
             var swfVersionStr = "${version_major}.${version_minor}.${version_revision}";
-            <!-- To use express install, set to playerProductInstall.swf, otherwise the empty string. -->
+            // To use express install, set to playerProductInstall.swf, otherwise the empty string. 
             var xiSwfUrlStr = "${expressInstallSwf}";
-            //cmisspaces var flashvars = {};
+            //cmisspaces already inited flashvars var flashvars = {};
             var params = {};
             params.quality = "high";
             params.bgcolor = "${bgcolor}";
@@ -135,7 +135,7 @@
                 "${width}", "${height}",
                 swfVersionStr, xiSwfUrlStr,
                 flashvars, params, attributes);
-			<!-- JavaScript enabled so display the flashContent div in case it is not replaced with a swf object. -->
+            // JavaScript enabled so display the flashContent div in case it is not replaced with a swf object.
 			swfobject.createCSS("#flashContent", "display:block;text-align:left;");
         </script>
     </head>
