@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<app:CMISAirAppBase title="CMIS Spaces"
+    xmlns:fx="http://ns.adobe.com/mxml/2009" 
+    xmlns:s="library://ns.adobe.com/flex/spark" 
+    xmlns:mx="library://ns.adobe.com/flex/mx" 
+    xmlns:app="org.integratedsemantics.cmisspacesair.app.*"
+    xmlns:business="org.integratedsemantics.flexspaces.control.delegate.*"
+    xmlns:control="org.integratedsemantics.cmisspacesair.control.*"
+    xmlns:view="org.integratedsemantics.cmisspacesair.view.main.*"
+    minWidth="600" minHeight="500" width="1200" height="800" 
+    showStatusBar="false" creationComplete="onCreationComplete(event)">
+        
+    <app:layout>
+        <s:VerticalLayout verticalAlign="middle" horizontalAlign="center"
+            paddingLeft="4" paddingRight="4" paddingBottom="4" paddingTop="4"/>
+    </app:layout> 
+    
+    <fx:Style source="css/flexspaces.css"/>    
+    <fx:Style source="css/dialog.css"/>
+    <fx:Style source="css/login.css"/>
+    <fx:Style source="css/logout.css"/>
+    <fx:Style source="css/search.css"/>    
+    <fx:Style source="css/flexspacesair.css"/>    
+    <fx:Style source="css/cmisspacesair.css"/>
+         
+    <fx:Declarations>
+        <business:Services id="services" />        
+        <control:CMISAirAppController id="appController" />
+    </fx:Declarations>    
+
+    <view:CMISSpacesAirView id="cmisSpacesAirView" cmisSpacesAirPresModel="{cmisSpacesAirPresModel}" width="100%" height="100%"/>
+                     
+</app:CMISAirAppBase>
