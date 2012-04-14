@@ -81,7 +81,7 @@ package org.integratedsemantics.cmis.atom
 		  			<cmis:statement>{cmisQuery}</cmis:statement>
                     <cmis:skipCount>0</cmis:skipCount>
                     <cmis:maxItems>100</cmis:maxItems>		
-                    <cmis:searchAllVersions>true</cmis:searchAllVersions>                      	
+                    <cmis:searchAllVersions>false</cmis:searchAllVersions>                      	
 				</cmis:query>;
 			
             var queryData:ByteArray = new ByteArray();       
@@ -177,7 +177,14 @@ package org.integratedsemantics.cmis.atom
             
             req.addHeader("Content-Type", AtomMediaType.ENTRY.toString());
             var content:ByteArray = new ByteArray();
-            content.writeUTFBytes(entry.toXMLString());
+			
+			// opencmis alfresco 4.x doesn't seem to like giving the full entry and content
+            //content.writeUTFBytes(entry.toXMLString());
+			
+			var newEntry:CMISAtomEntry = new CMISAtomEntry();
+			newEntry.addCMISObject();			
+			content.writeUTFBytes(newEntry.toXMLString());
+			
             req.body = content;
 
             uri.setQueryValue("checkin", "true");            
