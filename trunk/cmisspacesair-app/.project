@@ -28,6 +28,11 @@
 			<locationURI>DOCUMENTS/cmisspaces-assets-runtime/src</locationURI>
 		</link>
 		<link>
+			<name>[source path] cmisspaces-css-src</name>
+			<type>2</type>
+			<locationURI>DOCUMENTS/cmisspaces-css/src</locationURI>
+		</link>
+		<link>
 			<name>[source path] flexspaces-assets-runtime-src</name>
 			<type>2</type>
 			<locationURI>FLEXSPACES/flexspaces-assets-runtime/src</locationURI>
