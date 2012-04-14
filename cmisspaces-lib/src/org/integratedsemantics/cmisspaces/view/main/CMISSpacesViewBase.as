@@ -13,6 +13,7 @@ package org.integratedsemantics.cmisspaces.view.main
     import mx.events.MenuEvent;
     
     import org.integratedsemantics.cmisspaces.presmodel.main.CMISSpacesPresModel;
+    import org.integratedsemantics.cmisspaces.view.login.LoginViewBase;
     import org.integratedsemantics.flexspaces.framework.presmodel.PresModel;
     import org.integratedsemantics.flexspaces.model.folder.Folder;
     import org.integratedsemantics.flexspaces.model.folder.Node;
@@ -36,6 +37,9 @@ package org.integratedsemantics.cmisspaces.view.main
     public class CMISSpacesViewBase extends FlexSpacesViewBase
     {        
         public var treeNav:TreeNavBase;
+		
+		public var cmisLoginView:LoginViewBase;
+
         
         public function CMISSpacesViewBase()
         {
@@ -52,7 +56,18 @@ package org.integratedsemantics.cmisspaces.view.main
         {
             this.flexSpacesPresModel = cmisSpacesPresModel;            
         }  
-
+		
+		/**
+		 * Handle login view creation complete
+		 *  
+		 * @param event on create complete event
+		 * 
+		 */
+		protected function onCmisLoginViewCreated(event:FlexEvent):void
+		{
+			cmisLoginView.addEventListener(LoginDoneEvent.LOGIN_DONE, onLoginDone);            
+		}
+		
         override public function onLoginDone(event:LoginDoneEvent):void
         {
             trace("CMISSpacesViewBase onLoginDone");
