@@ -47,9 +47,9 @@ package org.integratedsemantics.util
 
 	/**
 	 * Extends HttpClient in as3httpclientlib to support URLLoader, HttpService requests
-	 * in addition to Socket request support in HttpClient
-	 * (note that URLLoader and HttpService requests have limitations in Flex
-	 * in terms of the headers and http methods use can use 
+	 * (instead of using sockets)
+	 * (note that URLLoader and HttpService requests have limitations in Flash (AIR less limits)
+	 * in terms of the headers and http methods use can use (unless BlazeDS proxy is used)
 	 *  
 	 */
 	public class HttpClient2 extends HttpClient
@@ -70,7 +70,7 @@ package org.integratedsemantics.util
 		 */
 		public function requestURLLoader(uri:URI, httpRequest:HttpRequest, timeout:int = -1, listener:HttpListener = null):void
 		{
-		    //trace("URLLoaderHttpClient requestURLLoader()");
+		    //trace("HttpClient2 requestURLLoader()");
 
 			var request:URLRequest = new URLRequest(uri.toString());		
 			
@@ -112,7 +112,7 @@ package org.integratedsemantics.util
 		  */
 		 public function requestHTTPService(cmisConfig:CMISConfig, uri:URI, httpRequest:HttpRequest, timeout:int = -1, listener:HttpListener = null):void
 		{
-		    //trace("URLLoaderHttpClient requestHTTPService()");
+		    //trace("HttpClient2 requestHTTPService()");
 
 			var httpService:HTTPService = new HTTPService();
 			httpService.url = uri.toString();
@@ -164,7 +164,7 @@ package org.integratedsemantics.util
 
 		private function onStatus(e:HTTPStatusEvent):void 
 		{
-		    trace("URLLoaderHttpClient onStatus()");
+		    trace("HttpClient2 onStatus()");
 
     		// todo create/init diff type status: HttpStatusEvent
     		//dispatchEvent(e.clone());
@@ -172,28 +172,28 @@ package org.integratedsemantics.util
 
 		private function onProgress(e:ProgressEvent):void 
 		{
-		    trace("URLLoaderHttpClient onProgress()");
+		    trace("HttpClient2 onProgress()");
 
 			dispatchEvent(e.clone());
 		}
 		
 		private function onIOError(e:IOErrorEvent):void 
 		{
-		    trace("URLLoaderHttpClient onIOError()");
+		    trace("HttpClient2 onIOError()");
 
 			dispatchEvent(e.clone());
 		}
 		
 		private function onSecurityError(e:SecurityErrorEvent):void 
 		{
-		    trace("URLLoaderHttpClient onSecurityError()");
+		    trace("HttpClient2 onSecurityError()");
 
 			dispatchEvent(e.clone());
 		}
 		
 		private function onComplete(event:Event):void 
 		{
-		    trace("URLLoaderHttpClient onComplete()");
+		    trace("HttpClient2 onComplete()");
 
 			var loader:URLLoader = URLLoader(event.target);
 		    
@@ -213,12 +213,12 @@ package org.integratedsemantics.util
 		
 		private function onFault(event:FaultEvent):void 
 		{
-		    trace("URLLoaderHttpClient onFault()");
+		    trace("HttpClient2 onFault()");
 		}
 		
 		private function onResult(event:ResultEvent):void 
 		{
-		    trace("URLLoaderHttpClient onResult()");
+		    trace("HttpClient2 onResult()");
 
 			var ba:ByteArray = new ByteArray();
             if (event.result != null)

@@ -60,6 +60,7 @@ package org.httpclient {
      *  
      * @return Listener
      */
+
     public function get listener():HttpListener {
       if (!_listener) {
         _listener = new HttpListener();
@@ -67,6 +68,7 @@ package org.httpclient {
       }
       return _listener;
     }
+
     
     /**
      * Set the listener.
@@ -90,18 +92,22 @@ package org.httpclient {
     /**
      * Cancel current request by closing the socket.
      */
+	/* sreiner tookout
     public function cancel():void {
       // sreiner _socket.close();
     }
+	*/
     
     /**
      * Cancels the current connection and removes any listeners.
      */
+	/* sreiner tookout
     public function close():void {
       // sreiner put in reverse of these two lines in newer lib 3/3/09
       cancel();
       this.listener = null;
     }
+	*/
     
     /**
      * Load a generic request.
@@ -111,17 +117,19 @@ package org.httpclient {
      * @param timeout Timeout (in millis)
      * @param listener Http listener to handle events, if null, the http client will handle events.
      */
+	/* sreiner tookout
     public function request(uri:URI, request:HttpRequest, timeout:int = -1, listener:HttpListener = null):void 
     {
-      /* sreiner took out use of sockets
+      // sreiner took out use of sockets
       if (timeout == -1) timeout = _timeout;
       var dispatcher:EventDispatcher = null;
       if (listener != null) dispatcher = listener.register();
       else dispatcher = this;
       _socket = new HttpSocket(dispatcher, timeout, _proxy);
       _socket.request(uri, request);
-      */ 
+      // 
     }
+    */
     
     /**
      * Upload file to URI. In the Flash/AIR VM, there is no way to determine when packets leave the computer, since
@@ -142,6 +150,7 @@ package org.httpclient {
      * @param method PUT or POST
      * @param 
      */
+	/* sreiner tookout
     public function upload(uri:URI, file:*, method:String = "PUT"):void {
       var httpRequest:HttpRequest = null;
       if (method == "PUT") httpRequest = new Put();
@@ -152,15 +161,18 @@ package org.httpclient {
       throw new IllegalOperationError("Not supported, comment out the line above");
       request(uri, httpRequest);      
     }
-    
+    */
+	
     /**
      * Get request.
      * @param uri
      * @param listener Listener (if null, the client is the listener)
      */
+	/* sreiner tookout
     public function get(uri:URI, listener:HttpListener = null):void {
       request(uri, new Get(), -1, listener);
     }
+	*/
     
     /**
      * Post with form data.
@@ -175,22 +187,26 @@ package org.httpclient {
      * @param uri
      * @param variables
      */
+	/* sreiner tookout
     public function postFormData(uri:URI, variables:Array):void {
       request(uri, new Post(variables));
     }
-    
+    */
+	
     /**
      * Post with multipart.
      *  
      * @param uri
      * @param multipart
      */
+	/* sreiner tookout
     public function postMultipart(uri:URI, multipart:Multipart):void {
       var post:Post = new Post();
       post.setMultipart(multipart);
       request(uri, post);
     }
-    
+    */
+	
     /**
      * Post with raw data.
      *  
@@ -204,12 +220,14 @@ package org.httpclient {
      *  - bytesAvailable
      *  - close
      */
+	/* sreiner tookout
     public function post(uri:URI, body:*, contentType:String = null):void {
       var post:Post = new Post();
       post.body = body;
       post.contentType = contentType;
       request(uri, post);
     }
+	*/
     
     /**
      * Put with raw data.
@@ -224,12 +242,14 @@ package org.httpclient {
      *  - bytesAvailable
      *  - close
      */ 
+	/* sreiner tookout
     public function put(uri:URI, body:*, contentType:String = null):void {
       var put:Put = new Put();
       put.body = body;
       put.contentType = contentType;
       request(uri, put);
     }
+	*/
     
     /**
      * Put with form data.
@@ -244,28 +264,33 @@ package org.httpclient {
      * @param uri
      * @param variables
      */
+	/* sreiner tookout
     public function putFormData(uri:URI, variables:Array):void {
       var put:Put = new Put();
       put.setFormData(variables);
       request(uri, put);
     }
-    
+   */
     /**
      * Head.
      * @param uri
      */    
+	/* sreiner tookout
     public function head(uri:URI):void {
       request(uri, new Head());
     }
+	*/
     
     /**
      * Delete.
      * (Delete is a keyword; which is why this method signature is inconsistent)
      * @param uri
      */
+	/* sreiner tookout
     public function del(uri:URI):void {
       request(uri, new Delete());
     }
+	*/
   }
 
 }
