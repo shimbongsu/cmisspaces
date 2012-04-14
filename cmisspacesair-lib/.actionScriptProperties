@@ -15,12 +15,14 @@
       </libraryPathEntry>
       <libraryPathEntry kind="1" linkType="1" path="${FLEXSPACES}/flexspaces-lib/lib"/>
       <libraryPathEntry kind="3" linkType="1" path="${FLEXSPACES}/flexspaces-lib/bin/flexspaces-lib.swc" useDefaultLinkType="false"/>
-      <libraryPathEntry kind="3" linkType="1" path="${FLEXSPACES}/flexspacesair-lib/bin/flexspacesair-lib.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="1" path="${FLEXSPACES}/flexspacesair-lib/bin/flexspacesair-lib.swc" sourcepath="${FLEXSPACES}/flexspacesair-lib/src" useDefaultLinkType="false"/>
       <libraryPathEntry kind="3" linkType="1" path="${FLEXSPACES}/flexspaces-assets-embed/bin/flexspaces-assets-embed.swc" useDefaultLinkType="false"/>
       <libraryPathEntry kind="3" linkType="1" path="${FLEXSPACES}/flexspaces-locales/bin/flexspaces-locales.swc" useDefaultLinkType="false"/>
-      <libraryPathEntry kind="3" linkType="1" path="/cmisspaces-lib/bin/cmisspaces-lib.swc" useDefaultLinkType="false"/>      
+      <libraryPathEntry kind="3" linkType="1" path="/cmisspaces-lib/bin/cmisspaces-lib.swc" useDefaultLinkType="false"/>
     </libraryPath>
-    <sourceAttachmentPath/>
+    <sourceAttachmentPath>
+      <sourceAttachmentPathEntry kind="3" linkType="1" path="${FLEXSPACES}/flexspacesair-lib/bin/flexspacesair-lib.swc" sourcepath="${FLEXSPACES}/flexspacesair-lib/src" useDefaultLinkType="false"/>
+    </sourceAttachmentPath>
   </compiler>
   <applications>
     <application path="cmisspacesair-lib.as"/>
