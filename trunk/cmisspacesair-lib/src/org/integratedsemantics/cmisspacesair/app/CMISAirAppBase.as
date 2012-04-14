@@ -1,6 +1,7 @@
 package org.integratedsemantics.cmisspacesair.app
 {
     import flash.events.Event;
+    import flash.net.SharedObject;
     
     import org.integratedsemantics.cmisspaces.model.config.CMISConfig;
     import org.integratedsemantics.cmisspaces.presmodel.main.CMISSpacesPresModel;
@@ -46,17 +47,24 @@ package org.integratedsemantics.cmisspacesair.app
             model.appConfig.airMode = true;         
             model.appConfig.cmisMode = true;                          
             
-            cmisSpacesAirPresModel = new CMISSpacesPresModel();
+            cmisSpacesAirPresModel = model.applicationContext.getObject("presModel");
             model.flexSpacesPresModel = cmisSpacesAirPresModel;            
 
-            // setup search results
-            cmisSpacesAirPresModel.searchResultsPresModel = new SearchResultsPresModel();                     
-
+			// use user prefs if avail
+			var userPrefs:SharedObject = SharedObject.getLocal("userPrefs");
+			if (userPrefs.data.cmisUrl != undefined)
+			{  
+				cmisConfig.cmisUrl = userPrefs.data.cmisUrl;
+			}  			
+			
         	cmisSpacesAirPresModel.showTasks = false;
         	cmisSpacesAirPresModel.showWCM = false;
         	cmisSpacesAirPresModel.showShare = false;                       
             
-            model.configComplete = true;                                                                                                                                                                                                                    	                                       	 	                                                                                     
+            model.configComplete = true; 
+			
+			// setup search results
+			cmisSpacesAirPresModel.searchResultsPresModel = new SearchResultsPresModel();                     			
         }                        	
         
     }
