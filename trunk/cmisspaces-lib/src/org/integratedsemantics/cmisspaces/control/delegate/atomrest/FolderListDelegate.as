@@ -122,7 +122,8 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
                 {
                     folder.folderNode.cmisChildren = link.href.toString();
                 }
-                else if (link.rel == "via")
+                //else if (link.rel == "via")
+				else if (link.rel == "service")
                 {
                     folder.folderNode.nodeRef = link.href.toString();                                  
                     folder.folderNode.id = folder.folderNode.nodeRef;             

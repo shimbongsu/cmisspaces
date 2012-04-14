@@ -1,5 +1,8 @@
 package org.integratedsemantics.cmisspaces.app
 {	
+    import flash.events.Event;
+    import flash.net.SharedObject;
+    
     import org.integratedsemantics.cmisspaces.model.config.CMISConfig;
     import org.integratedsemantics.cmisspaces.presmodel.main.CMISSpacesPresModel;
     import org.integratedsemantics.flexspaces.app.AppBase;
@@ -41,14 +44,12 @@ package org.integratedsemantics.cmisspaces.app
 
             var appConfig:AppConfig = model.applicationContext.getObject("appConfig"); 
             model.appConfig = appConfig; 
-            model.appConfig.cmisMode = true;   
+            
+			model.appConfig.cmisMode = true;   
 
             cmisSpacesPresModel = model.applicationContext.getObject("presModel");
             model.flexSpacesPresModel = cmisSpacesPresModel;     
-            
-            // setup search results
-            cmisSpacesPresModel.searchResultsPresModel = new SearchResultsPresModel();                     
-            
+            			
         	cmisSpacesPresModel.showTasks = false;
         	cmisSpacesPresModel.showWCM = false;
             
@@ -115,8 +116,18 @@ package org.integratedsemantics.cmisspaces.app
             {
                 model.userInfo.autoLogin = (autologin == "true");
             } 
-                                              
-            model.configComplete = true;                                             	                                       	 	                                                                         
+                     
+			// use user prefs if avail
+			var userPrefs:SharedObject = SharedObject.getLocal("userPrefs");
+			if (userPrefs.data.cmisUrl != undefined)
+			{  
+				cmisConfig.cmisUrl = userPrefs.data.cmisUrl;
+			}  					
+			
+            model.configComplete = true;  
+			
+			// setup search results
+			cmisSpacesPresModel.searchResultsPresModel = new SearchResultsPresModel();                     			
         }                        	
                 
 	}

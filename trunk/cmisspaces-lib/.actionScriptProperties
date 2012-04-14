@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <actionScriptProperties analytics="false" mainApplicationPath="cmisspaces-lib.as" projectUUID="084350f5-ffca-49fa-902d-c3051c786016" version="10">
-  <compiler additionalCompilerArguments="-locale en_US" autoRSLOrdering="true" copyDependentFiles="false" fteInMXComponents="false" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="false" htmlHistoryManagement="false" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="bin" removeUnusedRSL="true" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="false" useDebugRSLSwfs="true" verifyDigests="true" warn="true">
+  <compiler additionalCompilerArguments="-locale en_US" autoRSLOrdering="true" copyDependentFiles="false" fteInMXComponents="false" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="false" htmlHistoryManagement="false" htmlPlayerVersionCheck="true" includeNetmonSwc="true" outputFolderPath="bin" removeUnusedRSL="true" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="false" useDebugRSLSwfs="true" verifyDigests="true" warn="true">
     <compilerSourcePath/>
     <libraryPath defaultLinkType="0">
       <libraryPathEntry kind="4" path="">
@@ -11,14 +11,16 @@
       </libraryPathEntry>
       <libraryPathEntry kind="1" linkType="1" path="lib"/>
       <libraryPathEntry kind="1" linkType="1" path="${FLEXSPACES}/flexspaces-lib/lib"/>
-      <libraryPathEntry kind="3" linkType="1" path="${FLEXSPACES}/flexspaces-lib/bin/flexspaces-lib.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="1" path="${FLEXSPACES}/flexspaces-lib/bin/flexspaces-lib.swc" sourcepath="${FLEXSPACES}/flexspaces-lib/src" useDefaultLinkType="false"/>
       <libraryPathEntry kind="3" linkType="1" path="${FLEXSPACES}/flexspaces-assets-embed/bin/flexspaces-assets-embed.swc" useDefaultLinkType="false"/>
       <libraryPathEntry kind="3" linkType="1" path="${FLEXSPACES}/flexspaces-locales/bin/flexspaces-locales.swc" useDefaultLinkType="false"/>
       <libraryPathEntry kind="3" linkType="1" path="/cmisspaces-core-lib/bin/cmisspaces-core-lib.swc" useDefaultLinkType="false"/>
       <libraryPathEntry kind="3" linkType="1" path="/cmisspaces-atom-lib/bin/cmisspaces-atom-lib.swc" useDefaultLinkType="false"/>
       <libraryPathEntry kind="3" linkType="1" path="/cmisspaces-soap-lib/bin/cmisspaces-soap-lib.swc" useDefaultLinkType="false"/>
     </libraryPath>
-    <sourceAttachmentPath/>
+    <sourceAttachmentPath>
+      <sourceAttachmentPathEntry kind="3" linkType="1" path="${FLEXSPACES}/flexspaces-lib/bin/flexspaces-lib.swc" sourcepath="${FLEXSPACES}/flexspaces-lib/src" useDefaultLinkType="false"/>
+    </sourceAttachmentPath>
   </compiler>
   <applications>
     <application path="cmisspaces-lib.as"/>
