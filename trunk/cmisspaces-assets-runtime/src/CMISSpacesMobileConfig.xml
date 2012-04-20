@@ -25,11 +25,14 @@
         <!-- property name="cmisUrl" value="http://localhost:8080/alfresco/service/api/cmis"/-->
         <!-- property name="cmisUrl" value="http://cmis.alfresco.com:80/service/cmis"/-->
 
-        <!-- property name="cmisUrl" value="http://localhost:8080/nuxeo/site/cmis/repository"/-->
-        <!-- property name="cmisUrl" value="http://cmis.demo.nuxeo.org/nuxeo/site/cmis/repository"/-->        
+		<!-- Nuxeo -->
+        <!-- property name="cmisUrl" value="http://localhost:8080/nuxeo/atom/cmis"/-->
+        <!-- property name="cmisUrl" value="http://cmis.demo.nuxeo.org/nuxeo/atom/cmis"/-->        
 
+		<!-- EMC Documentum -->
         <!-- property name="cmisUrl" value="http://localhost:9080/emc-cmis-ea/resources/"/-->
 
+		<!-- Adobe CRX -->
         <!-- property name="cmisUrl" value="http://localhost:7402/cmis/repository"/-->
         
         <!-- whether to use cmis soap web services (true) or cmis atompub rest apis (false) -->  
