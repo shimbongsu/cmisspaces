@@ -29,8 +29,12 @@
   <flashCatalyst validateFlashCatalystCompatibility="false"/>
   <buildTargets>
     <buildTarget buildTargetName="default">
-      <airSettings airCertificatePath="" airTimestamp="true" anePathSet="false" version="1">
-        <airExcludes/>
+      <airSettings airCertificatePath="C:/Users/sreiner/Desktop/air cert/FlexSpacesAirCert1.p12" airTimestamp="true" anePathSet="true" version="1">
+        <airExcludes>
+          <pathEntry path="FlexSpacesMobileConfig.xml"/>
+          <pathEntry path="FlexSpacesConfig.xml"/>
+          <pathEntry path="CMISSpacesMobileConfig.xml"/>
+        </airExcludes>
         <anePaths/>
       </airSettings>
       <actionScriptSettings version="1"/>
