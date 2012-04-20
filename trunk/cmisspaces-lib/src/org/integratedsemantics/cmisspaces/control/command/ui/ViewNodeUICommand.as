@@ -160,7 +160,7 @@ package org.integratedsemantics.cmisspaces.control.command.ui
                 	
                 	request = new URLRequest(url);                    	
 					
-                    request.data = new URLVariables("name=John+Doe");
+                    //request.data = new URLVariables("name=John+Doe");
             
             		// basic auth header
             		var encoder:Base64Encoder = new Base64Encoder();

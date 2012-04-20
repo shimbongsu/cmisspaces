@@ -181,9 +181,15 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
                         }
                     }                    
                     
-                    node.mimetype = cmisObj.getContentStreamMimeType().getValue();            
-                    
-                    node.size = cmisObj.getContentStreamLength().getValue();                                                                  
+					if (cmisObj.getContentStreamMimeType() != null)
+					{
+                    	node.mimetype = cmisObj.getContentStreamMimeType().getValue();            
+					}
+					
+					if (cmisObj.getContentStreamLength() != null)
+					{
+                    	node.size = cmisObj.getContentStreamLength().getValue();
+					}
                     
                     node.isLocked = false;
                     var checkedOutProp:CMISProperty = cmisObj.isVersionSeriesCheckedOut();

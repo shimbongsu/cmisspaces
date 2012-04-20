@@ -94,7 +94,14 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
                 
                 node.cmisObj = cmisObj;
                 
-                node.name = cmisObj.getName().getValue();
+				if (cmisObj.getName() != null)
+				{
+                	node.name = cmisObj.getName().getValue();
+				}
+				else
+				{
+					node.name = "";
+				}
                 
                 var baseType:String = cmisObj.getBaseType().getValue();
 
@@ -128,15 +135,30 @@ package org.integratedsemantics.cmisspaces.control.delegate.atomrest
                 //node.isLocked = cmisObj.isVersionSeriesCheckedOut().getBooleanValue();
                 node.isLocked = false;
                 
-                var workingCopyId:String = cmisObj.getVersionSeriesCheckedOutId().getValue();
+				if (cmisObj.getVersionSeriesCheckedOutId() != null)
+				{
+                	var workingCopyId:String = cmisObj.getVersionSeriesCheckedOutId().getValue();
+				}
                 //node.isWorkingCopy = (workingCopyId == node.id);
                 node.isWorkingCopy = true;
 				
-				node.versionLabel = cmisObj.getVersionLabel().getValue();
+				if (cmisObj.getVersionLabel() != null)
+				{
+					node.versionLabel = cmisObj.getVersionLabel().getValue();
+				}
 				
-				node.creator = cmisObj.getCreatedBy().getValue();                  
-                node.created = cmisObj.getCreationDate().getValue();
-                node.modified = cmisObj.getLastModificationDate().getValue();
+				if (cmisObj.getCreatedBy() != null)
+				{
+					node.creator = cmisObj.getCreatedBy().getValue();
+				}
+				if (cmisObj.getCreationDate() != null)
+				{	
+                	node.created = cmisObj.getCreationDate().getValue();
+				}
+				if (cmisObj.getLastModificationDate() != null)
+				{
+                	node.modified = cmisObj.getLastModificationDate().getValue();
+				}
                 
                 for (var j:int = 0; j < entry.links.length; j++)
                 {

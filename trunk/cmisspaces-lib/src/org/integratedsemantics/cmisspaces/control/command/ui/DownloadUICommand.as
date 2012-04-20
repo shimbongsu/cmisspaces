@@ -86,7 +86,7 @@ package org.integratedsemantics.cmisspaces.control.command.ui
                 {
                     viewurl = selectedItem.viewurl;                
                     request = new URLRequest(viewurl);
-                    request.data = new URLVariables("name=value");
+                    //request.data = new URLVariables("name=value");
 		            request.requestHeaders.push(basicAuth);	                    	                    
                 }                                
                 
