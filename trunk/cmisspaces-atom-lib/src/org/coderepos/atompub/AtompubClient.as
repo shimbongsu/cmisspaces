@@ -227,6 +227,7 @@ package org.coderepos.atompub
 		protected var _lastRequestURI:URI;
 		protected var _timeout:int;
 		protected var cmisConfig:CMISConfig;
+		protected var delay:Timer;
 		
 		/**
 		 * Constructor
@@ -1016,7 +1017,7 @@ package org.coderepos.atompub
 				requestHttpService(uri, req);  
 				// todo: remove this workaround
 				// send delayed complete event since blazeds proxy gives fault even though delete worked
-				var delay:Timer = new Timer(3000);
+				delay = new Timer(3000);
 				delay.addEventListener(TimerEvent.TIMER, deleteCompleteWorkaround);
 				delay.start();
 			}            
@@ -1028,6 +1029,12 @@ package org.coderepos.atompub
 		
 		private function deleteCompleteWorkaround(event:TimerEvent):void
 		{
+			if (delay != null)
+			{
+				delay.stop();
+				delay.removeEventListener(TimerEvent.TIMER, deleteCompleteWorkaround);
+				delay = null;
+			}
 			var result:AtompubEventResult = new AtompubEventResult();
 			dispatchEvent(new AtompubEvent(AtompubEvent.DELETE_ENTRY_COMPLETED, result));            
 		}
