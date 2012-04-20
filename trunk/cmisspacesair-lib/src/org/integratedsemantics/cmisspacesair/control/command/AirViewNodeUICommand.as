@@ -94,9 +94,12 @@ package org.integratedsemantics.cmisspacesair.control.command
 	            request.requestHeaders.push(basicAuth);	                    	
 
                 var urlLoader:URLLoader = new URLLoader();
-                urlLoader.dataFormat = URLLoaderDataFormat.BINARY;
-                configureListeners(urlLoader);      
-                try 
+                
+				urlLoader.dataFormat = URLLoaderDataFormat.BINARY;
+                
+				configureListeners(urlLoader);      
+                
+				try 
                 {      
                     urlLoader.load(request);      
                 }
@@ -135,7 +138,7 @@ package org.integratedsemantics.cmisspacesair.control.command
                     var file:File = localDir.resolvePath(filename);
                     var stream:FileStream = new FileStream();
                     stream.open(file, FileMode.WRITE);
-                    stream.writeBytes(loader.data, 0, loader.bytesTotal);
+                    stream.writeBytes(loader.data, 0, loader.bytesLoaded);
                     stream.close();
                     if ( WebkitUtil.isWebKitViewableFormat(file.extension) == true )
                     {
@@ -193,7 +196,8 @@ package org.integratedsemantics.cmisspacesair.control.command
             function ioErrorHandler(event:IOErrorEvent):void 
             {
                 trace("airViewNode ioErrorHandler: " + event);
-            }            
+            }
+						
         }
         
     }
