@@ -95,7 +95,7 @@
     </object>
     
    <!-- DI config of views / dialogs -->
-   <object id="advancedSearchView" lazy-init="true" singleton="true" class="org.integratedsemantics.flexspaces.view.search.advanced.AdvancedSearchView"/>
-   <object id="tagsCategoriesView" lazy-init="true" singleton="false" class="org.integratedsemantics.flexspaces.view.properties.tagscategories.TagsCategoriesView"/>       
+   <object id="advancedSearchView" lazy-init="true" singleton="true" class="org.integratedsemantics.flexspacesmobile.view.search.advanced.AdvancedSearchView"/>
+   <object id="tagsCategoriesView" lazy-init="true" singleton="false" class="org.integratedsemantics.flexspacesmobile.view.properties.tagscategories.TagsCategoriesView"/>
 
 </objects>
